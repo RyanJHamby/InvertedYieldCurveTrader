@@ -1,0 +1,10 @@
+includedir=include
+libdir=lib
+
+Name: aws-cpp-sdk-redshift-data
+Description: 
+Version: 1.11.154
+Cflags: -I${includedir} -fno-exceptions -std=c++11
+Libs: -L${libdir} -laws-cpp-sdk-redshift-data 
+Libs.private: 
+Requires:  aws-cpp-sdk-core
