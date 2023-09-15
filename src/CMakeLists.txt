@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 # set aws cpp sdk pathname
-set(CMAKE_PREFIX_PATH "/Users/ryanhamby/Desktop/aws-sdk-cpp-main")
+set(CMAKE_PREFIX_PATH "/Users/ryanhamby/Desktop/aws-sdk-cpp-install")
 
 # Set the AWS service components used by this project.
 set(SERVICE_COMPONENTS athena)
