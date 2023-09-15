@@ -1,15 +1,21 @@
 # Set the minimum required version of CMake for this project.
 cmake_minimum_required(VERSION 3.13)
 
+# set aws cpp sdk pathname
+set(CMAKE_PREFIX_PATH "/Users/ryanhamby/Desktop/aws-sdk-cpp-install")
+
 # Set the AWS service components used by this project.
-set(SERVICE_COMPONENTS s3)
+set(SERVICE_COMPONENTS athena)
+
+set(CMAKE_CXX_COMPILER g++)
+set(CMAKE_C_COMPILER gcc)
 
 # Set this project's name.
-project("hello_s3")
+project("main")
 
 # Set the C++ standard to use to build this target.
 # At least C++ 11 is required for the AWS SDK for C++.
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 20)
 
 # Use the MSVC variable to determine if this is a Windows build.
 set(WINDOWS_BUILD ${MSVC})
@@ -32,7 +38,7 @@ if (WINDOWS_BUILD)
 endif ()
 
 add_executable(${PROJECT_NAME}
-        hello_s3.cpp)
+        main.cpp)
 
 target_link_libraries(${PROJECT_NAME}
         ${AWSSDK_LINK_LIBRARIES})
