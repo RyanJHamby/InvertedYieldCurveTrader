@@ -7,6 +7,9 @@ set(CMAKE_PREFIX_PATH "/Users/ryanhamby/Desktop/aws-sdk-cpp-install")
 # Set the AWS service components used by this project.
 set(SERVICE_COMPONENTS athena)
 
+set(CMAKE_CXX_COMPILER g++)
+set(CMAKE_C_COMPILER gcc)
+
 # Set this project's name.
 project("main")
 
