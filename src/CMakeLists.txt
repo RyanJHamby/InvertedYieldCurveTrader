@@ -40,5 +40,9 @@ endif ()
 add_executable(${PROJECT_NAME}
         main.cpp)
 
+include_directories(${AWSSDK_INCLUDE_DIRS})
+
 target_link_libraries(${PROJECT_NAME}
-        ${AWSSDK_LINK_LIBRARIES})
+        ${AWSSDK_LINK_LIBRARIES}
+        ${AWSSDK_LIBRARIES})
+        
