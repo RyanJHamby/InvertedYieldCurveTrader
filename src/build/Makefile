@@ -111,44 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named main
+# Target rules for targets named InvertedYieldCurveTrader
 
 # Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 main
-.PHONY : main
+InvertedYieldCurveTrader: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 InvertedYieldCurveTrader
+.PHONY : InvertedYieldCurveTrader
 
 # fast build rule for target.
-main/fast:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
-.PHONY : main/fast
+InvertedYieldCurveTrader/fast:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/build
+.PHONY : InvertedYieldCurveTrader/fast
 
-main.o: main.cpp.o
+MultiVarAnalysisWorkflow.o: MultiVarAnalysisWorkflow.cpp.o
 
-.PHONY : main.o
+.PHONY : MultiVarAnalysisWorkflow.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.o
-.PHONY : main.cpp.o
+MultiVarAnalysisWorkflow.cpp.o:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o
+.PHONY : MultiVarAnalysisWorkflow.cpp.o
 
-main.i: main.cpp.i
+MultiVarAnalysisWorkflow.i: MultiVarAnalysisWorkflow.cpp.i
 
-.PHONY : main.i
+.PHONY : MultiVarAnalysisWorkflow.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.i
-.PHONY : main.cpp.i
+MultiVarAnalysisWorkflow.cpp.i:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.i
+.PHONY : MultiVarAnalysisWorkflow.cpp.i
 
-main.s: main.cpp.s
+MultiVarAnalysisWorkflow.s: MultiVarAnalysisWorkflow.cpp.s
 
-.PHONY : main.s
+.PHONY : MultiVarAnalysisWorkflow.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/main.cpp.s
-.PHONY : main.cpp.s
+MultiVarAnalysisWorkflow.cpp.s:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.s
+.PHONY : MultiVarAnalysisWorkflow.cpp.s
 
 # Help Target
 help:
@@ -158,10 +158,10 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... main"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... InvertedYieldCurveTrader"
+	@echo "... MultiVarAnalysisWorkflow.o"
+	@echo "... MultiVarAnalysisWorkflow.i"
+	@echo "... MultiVarAnalysisWorkflow.s"
 .PHONY : help
 
 

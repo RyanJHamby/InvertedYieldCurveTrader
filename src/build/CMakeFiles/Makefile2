@@ -53,12 +53,12 @@ CMAKE_BINARY_DIR = /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedY
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/main.dir/all
+all: CMakeFiles/InvertedYieldCurveTrader.dir/all
 
 .PHONY : all
 
 # The main recursive "clean" target.
-clean: CMakeFiles/main.dir/clean
+clean: CMakeFiles/InvertedYieldCurveTrader.dir/clean
 
 .PHONY : clean
 
@@ -68,31 +68,31 @@ preinstall:
 .PHONY : preinstall
 
 #=============================================================================
-# Target rules for target CMakeFiles/main.dir
+# Target rules for target CMakeFiles/InvertedYieldCurveTrader.dir
 
 # All Build rule for target.
-CMakeFiles/main.dir/all:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/depend
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/build/CMakeFiles --progress-num=1,2 "Built target main"
-.PHONY : CMakeFiles/main.dir/all
+CMakeFiles/InvertedYieldCurveTrader.dir/all:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/depend
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/build/CMakeFiles --progress-num=1,2 "Built target InvertedYieldCurveTrader"
+.PHONY : CMakeFiles/InvertedYieldCurveTrader.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/main.dir/rule: cmake_check_build_system
+CMakeFiles/InvertedYieldCurveTrader.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/main.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/InvertedYieldCurveTrader.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/build/CMakeFiles 0
-.PHONY : CMakeFiles/main.dir/rule
+.PHONY : CMakeFiles/InvertedYieldCurveTrader.dir/rule
 
 # Convenience name for target.
-main: CMakeFiles/main.dir/rule
+InvertedYieldCurveTrader: CMakeFiles/InvertedYieldCurveTrader.dir/rule
 
-.PHONY : main
+.PHONY : InvertedYieldCurveTrader
 
 # clean rule for target.
-CMakeFiles/main.dir/clean:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/clean
-.PHONY : CMakeFiles/main.dir/clean
+CMakeFiles/InvertedYieldCurveTrader.dir/clean:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/clean
+.PHONY : CMakeFiles/InvertedYieldCurveTrader.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

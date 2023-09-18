@@ -11,7 +11,6 @@
 #include <aws/core/auth/AWSCredentialsProviderChain.h>
 using namespace Aws;
 using namespace Aws::Auth;
-using namespace std;
 
 int main(int argc, char **argv) {
     Aws::SDKOptions options;
@@ -21,9 +20,7 @@ int main(int argc, char **argv) {
     int result = 0;
     {
         Aws::Client::ClientConfiguration clientConfig;
-        // Optional: Set to the AWS Region (overrides config file).
-        // clientConfig.region = "us-east-1";
-        cout << "hello" << endl;
+        clientConfig.region = "us-east-1";
                
         auto provider = Aws::MakeShared<DefaultAWSCredentialsProviderChain>("alloc-tag");
         auto creds = provider->GetAWSCredentials();
