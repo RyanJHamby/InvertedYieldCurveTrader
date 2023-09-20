@@ -123,6 +123,19 @@ InvertedYieldCurveTrader/fast:
 	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/build
 .PHONY : InvertedYieldCurveTrader/fast
 
+#=============================================================================
+# Target rules for targets named test
+
+# Build rule for target.
+test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test
+.PHONY : test
+
+# fast build rule for target.
+test/fast:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
+.PHONY : test/fast
+
 MultiVarAnalysisWorkflow.o: MultiVarAnalysisWorkflow.cpp.o
 
 .PHONY : MultiVarAnalysisWorkflow.o
@@ -150,6 +163,33 @@ MultiVarAnalysisWorkflow.cpp.s:
 	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.s
 .PHONY : MultiVarAnalysisWorkflow.cpp.s
 
+Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.o: Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.o
+
+.PHONY : Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.o
+
+# target to build an object file
+Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.o:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.o
+.PHONY : Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.o
+
+Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.i: Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.i
+
+.PHONY : Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.i
+
+# target to preprocess a source file
+Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.i:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.i
+.PHONY : Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.i
+
+Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.s: Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.s
+
+.PHONY : Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.s
+
+# target to generate assembly for a file
+Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.s:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.s
+.PHONY : Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -159,9 +199,13 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... InvertedYieldCurveTrader"
+	@echo "... test"
 	@echo "... MultiVarAnalysisWorkflow.o"
 	@echo "... MultiVarAnalysisWorkflow.i"
 	@echo "... MultiVarAnalysisWorkflow.s"
+	@echo "... Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.o"
+	@echo "... Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.i"
+	@echo "... Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.s"
 .PHONY : help
 
 
