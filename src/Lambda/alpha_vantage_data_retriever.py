@@ -2,14 +2,14 @@ import requests
 import boto3
 import json
 from datetime import date
-from alpha_vantage_constants import alpha_vantage_constants, api_key
 
 class AlphaVantageDataRetriever:
-    def __init__(self, api_key):
-        self.api_key = api_key
+    def __init__(self):
+        self.api_key = "D3G5VY7GCOEB887N"
         
     def fetch_data_and_upload_to_s3(self, api_template_url, bucket_name, object_key):
-        results = self.retrieve(api_template_url)
+        api_url = api_template_url.format(self.api_key)
+        results = self.retrieve(api_url)
         
         if object_key.startswith("time-series"):
             results = filter_json_by_recent_date(results)
@@ -59,12 +59,17 @@ def filter_json_by_recent_date(json_data):
         
 def lambda_handler(event, context):
     bucket_name = 'alpha-insights'
-    data_retriever = AlphaVantageDataRetriever(api_key)
+    data_retriever = AlphaVantageDataRetriever()
+    
+    json_file_path = "alpha_vantage_constants.json"
+
+    with open(json_file_path, "r") as json_file:
+        alpha_vantage_constants = json.load(json_file)
+        print(alpha_vantage_constants)
     
     for k, v in alpha_vantage_constants.items():
         object_key = v["s3_object_key"] + "/" + str(date.today())
-        if object_key.startswith("time-series"):
-            stock_data = data_retriever.fetch_data_and_upload_to_s3(v["api_template_url"], bucket_name, object_key)
+        stock_data = data_retriever.fetch_data_and_upload_to_s3(v["api_template_url"], bucket_name, object_key)
 
 # run python alpha_vantage_data_retriever.py to run this locally. TODO: set up EventBridge to run nightly
 lambda_handler(1, 2)
