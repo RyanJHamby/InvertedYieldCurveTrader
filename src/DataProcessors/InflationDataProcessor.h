@@ -10,3 +10,10 @@
 
 
 #endif /* InflationDataProcessor_h */
+
+class InflationDataProcessor {
+public:
+    InflationDataProcessor(const std::vector* inflationData);
+
+    std::string process();
+}
