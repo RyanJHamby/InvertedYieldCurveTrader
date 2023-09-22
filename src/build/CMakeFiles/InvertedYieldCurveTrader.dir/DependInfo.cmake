@@ -33,6 +33,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../src"
   "/usr/local/include"
+  "../include"
   "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/include"
   )
 

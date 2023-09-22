@@ -6,3 +6,7 @@
 
 #IncludeRegexTransform: 
 
+/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp
+stdio.h
+-
+
