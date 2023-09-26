@@ -11,6 +11,7 @@
 #include <aws/core/auth/AWSCredentialsProviderChain.h>
 #include <aws/athena/model/StartQueryExecutionRequest.h>
 #include <aws/athena/model/ResultConfiguration.h>
+#include "DataProcessors/InflationDataProcessor.cpp"
 using namespace Aws;
 using namespace Aws::Auth;
 
@@ -31,6 +32,10 @@ int main(int argc, char **argv) {
         if (creds.IsEmpty()) {
             std::cerr << "Failed authentication" << std::endl;
         }
+        
+        InflationDataProcessor inflationDataProcessor;
+        
+        std::vector<double> result = inflationDataProcessor.process();
         
 //        Aws::Athena::AthenaClient athenaClient(clientConfig);
 //        Aws::String query = "SELECT * FROM your_database.your_table LIMIT 10"; // Replace with your query

@@ -49,6 +49,7 @@ add_executable(${PROJECT_NAME}
 include_directories("${CMAKE_SOURCE_DIR}/src")
 include_directories(${AWSSDK_INCLUDE_DIRS})
 include_directories(${GTEST_INCLUDE_DIRS})
+include_directories("${CMAKE_SOURCE_DIR}/include")
 
 target_link_libraries(${PROJECT_NAME}
         ${AWSSDK_LINK_LIBRARIES}
