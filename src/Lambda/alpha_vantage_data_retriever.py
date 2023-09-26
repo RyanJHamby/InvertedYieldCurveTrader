@@ -61,7 +61,7 @@ def lambda_handler(event, context):
     bucket_name = 'alpha-insights'
     data_retriever = AlphaVantageDataRetriever()
     
-    json_file_path = "alpha_vantage_constants.json"
+    json_file_path = "AlphaVantageConstants.json"
 
     with open(json_file_path, "r") as json_file:
         alpha_vantage_constants = json.load(json_file)

@@ -5,14 +5,14 @@
 //  Created by Ryan Hamby on 9/21/23.
 //
 
-#include "S3ObjectRetriever.hpp"
+#ifndef S3_OBJECT_RETRIEVER_HPP
+#define S3_OBJECT_RETRIEVER_HPP
+
 #include <aws/core/Aws.h>
 #include <aws/s3/S3Client.h>
 #include <aws/s3/model/GetObjectRequest.h>
 #include <aws/core/utils/Outcome.h>
 #include <string>
-
-#ifndef S3_OBJECT_RETRIEVER_HPP
 
 class S3ObjectRetriever {
 public:
@@ -29,3 +29,5 @@ private:
     std::string bucketName;
     std::string objectKey;
 };
+
+#endif

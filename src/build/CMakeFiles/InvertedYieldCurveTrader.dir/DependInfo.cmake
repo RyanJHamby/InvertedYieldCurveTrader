@@ -4,6 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/InflationDataProcessor.cpp" "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/build/CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InflationDataProcessor.cpp.o"
+  "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/S3ObjectRetriever.cpp" "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/build/CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/S3ObjectRetriever.cpp.o"
   "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/MultiVarAnalysisWorkflow.cpp" "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/build/CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
@@ -33,6 +35,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../src"
   "/usr/local/include"
+  "../include"
   "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/include"
   )
 
