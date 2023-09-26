@@ -271,11 +271,8 @@ aws-cpp-sdk-core_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake
 //The directory containing a CMake configuration file for aws-crt-cpp.
 aws-crt-cpp_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/aws-crt-cpp/cmake
 
-//Value Computed by CMake
-main_BINARY_DIR:STATIC=/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/build
-
-//Value Computed by CMake
-main_SOURCE_DIR:STATIC=/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src
+//The directory containing a CMake configuration file for nlohmann_json.
+nlohmann_json_DIR:PATH=nlohmann_json_DIR-NOTFOUND
 
 
 ########################
