@@ -32,10 +32,6 @@ std::vector<double> InflationDataProcessor::process() {
     std::string objectKey = jsonData["inflation"]["s3_object_key"];
     std::string bucketName = "alpha-insights";
     S3ObjectRetriever s3ObjectRetriever(bucketName, objectKey);
-
-    if (!s3ObjectRetriever.Initialize()) {
-        std::cerr << "Failed to initialize S3ObjectRetriever" << std::endl;
-    }
     
     std::cout << "here inflation" << std::endl;
     
