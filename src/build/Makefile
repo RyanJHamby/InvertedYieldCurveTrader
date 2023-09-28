@@ -136,33 +136,6 @@ test/fast:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
 .PHONY : test/fast
 
-DataProcessors/InflationDataProcessor.o: DataProcessors/InflationDataProcessor.cpp.o
-
-.PHONY : DataProcessors/InflationDataProcessor.o
-
-# target to build an object file
-DataProcessors/InflationDataProcessor.cpp.o:
-	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InflationDataProcessor.cpp.o
-.PHONY : DataProcessors/InflationDataProcessor.cpp.o
-
-DataProcessors/InflationDataProcessor.i: DataProcessors/InflationDataProcessor.cpp.i
-
-.PHONY : DataProcessors/InflationDataProcessor.i
-
-# target to preprocess a source file
-DataProcessors/InflationDataProcessor.cpp.i:
-	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InflationDataProcessor.cpp.i
-.PHONY : DataProcessors/InflationDataProcessor.cpp.i
-
-DataProcessors/InflationDataProcessor.s: DataProcessors/InflationDataProcessor.cpp.s
-
-.PHONY : DataProcessors/InflationDataProcessor.s
-
-# target to generate assembly for a file
-DataProcessors/InflationDataProcessor.cpp.s:
-	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InflationDataProcessor.cpp.s
-.PHONY : DataProcessors/InflationDataProcessor.cpp.s
-
 DataProcessors/S3ObjectRetriever.o: DataProcessors/S3ObjectRetriever.cpp.o
 
 .PHONY : DataProcessors/S3ObjectRetriever.o
@@ -254,9 +227,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... InvertedYieldCurveTrader"
 	@echo "... test"
-	@echo "... DataProcessors/InflationDataProcessor.o"
-	@echo "... DataProcessors/InflationDataProcessor.i"
-	@echo "... DataProcessors/InflationDataProcessor.s"
 	@echo "... DataProcessors/S3ObjectRetriever.o"
 	@echo "... DataProcessors/S3ObjectRetriever.i"
 	@echo "... DataProcessors/S3ObjectRetriever.s"

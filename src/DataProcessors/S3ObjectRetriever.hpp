@@ -17,9 +17,6 @@
 class S3ObjectRetriever {
 public:
     S3ObjectRetriever(const std::string& bucketName, const std::string& objectKey);
-    ~S3ObjectRetriever();
-
-    bool Initialize();
     bool RetrieveJson(std::string& jsonData);
 
 private:
