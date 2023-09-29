@@ -13,8 +13,6 @@
 
 class InflationDataProcessor {
 public:
-//    InflationDataProcessor();
-
     std::vector<double> process();
 };
 

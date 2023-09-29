@@ -13,13 +13,12 @@
 #include "S3ObjectRetriever.hpp"
 #include <aws/s3/S3Client.h>
 #include <aws/core/auth/AWSCredentialsProvider.h>
-#include <aws/core/endpoint/DefaultEndpointProvider.h>
 #include <iostream>
 
 S3ObjectRetriever::S3ObjectRetriever(const std::string& bucketName, const std::string& objectKey)
     : getObjectRequest(), bucketName(bucketName), objectKey(objectKey) {
         Aws::S3::S3ClientConfiguration clientConfig;
-        std::shared_ptr<Aws::S3::S3EndpointProviderBase> endpointProvider = Aws::MakeShared<Aws::S3::S3EndpointProvider>("myEndpointProvider");
+        std::shared_ptr<Aws::S3::Endpoint::S3EndpointProvider> endpointProvider = std::make_shared<Aws::S3::Endpoint::S3EndpointProvider>();
         s3Client = Aws::S3::S3Client(clientConfig, endpointProvider);
     }
 
@@ -30,7 +29,14 @@ bool S3ObjectRetriever::RetrieveJson(std::string& jsonData) {
     auto getObjectOutcome = s3Client.GetObject(getObjectRequest);
 
     if (getObjectOutcome.IsSuccess()) {
-        jsonData = getObjectOutcome.GetResult().GetBody().get();
+        Aws::IOStream& bodyStream = getObjectOutcome.GetResult().GetBody();
+        std::string line;
+        std::stringstream jsonStream;
+        while (std::getline(bodyStream, line)) {
+            jsonStream << line;
+        }
+        jsonData = jsonStream.str();
+
         return true;
     } else {
         std::cerr << "Error retrieving JSON from S3: " << getObjectOutcome.GetError().GetMessage() << std::endl;

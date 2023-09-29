@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.13)
 set(CMAKE_PREFIX_PATH "/Users/ryanhamby/Desktop/aws-sdk-cpp-install")
 
 # Set the AWS service components used by this project.
-set(SERVICE_COMPONENTS athena)
+set(SERVICE_COMPONENTS athena s3)
 
 set(CMAKE_CXX_COMPILER g++)
 set(CMAKE_C_COMPILER gcc)
@@ -45,7 +45,6 @@ file(GLOB TEST_SOURCES
 add_executable(test ${TEST_SOURCES})
 add_executable(${PROJECT_NAME}
         MultiVarAnalysisWorkflow.cpp
-        DataProcessors/InflationDataProcessor.cpp
         DataProcessors/S3ObjectRetriever.cpp)
 
 include_directories("${CMAKE_SOURCE_DIR}/src")
