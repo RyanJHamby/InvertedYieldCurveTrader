@@ -8,7 +8,6 @@
 #include "InflationDataProcessor.hpp"
 #include "S3ObjectRetriever.hpp"
 #include "../Lambda/AlphaVantageDataRetriever.hpp"
-//#include "../../include/nlohmann/json.hpp"
 #include <nlohmann/json.hpp>
 #include <iostream>
 #include <fstream>
@@ -17,7 +16,7 @@ using json = nlohmann::json;
 
 std::vector<double> InflationDataProcessor::process() {
 
-    const std::string jsonFilePath = "AlphaVantageConstants.json";
+    const std::string jsonFilePath = "../Lambda/AlphaVantageConstants.json";
 
     std::ifstream jsonFile(jsonFilePath);
     if (!jsonFile) {
@@ -29,11 +28,14 @@ std::vector<double> InflationDataProcessor::process() {
     
     std::string jsonString = jsonData.dump();
     
-    std::string objectKey = jsonData["inflation"]["s3_object_key"];
+    std::string objectKeyPrefix = jsonData["inflation"]["s3_object_key_prefix"];
+    
+    // temporary hardcode
+    // TODO: configure to be most recent day once EventBridge gets set up
+    std::string objectKey = objectKeyPrefix + "/2023-09-21";
+    
     std::string bucketName = "alpha-insights";
     S3ObjectRetriever s3ObjectRetriever(bucketName, objectKey);
-    
-    std::cout << "here inflation" << std::endl;
     
     if (s3ObjectRetriever.RetrieveJson(jsonString)) {
         std::cout << "Retrieved JSON data:\n" << jsonString << std::endl;
