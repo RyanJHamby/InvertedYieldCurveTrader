@@ -5610,16 +5610,6 @@ aws/core/utils/Outcome.h
 string
 -
 
-/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StatsCalculator.cpp
-StatsCalculator.hpp
-/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StatsCalculator.hpp
-nlohmann/json.hpp
--
-cmath
--
-iostream
--
-
 /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StatsCalculator.hpp
 vector
 -
@@ -5647,6 +5637,8 @@ aws/athena/model/ResultConfiguration.h
 -
 DataProcessors/InflationDataProcessor.cpp
 /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/InflationDataProcessor.cpp
+DataProcessors/InvertedYieldDataProcessor.cpp
+/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/InvertedYieldDataProcessor.cpp
 
 /usr/local/include/nlohmann/adl_serializer.hpp
 utility

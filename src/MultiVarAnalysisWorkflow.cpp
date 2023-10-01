@@ -12,6 +12,7 @@
 #include <aws/athena/model/StartQueryExecutionRequest.h>
 #include <aws/athena/model/ResultConfiguration.h>
 #include "DataProcessors/InflationDataProcessor.cpp"
+#include "DataProcessors/InvertedYieldDataProcessor.cpp"
 using namespace Aws;
 using namespace Aws::Auth;
 
@@ -34,8 +35,10 @@ int main(int argc, char **argv) {
         }
         
         InflationDataProcessor inflationDataProcessor;
+        InvertedYieldDataProcessor invertedYieldDataProcessor;
         
-        std::vector<double> result = inflationDataProcessor.process();
+        std::vector<double> inflationResult = inflationDataProcessor.process();
+        std::vector<double> yieldResult = invertedYieldDataProcessor.process();
         
 //        Aws::Athena::AthenaClient athenaClient(clientConfig);
 //        Aws::String query = "SELECT * FROM your_database.your_table LIMIT 10"; // Replace with your query

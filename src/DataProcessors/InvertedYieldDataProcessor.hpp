@@ -8,5 +8,9 @@
 #ifndef InvertedYieldDataProcessor_h
 #define InvertedYieldDataProcessor_h
 
+class InvertedYieldDataProcessor {
+public:
+    std::vector<double> process();
+};
 
 #endif /* InvertedYieldDataProcessor_h */
