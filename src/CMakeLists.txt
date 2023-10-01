@@ -45,7 +45,8 @@ file(GLOB TEST_SOURCES
 add_executable(test ${TEST_SOURCES})
 add_executable(${PROJECT_NAME}
         MultiVarAnalysisWorkflow.cpp
-        DataProcessors/S3ObjectRetriever.cpp)
+        DataProcessors/S3ObjectRetriever.cpp
+        DataProcessors/StatsCalculator.cpp)
 
 include_directories("${CMAKE_SOURCE_DIR}/src")
 include_directories(${AWSSDK_INCLUDE_DIRS})
