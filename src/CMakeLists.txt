@@ -20,6 +20,10 @@ set(CMAKE_CXX_STANDARD 20)
 # Use the MSVC variable to determine if this is a Windows build.
 set(WINDOWS_BUILD ${MSVC})
 
+file(GLOB DATA_PROCESSORS_SRC
+     "*DataProcessors/*.cpp"
+)
+
 if (WINDOWS_BUILD) # Set the location where CMake can find the installed libraries for the AWS SDK.
     string(REPLACE ";" "/aws-cpp-sdk-all;" SYSTEM_MODULE_PATH "${CMAKE_SYSTEM_PREFIX_PATH}/aws-cpp-sdk-all")
     list(APPEND CMAKE_PREFIX_PATH ${SYSTEM_MODULE_PATH})
@@ -45,8 +49,7 @@ file(GLOB TEST_SOURCES
 add_executable(test ${TEST_SOURCES})
 add_executable(${PROJECT_NAME}
         MultiVarAnalysisWorkflow.cpp
-        DataProcessors/S3ObjectRetriever.cpp
-        DataProcessors/StatsCalculator.cpp)
+        ${DATA_PROCESSORS_SRC})
 
 include_directories("${CMAKE_SOURCE_DIR}/src")
 include_directories(${AWSSDK_INCLUDE_DIRS})
