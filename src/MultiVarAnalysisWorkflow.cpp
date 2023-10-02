@@ -11,8 +11,8 @@
 #include <aws/core/auth/AWSCredentialsProviderChain.h>
 #include <aws/athena/model/StartQueryExecutionRequest.h>
 #include <aws/athena/model/ResultConfiguration.h>
-#include "DataProcessors/InflationDataProcessor.cpp"
-#include "DataProcessors/InvertedYieldDataProcessor.cpp"
+#include "DataProcessors/InflationDataProcessor.hpp"
+#include "DataProcessors/InvertedYieldDataProcessor.hpp"
 using namespace Aws;
 using namespace Aws::Auth;
 

@@ -136,6 +136,87 @@ test/fast:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
 .PHONY : test/fast
 
+DataProcessors/InflationDataProcessor.o: DataProcessors/InflationDataProcessor.cpp.o
+
+.PHONY : DataProcessors/InflationDataProcessor.o
+
+# target to build an object file
+DataProcessors/InflationDataProcessor.cpp.o:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InflationDataProcessor.cpp.o
+.PHONY : DataProcessors/InflationDataProcessor.cpp.o
+
+DataProcessors/InflationDataProcessor.i: DataProcessors/InflationDataProcessor.cpp.i
+
+.PHONY : DataProcessors/InflationDataProcessor.i
+
+# target to preprocess a source file
+DataProcessors/InflationDataProcessor.cpp.i:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InflationDataProcessor.cpp.i
+.PHONY : DataProcessors/InflationDataProcessor.cpp.i
+
+DataProcessors/InflationDataProcessor.s: DataProcessors/InflationDataProcessor.cpp.s
+
+.PHONY : DataProcessors/InflationDataProcessor.s
+
+# target to generate assembly for a file
+DataProcessors/InflationDataProcessor.cpp.s:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InflationDataProcessor.cpp.s
+.PHONY : DataProcessors/InflationDataProcessor.cpp.s
+
+DataProcessors/InvertedYieldDataProcessor.o: DataProcessors/InvertedYieldDataProcessor.cpp.o
+
+.PHONY : DataProcessors/InvertedYieldDataProcessor.o
+
+# target to build an object file
+DataProcessors/InvertedYieldDataProcessor.cpp.o:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InvertedYieldDataProcessor.cpp.o
+.PHONY : DataProcessors/InvertedYieldDataProcessor.cpp.o
+
+DataProcessors/InvertedYieldDataProcessor.i: DataProcessors/InvertedYieldDataProcessor.cpp.i
+
+.PHONY : DataProcessors/InvertedYieldDataProcessor.i
+
+# target to preprocess a source file
+DataProcessors/InvertedYieldDataProcessor.cpp.i:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InvertedYieldDataProcessor.cpp.i
+.PHONY : DataProcessors/InvertedYieldDataProcessor.cpp.i
+
+DataProcessors/InvertedYieldDataProcessor.s: DataProcessors/InvertedYieldDataProcessor.cpp.s
+
+.PHONY : DataProcessors/InvertedYieldDataProcessor.s
+
+# target to generate assembly for a file
+DataProcessors/InvertedYieldDataProcessor.cpp.s:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InvertedYieldDataProcessor.cpp.s
+.PHONY : DataProcessors/InvertedYieldDataProcessor.cpp.s
+
+DataProcessors/InvertedYieldStatsCalculator.o: DataProcessors/InvertedYieldStatsCalculator.cpp.o
+
+.PHONY : DataProcessors/InvertedYieldStatsCalculator.o
+
+# target to build an object file
+DataProcessors/InvertedYieldStatsCalculator.cpp.o:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InvertedYieldStatsCalculator.cpp.o
+.PHONY : DataProcessors/InvertedYieldStatsCalculator.cpp.o
+
+DataProcessors/InvertedYieldStatsCalculator.i: DataProcessors/InvertedYieldStatsCalculator.cpp.i
+
+.PHONY : DataProcessors/InvertedYieldStatsCalculator.i
+
+# target to preprocess a source file
+DataProcessors/InvertedYieldStatsCalculator.cpp.i:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InvertedYieldStatsCalculator.cpp.i
+.PHONY : DataProcessors/InvertedYieldStatsCalculator.cpp.i
+
+DataProcessors/InvertedYieldStatsCalculator.s: DataProcessors/InvertedYieldStatsCalculator.cpp.s
+
+.PHONY : DataProcessors/InvertedYieldStatsCalculator.s
+
+# target to generate assembly for a file
+DataProcessors/InvertedYieldStatsCalculator.cpp.s:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InvertedYieldStatsCalculator.cpp.s
+.PHONY : DataProcessors/InvertedYieldStatsCalculator.cpp.s
+
 DataProcessors/S3ObjectRetriever.o: DataProcessors/S3ObjectRetriever.cpp.o
 
 .PHONY : DataProcessors/S3ObjectRetriever.o
@@ -254,6 +335,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... InvertedYieldCurveTrader"
 	@echo "... test"
+	@echo "... DataProcessors/InflationDataProcessor.o"
+	@echo "... DataProcessors/InflationDataProcessor.i"
+	@echo "... DataProcessors/InflationDataProcessor.s"
+	@echo "... DataProcessors/InvertedYieldDataProcessor.o"
+	@echo "... DataProcessors/InvertedYieldDataProcessor.i"
+	@echo "... DataProcessors/InvertedYieldDataProcessor.s"
+	@echo "... DataProcessors/InvertedYieldStatsCalculator.o"
+	@echo "... DataProcessors/InvertedYieldStatsCalculator.i"
+	@echo "... DataProcessors/InvertedYieldStatsCalculator.s"
 	@echo "... DataProcessors/S3ObjectRetriever.o"
 	@echo "... DataProcessors/S3ObjectRetriever.i"
 	@echo "... DataProcessors/S3ObjectRetriever.s"

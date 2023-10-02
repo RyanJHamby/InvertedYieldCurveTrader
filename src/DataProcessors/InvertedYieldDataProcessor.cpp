@@ -1,11 +1,11 @@
 //
-//  InflationDataProcessor.cpp
+//  InvertedYieldDataProcessor.cpp
 //  InvertedYieldCurveTrader
 //
-//  Created by Ryan Hamby on 9/29/23.
+//  Created by Ryan Hamby on 10/1/23.
 //
-
 #include "InvertedYieldDataProcessor.hpp"
+#include "InvertedYieldStatsCalculator.hpp"
 #include "S3ObjectRetriever.hpp"
 #include "../Lambda/AlphaVantageDataRetriever.hpp"
 #include "StatsCalculator.hpp"
@@ -27,24 +27,33 @@ std::vector<double> InvertedYieldDataProcessor::process() {
     nlohmann::json jsonData;
     jsonFile >> jsonData;
 
-    std::string jsonString = jsonData.dump();
+    std::string jsonString10Year = jsonData.dump();
+    std::string jsonString2Year = jsonData.dump();
 
-    std::string objectKeyPrefix = jsonData["inflation"]["s3_object_key_prefix"];
+    std::string objectKeyPrefix10Year = jsonData["yield-10-year"]["s3_object_key_prefix"];
+    std::string objectKeyPrefix2Year = jsonData["yield-2-year"]["s3_object_key_prefix"];
 
     // Temporary hardcode
     // TODO: Configure to be the most recent day once EventBridge gets set up
-    std::string objectKey = objectKeyPrefix + "/2023-09-21";
+    std::string objectKey10Year = objectKeyPrefix10Year + "/2023-09-21";
+    std::string objectKey2Year = objectKeyPrefix2Year + "/2023-09-21";
 
     std::string bucketName = "alpha-insights";
-    S3ObjectRetriever s3ObjectRetriever(bucketName, objectKey);
+    S3ObjectRetriever s3ObjectRetriever10Year(bucketName, objectKey10Year);
+    S3ObjectRetriever s3ObjectRetriever2Year(bucketName, objectKey2Year);
 
-    if (s3ObjectRetriever.RetrieveJson(jsonString)) {
-        std::cout << "Retrieved JSON data:\n" << jsonString << std::endl;
+    if (s3ObjectRetriever10Year.RetrieveJson(jsonString10Year) &&
+        s3ObjectRetriever2Year.RetrieveJson(jsonString2Year)) {
+        std::cout << "Retrieved 10 Year JSON data:\n" << jsonString10Year << std::endl;
+        std::cout << "Retrieved 2 Year JSON data:\n" << jsonString2Year << std::endl;
 
+        InvertedYieldStatsCalculator calculator;
+        
+        calculator.setData(jsonString10Year, jsonString2Year);
+        
         // Process the retrieved JSON data to calculate confidence score
-        StatsCalculator calculator;
-        calculator.setData(jsonString);
         std::tuple<double, double> meanAndStdDev = calculator.calculateMeanAndStdDev();
+        
         double confidenceScore = std::get<0>(meanAndStdDev); // Use the mean as the confidence score
 
         std::cout << "Confidence Score: " << confidenceScore << std::endl;
@@ -52,7 +61,7 @@ std::vector<double> InvertedYieldDataProcessor::process() {
         std::cerr << "Failed to retrieve JSON data from S3" << std::endl;
     }
 
-    std::vector<double> inflationData;
+    std::vector<double> invertedYieldData;
 
-    return inflationData;
+    return invertedYieldData;
 }

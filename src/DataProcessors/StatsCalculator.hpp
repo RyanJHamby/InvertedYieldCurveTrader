@@ -17,7 +17,7 @@ public:
     std::tuple<double, double> calculateMeanAndStdDev();
     std::tuple<double, double> calculateBuyAndSellConfidence();
 
-private:
+protected:
     std::vector<double> data;
 };
 

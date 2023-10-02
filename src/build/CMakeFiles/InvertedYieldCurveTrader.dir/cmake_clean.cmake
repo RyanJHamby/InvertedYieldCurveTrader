@@ -1,4 +1,7 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InflationDataProcessor.cpp.o"
+  "CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InvertedYieldDataProcessor.cpp.o"
+  "CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InvertedYieldStatsCalculator.cpp.o"
   "CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/S3ObjectRetriever.cpp.o"
   "CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StatsCalculator.cpp.o"
   "CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o"
