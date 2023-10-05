@@ -21,8 +21,8 @@ void InvertedYieldStatsCalculator::setData(const std::string& jsonData10Year, co
             auto entry2Year = inflationData2Year["data"][i];
             
             // Convert the "value" field from string to double and add it to the vector
-            double value10Year = std::stod(entry10Year["value"].get<std::string>());
-            double value2Year = std::stod(entry2Year["value"].get<std::string>());
+            double value10Year = double(entry10Year["value"]);
+            double value2Year = double(entry2Year["value"]);
             
             // Inverted Yield = 10 year yield - 2 year yield
             values.push_back(value10Year - value2Year);
