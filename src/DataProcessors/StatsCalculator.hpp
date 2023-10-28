@@ -14,6 +14,7 @@
 class StatsCalculator {
 public:
     void setData(const std::string& jsonData);
+    std::vector<double> getData();
     std::tuple<double, double> calculateMeanAndStdDev();
     std::tuple<double, double> calculateBuyAndSellConfidence();
 

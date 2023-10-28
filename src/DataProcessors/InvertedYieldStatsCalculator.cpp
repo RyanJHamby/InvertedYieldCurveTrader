@@ -15,13 +15,15 @@ void InvertedYieldStatsCalculator::setData(const std::string& jsonData10Year, co
         nlohmann::json inflationData10Year = nlohmann::json::parse(jsonData10Year);
         nlohmann::json inflationData2Year = nlohmann::json::parse(jsonData2Year);
 
+        const int daysToAnalyze = 10; // Number of past days to analyze
         std::vector<double> values;
-        for (int i = 0; i < 1000; ++i) {
+        
+        for (int i = 0; i < daysToAnalyze; ++i) {
             auto entry10Year = inflationData10Year["data"][i];
             auto entry2Year = inflationData2Year["data"][i];
                         
             if (entry10Year["value"] != "." && entry2Year["value"] != ".") {
-                //  Convert the "value" field from string to double and add it to the vector
+                // Convert the "value" field from string to double and add it to the vector
                 double value10Year = std::stod(entry10Year["value"].get<std::string>());
                 double value2Year = std::stod(entry2Year["value"].get<std::string>());
             
@@ -29,7 +31,7 @@ void InvertedYieldStatsCalculator::setData(const std::string& jsonData10Year, co
                 values.push_back(value10Year - value2Year);
             } else {
                 // Maintain previous day for missing data, and maintain day ordering
-                values.push_back(values.back());
+                values.push_back(values.empty() ? 0.0 : values.back());
             }
         }
         

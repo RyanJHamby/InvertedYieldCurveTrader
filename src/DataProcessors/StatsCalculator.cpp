@@ -28,6 +28,10 @@ void StatsCalculator::setData(const std::string& jsonData) {
     }
 }
 
+std::vector<double> StatsCalculator::getData() {
+    return data;
+};
+
 std::tuple<double, double> StatsCalculator::calculateMeanAndStdDev() {
     double mean = 0.0;
     double sum = 0.0;

@@ -37,21 +37,27 @@ std::vector<double> InflationDataProcessor::process() {
     std::string bucketName = "alpha-insights";
     S3ObjectRetriever s3ObjectRetriever(bucketName, objectKey);
 
-    if (s3ObjectRetriever.RetrieveJson(jsonString)) {
-        std::cout << "Retrieved JSON data:\n" << jsonString << std::endl;
+    std::vector<double> inflationData;
 
+    if (s3ObjectRetriever.RetrieveJson(jsonString)) {
         // Process the retrieved JSON data to calculate confidence score
         StatsCalculator calculator;
         calculator.setData(jsonString);
         std::tuple<double, double> meanAndStdDev = calculator.calculateMeanAndStdDev();
-        double confidenceScore = std::get<0>(meanAndStdDev); // Use the mean as the confidence score
-
-        std::cout << "Confidence Score: " << confidenceScore << std::endl;
+        
+        std::vector<double> inflationValues = calculator.getData();
+        inflationData = std::vector<double>(inflationValues.begin(), inflationValues.begin() + 10);
+        
+        for (auto &datapoint: inflationData) {
+            std::cout << datapoint << std::endl;
+        }
+        
+        // TODO: remove confidence score at bottom level, and instead use covariance to calculate it at top level, in relation to inverted yield
+//        double confidenceScore = std::get<0>(meanAndStdDev); // Use the mean as the confidence score
+//        std::cout << "Confidence Score: " << confidenceScore << std::endl;
     } else {
         std::cerr << "Failed to retrieve JSON data from S3" << std::endl;
     }
 
-    std::vector<double> inflationData;
-
     return inflationData;
-}
+};

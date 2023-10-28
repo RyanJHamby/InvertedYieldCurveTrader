@@ -13,6 +13,7 @@
 #include <aws/athena/model/ResultConfiguration.h>
 #include "DataProcessors/InflationDataProcessor.hpp"
 #include "DataProcessors/InvertedYieldDataProcessor.hpp"
+#include "DataProcessors/CovarianceCalculator.hpp"
 using namespace Aws;
 using namespace Aws::Auth;
 
@@ -39,6 +40,10 @@ int main(int argc, char **argv) {
         
         std::vector<double> inflationResult = inflationDataProcessor.process();
         std::vector<double> yieldResult = invertedYieldDataProcessor.process();
+        
+        CovarianceCalculator covarianceCalculator();
+        
+//        double inflationAndInvertedYieldCovariance = covarianceCalculator.calculateCovariance()
         
 //        Aws::Athena::AthenaClient athenaClient(clientConfig);
 //        Aws::String query = "SELECT * FROM your_database.your_table LIMIT 10"; // Replace with your query
