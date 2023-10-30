@@ -3874,9 +3874,11 @@ aws/core/utils/memory/stl/AWSMap.h
 smithy/Smithy_EXPORTS.h
 -
 
-/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/InflationDataProcessor.cpp
-InflationDataProcessor.hpp
-/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/InflationDataProcessor.hpp
+/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/InvertedYieldDataProcessor.cpp
+InvertedYieldDataProcessor.hpp
+/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/InvertedYieldDataProcessor.hpp
+InvertedYieldStatsCalculator.hpp
+/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/InvertedYieldStatsCalculator.hpp
 S3ObjectRetriever.hpp
 /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/S3ObjectRetriever.hpp
 ../Lambda/AlphaVantageDataRetriever.hpp
@@ -3894,11 +3896,23 @@ vector
 cmath
 -
 
-/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/InflationDataProcessor.hpp
+/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/InvertedYieldDataProcessor.hpp
 stdio.h
 -
 iostream
 -
+vector
+-
+
+/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/InvertedYieldStatsCalculator.hpp
+stdio.h
+-
+tuple
+-
+vector
+-
+StatsCalculator.hpp
+/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StatsCalculator.hpp
 
 /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/S3ObjectRetriever.hpp
 aws/core/Aws.h

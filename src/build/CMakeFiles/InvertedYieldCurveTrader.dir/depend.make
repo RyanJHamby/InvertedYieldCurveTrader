@@ -1718,6 +1718,7 @@ CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o: /Users/r
 CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/smithy/tracing/Tracer.h
 CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/smithy/tracing/TracerProvider.h
 CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/smithy/tracing/UpDownCounter.h
+CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o: ../DataProcessors/CovarianceCalculator.hpp
 CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o: ../DataProcessors/InflationDataProcessor.hpp
 CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o: ../DataProcessors/InvertedYieldDataProcessor.hpp
 CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o: ../MultiVarAnalysisWorkflow.cpp

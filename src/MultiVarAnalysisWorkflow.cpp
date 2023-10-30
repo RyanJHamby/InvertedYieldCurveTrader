@@ -43,6 +43,7 @@ int main(int argc, char **argv) {
         
         CovarianceCalculator covarianceCalculator();
         
+        covarianceCalculator().calculateCovarianceWithInvertedYield(<#std::vector<double> kpiValues#>, <#std::vector<double> invertedYieldValues#>, std::tuple<double, double> kpiMeanAndStdDev, std::tuple<double, double> invertedYieldMeanAndStdDev)
 //        double inflationAndInvertedYieldCovariance = covarianceCalculator.calculateCovariance()
         
 //        Aws::Athena::AthenaClient athenaClient(clientConfig);
