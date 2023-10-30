@@ -12,8 +12,12 @@
 #include <aws/athena/model/StartQueryExecutionRequest.h>
 #include <aws/athena/model/ResultConfiguration.h>
 #include "DataProcessors/InflationDataProcessor.hpp"
+#include "DataProcessors/GDPDataProcessor.hpp"
+#include "DataProcessors/InterestRateDataProcessor.hpp"
 #include "DataProcessors/InvertedYieldDataProcessor.hpp"
 #include "DataProcessors/CovarianceCalculator.hpp"
+#include "DataProcessors/StatsCalculator.hpp"
+#include "DataProcessors/InvertedYieldStatsCalculator.hpp"
 using namespace Aws;
 using namespace Aws::Auth;
 
@@ -36,39 +40,33 @@ int main(int argc, char **argv) {
         }
         
         InflationDataProcessor inflationDataProcessor;
+        GDPDataProcessor gdpDataProcessor;
+        InterestRateDataProcessor interestRateDataProcessor;
         InvertedYieldDataProcessor invertedYieldDataProcessor;
         
         std::vector<double> inflationResult = inflationDataProcessor.process();
-        std::vector<double> yieldResult = invertedYieldDataProcessor.process();
+        std::vector<double> gdpResult = gdpDataProcessor.process();
+        std::vector<double> interestRateResult = interestRateDataProcessor.process();
+        invertedYieldDataProcessor.process();
+        std::vector<double> yieldResult = invertedYieldDataProcessor.getRecentValues();
+        double yieldMean = invertedYieldDataProcessor.getMean();
         
-        CovarianceCalculator covarianceCalculator();
+        StatsCalculator statsCalculator;
+        InvertedYieldStatsCalculator invertedYieldStatsCalculator;
+        CovarianceCalculator covarianceCalculator;
         
-        covarianceCalculator().calculateCovarianceWithInvertedYield(<#std::vector<double> kpiValues#>, <#std::vector<double> invertedYieldValues#>, std::tuple<double, double> kpiMeanAndStdDev, std::tuple<double, double> invertedYieldMeanAndStdDev)
-//        double inflationAndInvertedYieldCovariance = covarianceCalculator.calculateCovariance()
+        double inflationKpiMean = statsCalculator.calculateMean(inflationResult);
+        double gdpKpiMean = statsCalculator.calculateMean(gdpResult);
+        double interestRateKpiMean = statsCalculator.calculateMean(interestRateResult);
+        double invertedYieldMean = invertedYieldStatsCalculator.calculateMean(yieldResult);
         
-//        Aws::Athena::AthenaClient athenaClient(clientConfig);
-//        Aws::String query = "SELECT * FROM your_database.your_table LIMIT 10"; // Replace with your query
-//
-//        Aws::Athena::Model::StartQueryExecutionRequest startRequest;
-//        startRequest.SetQueryString(query);
-//        startRequest.SetResultConfiguration({
-//            Aws::Athena::Model::ResultConfiguration()
-//                .WithOutputLocation("/your/s3/output/location")
-//        });
-//
-//        std::cout << "running athena" << std::endl;
-//
-//        auto startOutcome = athenaClient.StartQueryExecution(startRequest);
-//
-//        if (startOutcome.IsSuccess()) {
-//            Aws::String queryExecutionId = startOutcome.GetResult().GetQueryExecutionId();
-//            // You can use queryExecutionId to check the status and retrieve results later
-//            std::cout << "Query execution ID: " << queryExecutionId << std::endl;
-//        } else {
-//            std::cout << "Failed to start query execution: " << startOutcome.GetError().GetMessage() << std::endl;
-//        }
+        double inflationCovariance = covarianceCalculator.calculateCovarianceWithInvertedYield(inflationResult, yieldResult, inflationKpiMean, invertedYieldMean);
+        double gdpCovariance = covarianceCalculator.calculateCovarianceWithInvertedYield(gdpResult, yieldResult, gdpKpiMean, invertedYieldMean);
+        double interestRateCovariance = covarianceCalculator.calculateCovarianceWithInvertedYield(interestRateResult, yieldResult, interestRateKpiMean, invertedYieldMean);
         
-        
+        std::cout << inflationCovariance << std::endl;
+        std::cout << gdpCovariance << std::endl;
+        std::cout << interestRateCovariance << std::endl;
     }
 
     Aws::ShutdownAPI(options); // Should only be called once.

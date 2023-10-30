@@ -14,16 +14,14 @@
 
 class InvertedYieldDataProcessor {
 public:
-    std::vector<double> process();
+    void process();
     double getMean();
-    double getStdDev();
     std::vector<double> getRecentValues();
     
 protected:
     double mean;
     double stdDev;
     void setMean(double mean);
-    void setStdDev(double stdDev);
     void setRecentValues(std::vector<double> recentValues);
     std::vector<double> recentValues;
 };

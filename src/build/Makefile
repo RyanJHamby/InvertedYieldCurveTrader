@@ -136,6 +136,60 @@ test/fast:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
 .PHONY : test/fast
 
+DataProcessors/CovarianceCalculator.o: DataProcessors/CovarianceCalculator.cpp.o
+
+.PHONY : DataProcessors/CovarianceCalculator.o
+
+# target to build an object file
+DataProcessors/CovarianceCalculator.cpp.o:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/CovarianceCalculator.cpp.o
+.PHONY : DataProcessors/CovarianceCalculator.cpp.o
+
+DataProcessors/CovarianceCalculator.i: DataProcessors/CovarianceCalculator.cpp.i
+
+.PHONY : DataProcessors/CovarianceCalculator.i
+
+# target to preprocess a source file
+DataProcessors/CovarianceCalculator.cpp.i:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/CovarianceCalculator.cpp.i
+.PHONY : DataProcessors/CovarianceCalculator.cpp.i
+
+DataProcessors/CovarianceCalculator.s: DataProcessors/CovarianceCalculator.cpp.s
+
+.PHONY : DataProcessors/CovarianceCalculator.s
+
+# target to generate assembly for a file
+DataProcessors/CovarianceCalculator.cpp.s:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/CovarianceCalculator.cpp.s
+.PHONY : DataProcessors/CovarianceCalculator.cpp.s
+
+DataProcessors/GDPDataProcessor.o: DataProcessors/GDPDataProcessor.cpp.o
+
+.PHONY : DataProcessors/GDPDataProcessor.o
+
+# target to build an object file
+DataProcessors/GDPDataProcessor.cpp.o:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/GDPDataProcessor.cpp.o
+.PHONY : DataProcessors/GDPDataProcessor.cpp.o
+
+DataProcessors/GDPDataProcessor.i: DataProcessors/GDPDataProcessor.cpp.i
+
+.PHONY : DataProcessors/GDPDataProcessor.i
+
+# target to preprocess a source file
+DataProcessors/GDPDataProcessor.cpp.i:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/GDPDataProcessor.cpp.i
+.PHONY : DataProcessors/GDPDataProcessor.cpp.i
+
+DataProcessors/GDPDataProcessor.s: DataProcessors/GDPDataProcessor.cpp.s
+
+.PHONY : DataProcessors/GDPDataProcessor.s
+
+# target to generate assembly for a file
+DataProcessors/GDPDataProcessor.cpp.s:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/GDPDataProcessor.cpp.s
+.PHONY : DataProcessors/GDPDataProcessor.cpp.s
+
 DataProcessors/InflationDataProcessor.o: DataProcessors/InflationDataProcessor.cpp.o
 
 .PHONY : DataProcessors/InflationDataProcessor.o
@@ -162,6 +216,33 @@ DataProcessors/InflationDataProcessor.s: DataProcessors/InflationDataProcessor.c
 DataProcessors/InflationDataProcessor.cpp.s:
 	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InflationDataProcessor.cpp.s
 .PHONY : DataProcessors/InflationDataProcessor.cpp.s
+
+DataProcessors/InterestRateDataProcessor.o: DataProcessors/InterestRateDataProcessor.cpp.o
+
+.PHONY : DataProcessors/InterestRateDataProcessor.o
+
+# target to build an object file
+DataProcessors/InterestRateDataProcessor.cpp.o:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InterestRateDataProcessor.cpp.o
+.PHONY : DataProcessors/InterestRateDataProcessor.cpp.o
+
+DataProcessors/InterestRateDataProcessor.i: DataProcessors/InterestRateDataProcessor.cpp.i
+
+.PHONY : DataProcessors/InterestRateDataProcessor.i
+
+# target to preprocess a source file
+DataProcessors/InterestRateDataProcessor.cpp.i:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InterestRateDataProcessor.cpp.i
+.PHONY : DataProcessors/InterestRateDataProcessor.cpp.i
+
+DataProcessors/InterestRateDataProcessor.s: DataProcessors/InterestRateDataProcessor.cpp.s
+
+.PHONY : DataProcessors/InterestRateDataProcessor.s
+
+# target to generate assembly for a file
+DataProcessors/InterestRateDataProcessor.cpp.s:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InterestRateDataProcessor.cpp.s
+.PHONY : DataProcessors/InterestRateDataProcessor.cpp.s
 
 DataProcessors/InvertedYieldDataProcessor.o: DataProcessors/InvertedYieldDataProcessor.cpp.o
 
@@ -335,9 +416,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... InvertedYieldCurveTrader"
 	@echo "... test"
+	@echo "... DataProcessors/CovarianceCalculator.o"
+	@echo "... DataProcessors/CovarianceCalculator.i"
+	@echo "... DataProcessors/CovarianceCalculator.s"
+	@echo "... DataProcessors/GDPDataProcessor.o"
+	@echo "... DataProcessors/GDPDataProcessor.i"
+	@echo "... DataProcessors/GDPDataProcessor.s"
 	@echo "... DataProcessors/InflationDataProcessor.o"
 	@echo "... DataProcessors/InflationDataProcessor.i"
 	@echo "... DataProcessors/InflationDataProcessor.s"
+	@echo "... DataProcessors/InterestRateDataProcessor.o"
+	@echo "... DataProcessors/InterestRateDataProcessor.i"
+	@echo "... DataProcessors/InterestRateDataProcessor.s"
 	@echo "... DataProcessors/InvertedYieldDataProcessor.o"
 	@echo "... DataProcessors/InvertedYieldDataProcessor.i"
 	@echo "... DataProcessors/InvertedYieldDataProcessor.s"

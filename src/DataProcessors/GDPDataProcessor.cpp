@@ -1,10 +1,11 @@
 //
-//  InflationDataProcessor.cpp
+//  GDPDataProcessor.cpp
 //  InvertedYieldCurveTrader
 //
-//  Created by Ryan Hamby on 9/21/23.
+//  Created by Ryan Hamby on 10/30/23.
 //
-#include "InflationDataProcessor.hpp"
+
+#include "GDPDataProcessor.hpp"
 #include "S3ObjectRetriever.hpp"
 #include "../Lambda/AlphaVantageDataRetriever.hpp"
 #include "StatsCalculator.hpp"
@@ -13,9 +14,8 @@
 #include <fstream>
 #include <vector>
 #include <cmath>
-using json = nlohmann::json;
 
-std::vector<double> InflationDataProcessor::process() {
+std::vector<double> GDPDataProcessor::process() {
     const std::string jsonFilePath = "../Lambda/AlphaVantageConstants.json";
 
     std::ifstream jsonFile(jsonFilePath);
@@ -28,7 +28,7 @@ std::vector<double> InflationDataProcessor::process() {
 
     std::string jsonString = jsonData.dump();
 
-    std::string objectKeyPrefix = jsonData["inflation"]["s3_object_key_prefix"];
+    std::string objectKeyPrefix = jsonData["gdp"]["s3_object_key_prefix"];
 
     // Temporary hardcode
     // TODO: Configure to be the most recent day once EventBridge gets set up
@@ -37,7 +37,7 @@ std::vector<double> InflationDataProcessor::process() {
     std::string bucketName = "alpha-insights";
     S3ObjectRetriever s3ObjectRetriever(bucketName, objectKey);
 
-    std::vector<double> inflationData;
+    std::vector<double> gdpData;
 
     if (s3ObjectRetriever.RetrieveJson(jsonString)) {
         // Process the retrieved JSON data to calculate confidence score
@@ -45,11 +45,11 @@ std::vector<double> InflationDataProcessor::process() {
 
         calculator.setData(jsonString);
 
-        std::vector<double> inflationValues = calculator.getData();
-        inflationData = std::vector<double>(inflationValues.begin(), inflationValues.begin() + 10);
+        std::vector<double> gdpValues = calculator.getData();
+        gdpData = std::vector<double>(gdpValues.begin(), gdpValues.begin() + 10);
     } else {
         std::cerr << "Failed to retrieve JSON data from S3" << std::endl;
     }
 
-    return inflationData;
+    return gdpData;
 };
