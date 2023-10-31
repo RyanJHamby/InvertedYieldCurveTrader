@@ -16,6 +16,7 @@ public:
     std::vector<double> getData();
     double calculateMean(const std::vector<double>& data);
     void setData(const std::string& jsonData);
+    double calculateCovarianceConfidence(const double averageCovariance);
 
 protected:
     std::vector<double> data;

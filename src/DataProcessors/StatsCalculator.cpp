@@ -44,3 +44,10 @@ double StatsCalculator::calculateMean(const std::vector<double>& data) {
     
     return sum / data.size();
 }
+
+double StatsCalculator::calculateCovarianceConfidence(const double averageCovariance) {
+    if (averageCovariance < 0.2) {
+        return 0;
+    }
+    else return averageCovariance;
+};
