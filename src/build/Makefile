@@ -352,6 +352,33 @@ DataProcessors/StatsCalculator.cpp.s:
 	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StatsCalculator.cpp.s
 .PHONY : DataProcessors/StatsCalculator.cpp.s
 
+DataProcessors/StockDataRetriever.o: DataProcessors/StockDataRetriever.cpp.o
+
+.PHONY : DataProcessors/StockDataRetriever.o
+
+# target to build an object file
+DataProcessors/StockDataRetriever.cpp.o:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.o
+.PHONY : DataProcessors/StockDataRetriever.cpp.o
+
+DataProcessors/StockDataRetriever.i: DataProcessors/StockDataRetriever.cpp.i
+
+.PHONY : DataProcessors/StockDataRetriever.i
+
+# target to preprocess a source file
+DataProcessors/StockDataRetriever.cpp.i:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.i
+.PHONY : DataProcessors/StockDataRetriever.cpp.i
+
+DataProcessors/StockDataRetriever.s: DataProcessors/StockDataRetriever.cpp.s
+
+.PHONY : DataProcessors/StockDataRetriever.s
+
+# target to generate assembly for a file
+DataProcessors/StockDataRetriever.cpp.s:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.s
+.PHONY : DataProcessors/StockDataRetriever.cpp.s
+
 MultiVarAnalysisWorkflow.o: MultiVarAnalysisWorkflow.cpp.o
 
 .PHONY : MultiVarAnalysisWorkflow.o
@@ -440,6 +467,9 @@ help:
 	@echo "... DataProcessors/StatsCalculator.o"
 	@echo "... DataProcessors/StatsCalculator.i"
 	@echo "... DataProcessors/StatsCalculator.s"
+	@echo "... DataProcessors/StockDataRetriever.o"
+	@echo "... DataProcessors/StockDataRetriever.i"
+	@echo "... DataProcessors/StockDataRetriever.s"
 	@echo "... MultiVarAnalysisWorkflow.o"
 	@echo "... MultiVarAnalysisWorkflow.i"
 	@echo "... MultiVarAnalysisWorkflow.s"
