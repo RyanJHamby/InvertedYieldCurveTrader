@@ -43,12 +43,13 @@ std::vector<double> StockDataRetriever::retrieve() {
         // Process the retrieved JSON data to calculate confidence score
         StatsCalculator calculator;
 
-        std::cout << jsonString << std::endl;
-
-        calculator.setData(jsonString);
-
-        std::vector<double> stockValues = calculator.getData();
-        stockData = std::vector<double>(stockValues.begin(), stockValues.begin() + 10);
+        calculator.setStockData(jsonString);
+        std::vector<double> vals = calculator.getData();
+        std::cout << "vals" << std::endl;
+        for (auto &i : vals) {
+            std::cout << i << std::endl;
+        }
+        return calculator.getData();
     } else {
         std::cerr << "Failed to retrieve JSON data from S3" << std::endl;
     }

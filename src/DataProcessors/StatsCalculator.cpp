@@ -13,10 +13,10 @@ using json = nlohmann::json;
 
 void StatsCalculator::setData(const std::string& jsonData) {
     try {
-        nlohmann::json inflationData = nlohmann::json::parse(jsonData);
-
+        nlohmann::json data = nlohmann::json::parse(jsonData);
+        
         std::vector<double> values;
-        for (const auto& entry : inflationData["data"]) {
+        for (const auto& entry : data["data"]) {
             // Convert the "value" field from string to double and add it to the vector
             double value = std::stod(entry["value"].get<std::string>());
             values.push_back(value);
@@ -27,6 +27,27 @@ void StatsCalculator::setData(const std::string& jsonData) {
         std::cerr << "Error parsing JSON: " << e.what() << std::endl;
     }
 }
+
+void StatsCalculator::setStockData(const std::string& jsonData) {
+    try {
+        nlohmann::json data = nlohmann::json::parse(jsonData);
+        
+        std::vector<double> values;
+        for (const auto& entry : data["Time Series (1min)"]) {
+            // Convert the "value" field from string to double and add it to the vector
+            double value = std::stod(entry["4. close"].get<std::string>());
+            values.push_back(value);
+        }
+
+        data = values;
+        for (auto &i : data) {
+            std::cout << i << std::endl;
+        }
+    } catch (const nlohmann::json::exception& e) {
+        std::cerr << "Error parsing JSON: " << e.what() << std::endl;
+    }
+};
+
 
 std::vector<double> StatsCalculator::getData() {
     return data;
