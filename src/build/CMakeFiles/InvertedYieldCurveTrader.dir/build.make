@@ -174,18 +174,18 @@ CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StatsCalculator.cpp.s: cm
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StatsCalculator.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StatsCalculator.cpp -o CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StatsCalculator.cpp.s
 
-CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.o: CMakeFiles/InvertedYieldCurveTrader.dir/flags.make
-CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.o: ../DataProcessors/StockDataRetriever.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.o -c /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StockDataRetriever.cpp
+CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataProcessor.cpp.o: CMakeFiles/InvertedYieldCurveTrader.dir/flags.make
+CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataProcessor.cpp.o: ../DataProcessors/StockDataProcessor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataProcessor.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataProcessor.cpp.o -c /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StockDataProcessor.cpp
 
-CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StockDataRetriever.cpp > CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.i
+CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataProcessor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataProcessor.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StockDataProcessor.cpp > CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataProcessor.cpp.i
 
-CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StockDataRetriever.cpp -o CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.s
+CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataProcessor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataProcessor.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StockDataProcessor.cpp -o CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataProcessor.cpp.s
 
 # Object files for target InvertedYieldCurveTrader
 InvertedYieldCurveTrader_OBJECTS = \
@@ -198,7 +198,7 @@ InvertedYieldCurveTrader_OBJECTS = \
 "CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InvertedYieldStatsCalculator.cpp.o" \
 "CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/S3ObjectRetriever.cpp.o" \
 "CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StatsCalculator.cpp.o" \
-"CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.o"
+"CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataProcessor.cpp.o"
 
 # External object files for target InvertedYieldCurveTrader
 InvertedYieldCurveTrader_EXTERNAL_OBJECTS =
@@ -212,7 +212,7 @@ InvertedYieldCurveTrader: CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors
 InvertedYieldCurveTrader: CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InvertedYieldStatsCalculator.cpp.o
 InvertedYieldCurveTrader: CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/S3ObjectRetriever.cpp.o
 InvertedYieldCurveTrader: CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StatsCalculator.cpp.o
-InvertedYieldCurveTrader: CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.o
+InvertedYieldCurveTrader: CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataProcessor.cpp.o
 InvertedYieldCurveTrader: CMakeFiles/InvertedYieldCurveTrader.dir/build.make
 InvertedYieldCurveTrader: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-cpp-sdk-athena.dylib
 InvertedYieldCurveTrader: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-cpp-sdk-s3.dylib

@@ -19,7 +19,7 @@
 #include "DataProcessors/CovarianceCalculator.hpp"
 #include "DataProcessors/StatsCalculator.hpp"
 #include "DataProcessors/InvertedYieldStatsCalculator.hpp"
-#include "DataProcessors/StockDataRetriever.hpp"
+#include "DataProcessors/StockDataProcessor.hpp"
 using namespace Aws;
 using namespace Aws::Auth;
 
@@ -74,9 +74,7 @@ int main(int argc, char **argv) {
             double invertedYieldMean = invertedYieldStatsCalculator.calculateMean(yieldResult);
             double inflationCovariance = covarianceCalculator.calculateCovarianceWithInvertedYield(inflationResult, yieldResult, inflationKpiMean, invertedYieldMean);
             
-            std::cout << inflationCovariance << std::endl;
             double averageMagnitudeOfCovariance = (abs(inflationCovariance));
-            double confidenceToBuy =  statsCalculator.calculateCovarianceConfidence(averageMagnitudeOfCovariance);
             
             // Need to write intermediate result to output file to avoid API throttling, then will rerun with different instrumentation after a minute
             std::ofstream outputFile("./output.txt");
@@ -85,16 +83,29 @@ int main(int argc, char **argv) {
                 return 1;
             }
             
-            outputFile << confidenceToBuy << std::endl;
+            outputFile << averageMagnitudeOfCovariance << std::endl;
             outputFile.close();
         } else if (std::strcmp(argv[1], "trade") == 0) {
-            StockDataRetriever stockDataRetriever;
-            std::cout << "trading" << std::endl;
-            std::vector<double> stockDataResult = stockDataRetriever.retrieve();
-            for (auto &i : stockDataResult) {
-                std::cout << i << std::endl;
-            }
+            StockDataProcessor stockDataProcessor;
+            std::vector<double> stockDataResult = stockDataProcessor.retrieve();
 
+            double confidenceScore = 0;
+            std::ifstream inputFile("output.txt");
+            if (!inputFile.is_open()) {
+                std::cerr << "Failed to open the file." << std::endl;
+                return 1; // Exit the program with an error code
+            }
+            std::string line;
+            while (std::getline(inputFile, line)) {
+                confidenceScore = std::stod(line);
+            }
+            inputFile.close();
+
+            std::vector<double> averageSlidingWindowStockScores = stockDataProcessor.analyzeStockData(stockDataResult);
+            for (auto &stockScore: averageSlidingWindowStockScores) {
+                double tradeVolume = confidenceScore * stockScore;
+                std::cout << tradeVolume << std::endl;
+            }
             // call APIs for time series
         }
     }

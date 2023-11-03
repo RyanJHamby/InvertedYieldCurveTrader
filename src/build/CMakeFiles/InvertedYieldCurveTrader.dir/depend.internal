@@ -2259,7 +2259,7 @@ CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StatsCalculator.cpp.o
  /usr/local/include/nlohmann/ordered_map.hpp
  /usr/local/include/nlohmann/thirdparty/hedley/hedley.hpp
  /usr/local/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
-CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.o
+CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataProcessor.cpp.o
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/auth/auth.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/auth/exports.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/auth/signing_config.h
@@ -2651,8 +2651,8 @@ CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/StockDataRetriever.cpp.o
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/smithy/tracing/UpDownCounter.h
  /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/S3ObjectRetriever.hpp
  /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StatsCalculator.hpp
- /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StockDataRetriever.cpp
- /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StockDataRetriever.hpp
+ /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StockDataProcessor.cpp
+ /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StockDataProcessor.hpp
  /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/Lambda/AlphaVantageDataRetriever.hpp
  /usr/local/include/nlohmann/adl_serializer.hpp
  /usr/local/include/nlohmann/byte_container_with_subtype.hpp
@@ -3046,5 +3046,5 @@ CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o
  /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/InvertedYieldDataProcessor.hpp
  /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/InvertedYieldStatsCalculator.hpp
  /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StatsCalculator.hpp
- /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StockDataRetriever.hpp
+ /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/DataProcessors/StockDataProcessor.hpp
  /Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/src/MultiVarAnalysisWorkflow.cpp
