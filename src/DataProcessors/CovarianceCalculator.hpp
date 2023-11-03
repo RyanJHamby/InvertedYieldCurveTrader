@@ -17,8 +17,8 @@ class CovarianceCalculator {
 public:
     double calculateCovarianceWithInvertedYield(std::vector<double> kpiValues,
                                                 std::vector<double> invertedYieldValues,
-                                                std::tuple<double, double> kpiMeanAndStdDev,
-                                                std::tuple<double, double> invertedYieldMeanAndStdDev);
+                                                double kpiMean,
+                                                double invertedYieldMean);
 };
 
 #endif /* CovarianceCalculator_hpp */

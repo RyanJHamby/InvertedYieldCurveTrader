@@ -6,17 +6,15 @@
 //
 
 #include "CovarianceCalculator.hpp"
+#include <iostream>
 
 double CovarianceCalculator::calculateCovarianceWithInvertedYield(std::vector<double> kpiValues,
                                                                   std::vector<double> invertedYieldValues,
-                                                                  std::tuple<double, double> kpiMeanAndStdDev,
-                                                                  std::tuple<double, double> invertedYieldMeanAndStdDev) {
+                                                                  double kpiMean,
+                                                                  double invertedYieldMean) {
     if (kpiValues.size() != invertedYieldValues.size()) {
         throw std::invalid_argument("Input vectors must have the same size.");
     }
-
-    double kpiMean = std::get<0>(kpiMeanAndStdDev);
-    double invertedYieldMean = std::get<0>(invertedYieldMeanAndStdDev);
 
     double covariance = 0.0;
     for (size_t i = 0; i < kpiValues.size(); i++) {

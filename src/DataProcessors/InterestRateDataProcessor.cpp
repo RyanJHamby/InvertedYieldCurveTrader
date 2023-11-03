@@ -1,10 +1,11 @@
 //
-//  InflationDataProcessor.cpp
+//  interestRateDataProcessor.cpp
 //  InvertedYieldCurveTrader
 //
-//  Created by Ryan Hamby on 9/21/23.
+//  Created by Ryan Hamby on 10/30/23.
 //
-#include "InflationDataProcessor.hpp"
+
+#include "InterestRateDataProcessor.hpp"
 #include "S3ObjectRetriever.hpp"
 #include "../Lambda/AlphaVantageDataRetriever.hpp"
 #include "StatsCalculator.hpp"
@@ -13,9 +14,8 @@
 #include <fstream>
 #include <vector>
 #include <cmath>
-using json = nlohmann::json;
 
-std::vector<double> InflationDataProcessor::process() {
+std::vector<double> InterestRateDataProcessor::process() {
     const std::string jsonFilePath = "../Lambda/AlphaVantageConstants.json";
 
     std::ifstream jsonFile(jsonFilePath);
@@ -28,7 +28,7 @@ std::vector<double> InflationDataProcessor::process() {
 
     std::string jsonString = jsonData.dump();
 
-    std::string objectKeyPrefix = jsonData["inflation"]["s3_object_key_prefix"];
+    std::string objectKeyPrefix = jsonData["interest_rate"]["s3_object_key_prefix"];
 
     // Temporary hardcode
     // TODO: Configure to be the most recent day once EventBridge gets set up
@@ -37,19 +37,21 @@ std::vector<double> InflationDataProcessor::process() {
     std::string bucketName = "alpha-insights";
     S3ObjectRetriever s3ObjectRetriever(bucketName, objectKey);
 
-    std::vector<double> inflationData;
-
+    std::vector<double> interestRateData;
+    
     if (s3ObjectRetriever.RetrieveJson(jsonString)) {
         // Process the retrieved JSON data to calculate confidence score
         StatsCalculator calculator;
 
+        std::cout << jsonString << std::endl;
+
         calculator.setData(jsonString);
 
-        std::vector<double> inflationValues = calculator.getData();
-        inflationData = std::vector<double>(inflationValues.begin(), inflationValues.begin() + 10);
+        std::vector<double> InterestRateValues = calculator.getData();
+        interestRateData = std::vector<double>(InterestRateValues.begin(), InterestRateValues.begin() + 10);
     } else {
         std::cerr << "Failed to retrieve JSON data from S3" << std::endl;
     }
 
-    return inflationData;
+    return interestRateData;
 };

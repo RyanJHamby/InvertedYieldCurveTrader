@@ -16,7 +16,7 @@
 #include <cmath>
 using json = nlohmann::json;
 
-std::vector<double> InvertedYieldDataProcessor::process() {
+void InvertedYieldDataProcessor::process() {
     const std::string jsonFilePath = "../Lambda/AlphaVantageConstants.json";
 
     std::ifstream jsonFile(jsonFilePath);
@@ -48,21 +48,29 @@ std::vector<double> InvertedYieldDataProcessor::process() {
         InvertedYieldStatsCalculator calculator;
         
         calculator.setData(jsonString10Year, jsonString2Year);
-        for (auto &datapoint: calculator.getData()) {
-            std::cout << datapoint << std::endl;
-        }
 
         // Process the retrieved JSON data to calculate confidence score
-        std::tuple<double, double> meanAndStdDev = calculator.calculateMeanAndStdDev();
+        double mean = calculator.calculateMean(calculator.getData());
         
-        // TODO: remove confidence score at bottom level, and instead use covariance to calculate it at top level, in relation to inverted yield
-//        double confidenceScore = std::get<0>(meanAndStdDev); // Use the mean as the confidence score
-//        std::cout << "Confidence Score: " << confidenceScore << std::endl;
+        setMean(mean);
+        setRecentValues(calculator.getData());
     } else {
         std::cerr << "Failed to retrieve JSON data from S3" << std::endl;
     }
+};
 
-    std::vector<double> invertedYieldData;
+double InvertedYieldDataProcessor::getMean() {
+    return this->mean;
+};
 
-    return invertedYieldData;
+std::vector<double> InvertedYieldDataProcessor::getRecentValues() {
+    return this->recentValues;
+};
+
+void InvertedYieldDataProcessor::setMean(double inputMean) {
+    this->mean = inputMean;
+};
+
+void InvertedYieldDataProcessor::setRecentValues(std::vector<double> inputRecentValues) {
+    this->recentValues = inputRecentValues;
 };
