@@ -54,6 +54,9 @@ std::vector<double> StockDataProcessor::retrieve() {
 };
 
 double StockDataProcessor::calculateWindowSlope(const std::vector<double>& data, int start, int windowSize) {
+    if (start < 0) {
+        return 0.0;
+    }
     if (windowSize < 2) {
         return 0.0; // Avoid division by zero
     }
@@ -67,15 +70,24 @@ std::vector<double> StockDataProcessor::analyzeStockData(const std::vector<doubl
     int windowSize1 = 5;
     int windowSize2 = 15;
     int windowSize3 = 60;
-
+    
     for (int i = 0; i < stockData.size(); ++i) {
         // Calculate the slopes for the past 5, 15, and 60 minutes
-        double windowSlope1 = calculateWindowSlope(stockData, i, windowSize1);
-        double windowSlope2 = calculateWindowSlope(stockData, i, windowSize2);
-        double windowSlope3 = calculateWindowSlope(stockData, i, windowSize3);
+        double windowSlope1 = calculateWindowSlope(stockData, i - windowSize1, windowSize1);
+        double windowSlope2 = calculateWindowSlope(stockData, i - windowSize2, windowSize2);
+        double windowSlope3 = calculateWindowSlope(stockData, i - windowSize3, windowSize3);
 
         // Calculate the sell percentage based on the slopes of the three windows
-        double sellPercentage = (windowSlope1 + windowSlope2 + windowSlope3) / 3.0;
+        double sellPercentage = 0.0;
+        if (i <= windowSize1) {
+            sellPercentage = windowSlope1;
+        }
+        else if (i <= windowSize2) {
+            sellPercentage = (windowSize1 + windowSize2) / 2.0;
+        }
+        else {
+            sellPercentage = (windowSlope1 + windowSlope2 + windowSlope3) / 3.0;
+        }
 
         // Calculate the sell confidence (can be based on any criteria)
         double currentStockPrice = stockData[i];

@@ -90,6 +90,8 @@ int main(int argc, char **argv) {
             std::vector<double> stockDataResult = stockDataProcessor.retrieve();
 
             double confidenceScore = 0;
+            
+            // read the average magnitude of covariance from an input file to start trading day
             std::ifstream inputFile("output.txt");
             if (!inputFile.is_open()) {
                 std::cerr << "Failed to open the file." << std::endl;
@@ -102,9 +104,14 @@ int main(int argc, char **argv) {
             inputFile.close();
 
             std::vector<double> averageSlidingWindowStockScores = stockDataProcessor.analyzeStockData(stockDataResult);
-            for (auto &stockScore: averageSlidingWindowStockScores) {
-                double tradeVolume = confidenceScore * stockScore;
-                std::cout << tradeVolume << std::endl;
+            std::vector<double> actualTradingResults;
+            double totalDailyEarnings = 0.0;
+            for (int i = 0; i < averageSlidingWindowStockScores.size(); ++i) {
+                // combine confidence score found from covariances with per-minute trading stock data
+                double predictedMarketDelta = confidenceScore * averageSlidingWindowStockScores[i];
+                double amountToSell = predictedMarketDelta * stockDataResult[i];
+                double principalValueAfterTrade = stockDataResult[i] - amountToSell;
+                actualTradingResults.push_back(principalValueAfterTrade);
             }
             // call APIs for time series
         }
