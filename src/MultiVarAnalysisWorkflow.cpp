@@ -25,7 +25,6 @@ using namespace Aws::Auth;
 
 int main(int argc, char **argv) {
     
-//    options.loggingOptions.logLevel = Utils::Logging::LogLevel::Debug;
     Aws::SDKOptions options;
     Aws::InitAPI(options); // Should only be called once.
     
@@ -42,22 +41,7 @@ int main(int argc, char **argv) {
         }
         
         if (std::strcmp(argv[1], "covariance") == 0) {
-            /// Will only use inflation data for the time being, due to API throttling
-    //        GDPDataProcessor gdpDataProcessor;
-    //        InterestRateDataProcessor interestRateDataProcessor;
-
-    //        std::vector<double> gdpResult = gdpDataProcessor.process();
-    //        std::vector<double> interestRateResult = interestRateDataProcessor.process();
-    //        double yieldMean = invertedYieldDataProcessor.getMean();
-
-    //        double gdpKpiMean = statsCalculator.calculateMean(gdpResult);
-    //        double interestRateKpiMean = statsCalculator.calculateMean(interestRateResult);
-
-    //        double gdpCovariance = covarianceCalculator.calculateCovarianceWithInvertedYield(gdpResult, yieldResult, gdpKpiMean, invertedYieldMean);
-    //        double interestRateCovariance = covarianceCalculator.calculateCovarianceWithInvertedYield(interestRateResult, yieldResult, interestRateKpiMean, invertedYieldMean);
-
-    //        std::cout << gdpCovariance << std::endl;
-    //        std::cout << interestRateCovariance << std::endl;
+            // Will only use inflation data for the time being, due to API throttling
             
             InflationDataProcessor inflationDataProcessor;
             InvertedYieldDataProcessor invertedYieldDataProcessor;
@@ -90,6 +74,8 @@ int main(int argc, char **argv) {
             std::vector<double> stockDataResult = stockDataProcessor.retrieve();
 
             double confidenceScore = 0;
+            
+            // read the average magnitude of covariance from an input file to start trading day
             std::ifstream inputFile("output.txt");
             if (!inputFile.is_open()) {
                 std::cerr << "Failed to open the file." << std::endl;
@@ -102,11 +88,38 @@ int main(int argc, char **argv) {
             inputFile.close();
 
             std::vector<double> averageSlidingWindowStockScores = stockDataProcessor.analyzeStockData(stockDataResult);
-            for (auto &stockScore: averageSlidingWindowStockScores) {
-                double tradeVolume = confidenceScore * stockScore;
-                std::cout << tradeVolume << std::endl;
+            std::vector<double> actualTradingResults;
+            
+            double traderPrincipal = 1000.0;
+            double traderCashAccount = 1000.0;
+            
+            double marketPrincipal = 2000.0;
+            
+            double maxPercentTraderPrincipalToSellPerTransaction = 0.02;
+            double maxPercentTraderCashAccountToBuyPerTransaction = 0.02;
+            
+            double startingSharesInMarket = stockDataResult.size() > 0 ? 2000.0 / stockDataResult[0] : 0;
+            
+            for (int i = 0; i < averageSlidingWindowStockScores.size(); ++i) {
+                // combine confidence score found from covariances with per-minute trading stock data
+                double predictedMarketDelta = confidenceScore * averageSlidingWindowStockScores[i];
+                
+                if (predictedMarketDelta > 0) {
+                    double amountToSell = traderPrincipal * maxPercentTraderPrincipalToSellPerTransaction * predictedMarketDelta;
+                    traderPrincipal -= amountToSell;
+                    traderCashAccount += amountToSell;
+                }
+                else if (predictedMarketDelta < 0) {
+                    double amountToBuy = traderCashAccount * maxPercentTraderPrincipalToSellPerTransaction * predictedMarketDelta;
+                    traderPrincipal += amountToBuy;
+                    traderCashAccount -= amountToBuy;
+                }
+                double totalPortfolioValueAfterTrade = traderPrincipal + traderCashAccount;
+                actualTradingResults.push_back(totalPortfolioValueAfterTrade);
             }
-            // call APIs for time series
+            for (int i = 0; i < actualTradingResults.size(); ++i) {
+                std::cout << actualTradingResults[i] - stockDataResult[i] * startingSharesInMarket << std::endl;
+            }
         }
     }
 
