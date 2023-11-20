@@ -117,6 +117,12 @@ int main(int argc, char **argv) {
                 double totalPortfolioValueAfterTrade = traderPrincipal + traderCashAccount;
                 actualTradingResults.push_back(totalPortfolioValueAfterTrade);
             }
+            
+            // set up lambda to run this code with script.
+            // set up eventbridge to run this code daily
+            // need to concat output from prev day. Maybe write day closing vals to DDB. Also write the covariance val to DDB.
+            // Sub out any hardcoding of date.
+            // graph in quicksights
             for (int i = 0; i < actualTradingResults.size(); ++i) {
                 std::cout << actualTradingResults[i] - stockDataResult[i] * startingSharesInMarket << std::endl;
             }
