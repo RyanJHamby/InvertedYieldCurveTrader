@@ -81,6 +81,7 @@ test: CMakeFiles/test.dir/Users/ryanhamby/Documents/InvertedYieldCurveTrader/Inv
 test: CMakeFiles/test.dir/build.make
 test: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-cpp-sdk-athena.dylib
 test: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-cpp-sdk-s3.dylib
+test: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-cpp-sdk-dynamodb.dylib
 test: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-cpp-sdk-core.dylib
 test: /usr/local/lib/libgtest.a
 test: /usr/local/lib/libgtest_main.a
