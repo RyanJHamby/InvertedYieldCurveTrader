@@ -2900,6 +2900,7 @@ CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/AmazonWebServiceResult.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/Aws.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/Core_EXPORTS.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/NoResult.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/Region.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/SDKConfig.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/auth/AWSAuthSigner.h
@@ -2955,6 +2956,8 @@ CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/monitoring/HttpClientMetrics.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/monitoring/MonitoringManager.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/utils/Array.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/utils/Cache.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/utils/ConcurrentCache.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/utils/DateTime.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/utils/Outcome.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/utils/RAIICounter.h
@@ -3012,6 +3015,164 @@ CMakeFiles/InvertedYieldCurveTrader.dir/MultiVarAnalysisWorkflow.cpp.o
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/crt/io/EventLoopGroup.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/crt/io/HostResolver.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/crt/io/TlsOptions.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/DynamoDBClient.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/DynamoDBEndpointProvider.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/DynamoDBEndpointRules.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/DynamoDBErrors.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/DynamoDBRequest.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/DynamoDBServiceClientModel.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/DynamoDB_EXPORTS.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ArchivalSummary.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/AttributeDefinition.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/AttributeValue.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/AutoScalingPolicyDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/AutoScalingSettingsDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/AutoScalingTargetTrackingScalingPolicyConfigurationDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/BackupDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/BackupDetails.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/BackupStatus.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/BackupSummary.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/BackupType.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/BatchExecuteStatementResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/BatchGetItemResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/BatchStatementError.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/BatchStatementErrorCodeEnum.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/BatchStatementResponse.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/BatchWriteItemResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/BillingMode.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/BillingModeSummary.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/Capacity.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ComparisonOperator.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ConditionalOperator.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ConsumedCapacity.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ContinuousBackupsDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ContinuousBackupsStatus.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ContributorInsightsStatus.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ContributorInsightsSummary.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/CreateBackupResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/CreateGlobalTableResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/CreateTableResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/CsvOptions.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DeleteBackupResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DeleteItemResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DeleteRequest.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DeleteTableResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DescribeBackupResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DescribeContinuousBackupsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DescribeContributorInsightsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DescribeEndpointsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DescribeExportResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DescribeGlobalTableResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DescribeGlobalTableSettingsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DescribeImportResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DescribeKinesisStreamingDestinationResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DescribeLimitsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DescribeTableReplicaAutoScalingResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DescribeTableResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DescribeTimeToLiveResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DestinationStatus.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/DisableKinesisStreamingDestinationResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/EnableKinesisStreamingDestinationResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/Endpoint.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ExecuteStatementResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ExecuteTransactionResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ExpectedAttributeValue.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ExportDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ExportFormat.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ExportStatus.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ExportSummary.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ExportTableToPointInTimeResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/FailureException.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/GetItemRequest.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/GetItemResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/GlobalSecondaryIndex.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/GlobalSecondaryIndexDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/GlobalSecondaryIndexInfo.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/GlobalTable.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/GlobalTableDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/GlobalTableStatus.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ImportStatus.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ImportSummary.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ImportTableDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ImportTableResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/IndexStatus.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/InputCompressionType.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/InputFormat.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/InputFormatOptions.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ItemCollectionMetrics.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ItemResponse.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/KeySchemaElement.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/KeyType.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/KeysAndAttributes.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/KinesisDataStreamDestination.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ListBackupsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ListContributorInsightsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ListExportsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ListGlobalTablesResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ListImportsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ListTablesResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ListTagsOfResourceResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/LocalSecondaryIndexDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/LocalSecondaryIndexInfo.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/PointInTimeRecoveryDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/PointInTimeRecoveryStatus.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/Projection.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ProjectionType.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ProvisionedThroughput.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ProvisionedThroughputDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ProvisionedThroughputOverride.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/PutItemRequest.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/PutItemResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/PutRequest.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/QueryResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/Replica.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ReplicaAutoScalingDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ReplicaDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ReplicaGlobalSecondaryIndexAutoScalingDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ReplicaGlobalSecondaryIndexDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ReplicaGlobalSecondaryIndexSettingsDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ReplicaSettingsDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ReplicaStatus.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/RestoreSummary.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/RestoreTableFromBackupResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/RestoreTableToPointInTimeResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ReturnConsumedCapacity.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ReturnItemCollectionMetrics.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ReturnValue.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ReturnValuesOnConditionCheckFailure.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/S3BucketSource.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/S3SseAlgorithm.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/SSEDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/SSESpecification.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/SSEStatus.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/SSEType.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ScalarAttributeType.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/ScanResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/SourceTableDetails.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/SourceTableFeatureDetails.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/StreamSpecification.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/StreamViewType.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/TableAutoScalingDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/TableClass.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/TableClassSummary.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/TableCreationParameters.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/TableDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/TableStatus.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/Tag.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/TimeToLiveDescription.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/TimeToLiveSpecification.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/TimeToLiveStatus.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/TransactGetItemsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/TransactWriteItemsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/UpdateContinuousBackupsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/UpdateContributorInsightsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/UpdateGlobalTableResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/UpdateGlobalTableSettingsResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/UpdateItemResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/UpdateTableReplicaAutoScalingResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/UpdateTableResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/UpdateTimeToLiveResult.h
+ /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/dynamodb/model/WriteRequest.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/io/channel.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/io/channel_bootstrap.h
  /Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/io/event_loop.h
