@@ -24,10 +24,11 @@
 #include "DataProcessors/StatsCalculator.hpp"
 #include "DataProcessors/InvertedYieldStatsCalculator.hpp"
 #include "DataProcessors/StockDataProcessor.hpp"
+#include "AwsClients/DynamoDBClient.hpp"
+#include "Utils/Date.hpp"
+
 using namespace Aws;
 using namespace Aws::Auth;
-
-std::string getDateDaysAgo(int backwardsOffset);
 
 int main(int argc, char **argv) {
     
@@ -96,99 +97,65 @@ int main(int argc, char **argv) {
             std::vector<double> averageSlidingWindowStockScores = stockDataProcessor.analyzeStockData(stockDataResult);
             std::vector<double> actualTradingResults;
             
-            // Create a DynamoDB client
-            Aws::DynamoDB::DynamoDBClient dynamoClient(clientConfig);
-
-            // Specify the table name
-            const char* tableName = "InvertedYieldTrader";
-
-            // Specify the key you want to retrieve
-            Aws::DynamoDB::Model::AttributeValue keyAttributeValue;
-            keyAttributeValue.SetS("inverted_yield_trader_" + getDateDaysAgo(1)); // Replace with the actual key value
-
-            // Create a GetItemRequest
-            Aws::DynamoDB::Model::GetItemRequest getItemRequest;
-            getItemRequest.SetTableName(tableName);
-//            std::cout << "inverted_yield_trader_" + getDateDaysAgo(1) << std::endl;
-            getItemRequest.AddKey("trader_type_with_date", keyAttributeValue); // Replace with your actual key attribute name
-
-            // Perform the GetItem request
-            auto getItemOutcome = dynamoClient.GetItem(getItemRequest);
-
-            // Check if the request was successful
-            if (getItemOutcome.IsSuccess()) {
-                const auto& item = getItemOutcome.GetResult().GetItem();
-                if (!item.empty()) {
-                    // Retrieve and print the attribute value
-                    const auto& attributeValue = item.find("market_position_value")->second;
-                    std::cout << "Attribute Value: " << attributeValue.GetN() << std::endl; // Replace with your actual attribute name
-                } else {
-                    std::cout << "Item not found." << std::endl;
-                }
-            } else {
-                // Print the error message if the request fails
-                std::cerr << "Error: " << getItemOutcome.GetError().GetMessage() << std::endl;
-            }
+            DynamoDBClient dynamoDBClient(clientConfig);
             
-            double dailyStartingTraderPrincipal = 1000.0;
-            double dailyStartingTraderCashAccount = 1000.0;
+            std::string tableName = "InvertedYieldTrader";
             
+            double prevDayMarketClosingValue = dynamoDBClient.getDoubleItem(tableName,
+                                             "trader_type_with_date",
+                                             "inverted_yield_trader_" + getDateDaysAgo(1),
+                                             "market_position_value");
             
-            double marketPrincipal = 2000.0;
+            double prevDayStartingTraderPrincipal = dynamoDBClient.getDoubleItem(tableName,
+                                         "trader_type_with_date",
+                                         "inverted_yield_trader_" + getDateDaysAgo(1),
+                                         "trader_position_value");
+            double prevDayStartingTraderCashAccount = dynamoDBClient.getDoubleItem(tableName,
+                                         "trader_type_with_date",
+                                         "inverted_yield_trader_" +  getDateDaysAgo(1),
+                                         "trader_cash_account_value");
+            
+            double ongoingMarketValue = prevDayMarketClosingValue;
+            double ongoingTraderPrincipal = prevDayStartingTraderPrincipal;
+            double ongoingTraderCashAccount = prevDayStartingTraderCashAccount;
+            
+            double originalMarketPrincipal = 2000.0;
             
             double maxPercentTraderPrincipalToSellPerTransaction = 0.02;
             double maxPercentTraderCashAccountToBuyPerTransaction = 0.02;
             
-            double startingSharesInMarket = stockDataResult.size() > 0 ? 2000.0 / stockDataResult[0] : 0;
+            double startingSharesInMarket = stockDataResult.size() > 0 ? originalMarketPrincipal / stockDataResult[0] : 0;
             
             for (int i = 0; i < averageSlidingWindowStockScores.size(); ++i) {
                 // combine confidence score found from covariances with per-minute trading stock data
                 double predictedMarketDelta = confidenceScore * averageSlidingWindowStockScores[i];
                 
                 if (predictedMarketDelta > 0) {
-                    double amountToSell = dailyStartingTraderPrincipal * maxPercentTraderPrincipalToSellPerTransaction * predictedMarketDelta;
-                    dailyStartingTraderPrincipal -= amountToSell;
-                    dailyStartingTraderCashAccount += amountToSell;
+                    double amountToSell = ongoingTraderPrincipal * maxPercentTraderPrincipalToSellPerTransaction * predictedMarketDelta;
+                    ongoingTraderPrincipal -= amountToSell;
+                    ongoingTraderCashAccount += amountToSell;
                 }
                 else if (predictedMarketDelta < 0) {
-                    double amountToBuy = dailyStartingTraderCashAccount * maxPercentTraderPrincipalToSellPerTransaction * predictedMarketDelta;
-                    dailyStartingTraderPrincipal += amountToBuy;
-                    dailyStartingTraderCashAccount -= amountToBuy;
+                    double amountToBuy = ongoingTraderCashAccount * maxPercentTraderPrincipalToSellPerTransaction * predictedMarketDelta;
+                    ongoingTraderPrincipal += amountToBuy;
+                    ongoingTraderCashAccount -= amountToBuy;
                 }
-                double totalPortfolioValueAfterTrade = dailyStartingTraderPrincipal + dailyStartingTraderCashAccount;
+                double totalPortfolioValueAfterTrade = ongoingTraderPrincipal + ongoingTraderCashAccount;
                 actualTradingResults.push_back(totalPortfolioValueAfterTrade);
             }
             
-            /// AWS Online setup -->
-            // need to concat output from prev day. Maybe write day closing vals to DDB. Also write the covariance val to DDB.
-
-            // Create a PutItemRequest
-            Aws::DynamoDB::Model::PutItemRequest putItemRequest;
-            putItemRequest.SetTableName(tableName);
-
-            // Create an attribute map for the item you want to put
+            double dailyProfit = actualTradingResults[actualTradingResults.size() - 1] - stockDataResult[stockDataResult.size() - 1] * startingSharesInMarket;
+            
             Aws::Map<Aws::String, Aws::DynamoDB::Model::AttributeValue> item;
+
             item["trader_type_with_date"] =  Aws::DynamoDB::Model::AttributeValue().SetS("inverted_yield_trader_" + getDateDaysAgo(0));
             item["covariance_confidence_score"] = Aws::DynamoDB::Model::AttributeValue().SetN(confidenceScore);
-            item["market_position_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(marketPrincipal);
-            item["trader_position_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(dailyStartingTraderPrincipal);
-            item["trader_cash_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(dailyStartingTraderCashAccount);
-            item["daily_profit"] = Aws::DynamoDB::Model::AttributeValue().SetN(confidenceScore);
-            // Add more attributes as needed
+            item["market_position_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(ongoingMarketValue);
+            item["trader_position_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(ongoingTraderPrincipal);
+            item["trader_cash_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(ongoingTraderCashAccount);
+            item["daily_profit"] = Aws::DynamoDB::Model::AttributeValue().SetN(dailyProfit);
 
-            // Iterate through the map and add each attribute to the request
-            for (const auto& pair : item) {
-                putItemRequest.AddItem(pair.first, pair.second);
-            }
-
-            // Put the item into the DynamoDB table
-            auto outcome = dynamoClient.PutItem(putItemRequest);
-
-            if (outcome.IsSuccess()) {
-                std::cout << "Item successfully added to DynamoDB" << std::endl;
-            } else {
-                std::cerr << "Failed to put item into DynamoDB: " << outcome.GetError().GetMessage() << std::endl;
-            }
+            dynamoDBClient.putDailyResultItem(item, tableName);
             
             // PK: inverted_yield_trader_date
             // Indexes: covariance (just use inflation for now), market data time series of shares * stock value, trader principal, trader cash, daily profit
@@ -210,25 +177,3 @@ int main(int argc, char **argv) {
     Aws::ShutdownAPI(options); // Should only be called once.
     return result;
 }
-
-std::string getDateDaysAgo(int daysAgo = 0) {
-    // Get the current system time
-    auto now = std::chrono::system_clock::now();
-
-    // Subtract daysAgo from the current time
-    auto timeAgo = now - std::chrono::hours(24 * daysAgo);
-
-    // Convert the time to a time_t object
-    std::time_t currentTime = std::chrono::system_clock::to_time_t(timeAgo);
-
-    // Convert the time_t object to a struct tm object (for local time)
-    std::tm* localTime = std::localtime(&currentTime);
-
-    // Extract year, month, and day from the struct tm
-    int year = localTime->tm_year + 1900; // Years since 1900
-    int month = localTime->tm_mon + 1;    // Months are zero-based
-    int day = localTime->tm_mday;
-
-    return std::to_string(year) + "_" + std::to_string(month) + "_" + std::to_string(day);
-}
-

@@ -136,6 +136,60 @@ test/fast:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
 .PHONY : test/fast
 
+AwsClients/DynamoDBClient.o: AwsClients/DynamoDBClient.cpp.o
+
+.PHONY : AwsClients/DynamoDBClient.o
+
+# target to build an object file
+AwsClients/DynamoDBClient.cpp.o:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/AwsClients/DynamoDBClient.cpp.o
+.PHONY : AwsClients/DynamoDBClient.cpp.o
+
+AwsClients/DynamoDBClient.i: AwsClients/DynamoDBClient.cpp.i
+
+.PHONY : AwsClients/DynamoDBClient.i
+
+# target to preprocess a source file
+AwsClients/DynamoDBClient.cpp.i:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/AwsClients/DynamoDBClient.cpp.i
+.PHONY : AwsClients/DynamoDBClient.cpp.i
+
+AwsClients/DynamoDBClient.s: AwsClients/DynamoDBClient.cpp.s
+
+.PHONY : AwsClients/DynamoDBClient.s
+
+# target to generate assembly for a file
+AwsClients/DynamoDBClient.cpp.s:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/AwsClients/DynamoDBClient.cpp.s
+.PHONY : AwsClients/DynamoDBClient.cpp.s
+
+AwsClients/S3ObjectRetriever.o: AwsClients/S3ObjectRetriever.cpp.o
+
+.PHONY : AwsClients/S3ObjectRetriever.o
+
+# target to build an object file
+AwsClients/S3ObjectRetriever.cpp.o:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/AwsClients/S3ObjectRetriever.cpp.o
+.PHONY : AwsClients/S3ObjectRetriever.cpp.o
+
+AwsClients/S3ObjectRetriever.i: AwsClients/S3ObjectRetriever.cpp.i
+
+.PHONY : AwsClients/S3ObjectRetriever.i
+
+# target to preprocess a source file
+AwsClients/S3ObjectRetriever.cpp.i:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/AwsClients/S3ObjectRetriever.cpp.i
+.PHONY : AwsClients/S3ObjectRetriever.cpp.i
+
+AwsClients/S3ObjectRetriever.s: AwsClients/S3ObjectRetriever.cpp.s
+
+.PHONY : AwsClients/S3ObjectRetriever.s
+
+# target to generate assembly for a file
+AwsClients/S3ObjectRetriever.cpp.s:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/AwsClients/S3ObjectRetriever.cpp.s
+.PHONY : AwsClients/S3ObjectRetriever.cpp.s
+
 DataProcessors/CovarianceCalculator.o: DataProcessors/CovarianceCalculator.cpp.o
 
 .PHONY : DataProcessors/CovarianceCalculator.o
@@ -298,33 +352,6 @@ DataProcessors/InvertedYieldStatsCalculator.cpp.s:
 	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/InvertedYieldStatsCalculator.cpp.s
 .PHONY : DataProcessors/InvertedYieldStatsCalculator.cpp.s
 
-DataProcessors/S3ObjectRetriever.o: DataProcessors/S3ObjectRetriever.cpp.o
-
-.PHONY : DataProcessors/S3ObjectRetriever.o
-
-# target to build an object file
-DataProcessors/S3ObjectRetriever.cpp.o:
-	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/S3ObjectRetriever.cpp.o
-.PHONY : DataProcessors/S3ObjectRetriever.cpp.o
-
-DataProcessors/S3ObjectRetriever.i: DataProcessors/S3ObjectRetriever.cpp.i
-
-.PHONY : DataProcessors/S3ObjectRetriever.i
-
-# target to preprocess a source file
-DataProcessors/S3ObjectRetriever.cpp.i:
-	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/S3ObjectRetriever.cpp.i
-.PHONY : DataProcessors/S3ObjectRetriever.cpp.i
-
-DataProcessors/S3ObjectRetriever.s: DataProcessors/S3ObjectRetriever.cpp.s
-
-.PHONY : DataProcessors/S3ObjectRetriever.s
-
-# target to generate assembly for a file
-DataProcessors/S3ObjectRetriever.cpp.s:
-	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors/S3ObjectRetriever.cpp.s
-.PHONY : DataProcessors/S3ObjectRetriever.cpp.s
-
 DataProcessors/StatsCalculator.o: DataProcessors/StatsCalculator.cpp.o
 
 .PHONY : DataProcessors/StatsCalculator.o
@@ -433,6 +460,33 @@ Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/Inve
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.s
 .PHONY : Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.cpp.s
 
+Utils/Date.o: Utils/Date.cpp.o
+
+.PHONY : Utils/Date.o
+
+# target to build an object file
+Utils/Date.cpp.o:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/Utils/Date.cpp.o
+.PHONY : Utils/Date.cpp.o
+
+Utils/Date.i: Utils/Date.cpp.i
+
+.PHONY : Utils/Date.i
+
+# target to preprocess a source file
+Utils/Date.cpp.i:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/Utils/Date.cpp.i
+.PHONY : Utils/Date.cpp.i
+
+Utils/Date.s: Utils/Date.cpp.s
+
+.PHONY : Utils/Date.s
+
+# target to generate assembly for a file
+Utils/Date.cpp.s:
+	$(MAKE) -f CMakeFiles/InvertedYieldCurveTrader.dir/build.make CMakeFiles/InvertedYieldCurveTrader.dir/Utils/Date.cpp.s
+.PHONY : Utils/Date.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -443,6 +497,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... InvertedYieldCurveTrader"
 	@echo "... test"
+	@echo "... AwsClients/DynamoDBClient.o"
+	@echo "... AwsClients/DynamoDBClient.i"
+	@echo "... AwsClients/DynamoDBClient.s"
+	@echo "... AwsClients/S3ObjectRetriever.o"
+	@echo "... AwsClients/S3ObjectRetriever.i"
+	@echo "... AwsClients/S3ObjectRetriever.s"
 	@echo "... DataProcessors/CovarianceCalculator.o"
 	@echo "... DataProcessors/CovarianceCalculator.i"
 	@echo "... DataProcessors/CovarianceCalculator.s"
@@ -461,9 +521,6 @@ help:
 	@echo "... DataProcessors/InvertedYieldStatsCalculator.o"
 	@echo "... DataProcessors/InvertedYieldStatsCalculator.i"
 	@echo "... DataProcessors/InvertedYieldStatsCalculator.s"
-	@echo "... DataProcessors/S3ObjectRetriever.o"
-	@echo "... DataProcessors/S3ObjectRetriever.i"
-	@echo "... DataProcessors/S3ObjectRetriever.s"
 	@echo "... DataProcessors/StatsCalculator.o"
 	@echo "... DataProcessors/StatsCalculator.i"
 	@echo "... DataProcessors/StatsCalculator.s"
@@ -476,6 +533,9 @@ help:
 	@echo "... Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.o"
 	@echo "... Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.i"
 	@echo "... Users/ryanhamby/Documents/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/InvertedYieldCurveTrader/test/AlphaVantageDataRetrieverTest.s"
+	@echo "... Utils/Date.o"
+	@echo "... Utils/Date.i"
+	@echo "... Utils/Date.s"
 .PHONY : help
 
 

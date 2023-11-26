@@ -5,7 +5,7 @@
 //  Created by Ryan Hamby on 9/21/23.
 //
 #include "InflationDataProcessor.hpp"
-#include "S3ObjectRetriever.hpp"
+#include "../AwsClients/S3ObjectRetriever.hpp"
 #include "../Lambda/AlphaVantageDataRetriever.hpp"
 #include "StatsCalculator.hpp"
 #include <nlohmann/json.hpp>
