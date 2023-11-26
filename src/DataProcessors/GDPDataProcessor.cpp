@@ -6,7 +6,7 @@
 //
 
 #include "GDPDataProcessor.hpp"
-#include "S3ObjectRetriever.hpp"
+#include "../AwsClients/S3ObjectRetriever.hpp"
 #include "../Lambda/AlphaVantageDataRetriever.hpp"
 #include "StatsCalculator.hpp"
 #include <nlohmann/json.hpp>

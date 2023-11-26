@@ -10,6 +10,10 @@
 #include <iostream>
 #include <fstream>
 #include <aws/core/auth/AWSCredentialsProviderChain.h>
+#include <aws/dynamodb/DynamoDBClient.h>
+#include <aws/dynamodb/model/PutItemRequest.h>
+#include <aws/dynamodb/model/GetItemRequest.h>
+#include <aws/dynamodb/model/AttributeValue.h>
 #include <aws/athena/model/StartQueryExecutionRequest.h>
 #include <aws/athena/model/ResultConfiguration.h>
 #include "DataProcessors/InflationDataProcessor.hpp"
@@ -20,6 +24,9 @@
 #include "DataProcessors/StatsCalculator.hpp"
 #include "DataProcessors/InvertedYieldStatsCalculator.hpp"
 #include "DataProcessors/StockDataProcessor.hpp"
+#include "AwsClients/DynamoDBClient.hpp"
+#include "Utils/Date.hpp"
+
 using namespace Aws;
 using namespace Aws::Auth;
 
@@ -90,36 +97,66 @@ int main(int argc, char **argv) {
             std::vector<double> averageSlidingWindowStockScores = stockDataProcessor.analyzeStockData(stockDataResult);
             std::vector<double> actualTradingResults;
             
-            double traderPrincipal = 1000.0;
-            double traderCashAccount = 1000.0;
+            DynamoDBClient dynamoDBClient(clientConfig);
             
-            double marketPrincipal = 2000.0;
+            std::string tableName = "InvertedYieldTrader";
+            
+            double prevDayMarketClosingValue = dynamoDBClient.getDoubleItem(tableName,
+                                             "trader_type_with_date",
+                                             "inverted_yield_trader_" + getDateDaysAgo(1),
+                                             "market_position_value");
+            
+            double prevDayStartingTraderPrincipal = dynamoDBClient.getDoubleItem(tableName,
+                                         "trader_type_with_date",
+                                         "inverted_yield_trader_" + getDateDaysAgo(1),
+                                         "trader_position_value");
+            double prevDayStartingTraderCashAccount = dynamoDBClient.getDoubleItem(tableName,
+                                         "trader_type_with_date",
+                                         "inverted_yield_trader_" +  getDateDaysAgo(1),
+                                         "trader_cash_account_value");
+            
+            double ongoingMarketValue = prevDayMarketClosingValue;
+            double ongoingTraderPrincipal = prevDayStartingTraderPrincipal;
+            double ongoingTraderCashAccount = prevDayStartingTraderCashAccount;
+            
+            double originalMarketPrincipal = 2000.0;
             
             double maxPercentTraderPrincipalToSellPerTransaction = 0.02;
             double maxPercentTraderCashAccountToBuyPerTransaction = 0.02;
             
-            double startingSharesInMarket = stockDataResult.size() > 0 ? 2000.0 / stockDataResult[0] : 0;
+            double startingSharesInMarket = stockDataResult.size() > 0 ? originalMarketPrincipal / stockDataResult[0] : 0;
             
             for (int i = 0; i < averageSlidingWindowStockScores.size(); ++i) {
                 // combine confidence score found from covariances with per-minute trading stock data
                 double predictedMarketDelta = confidenceScore * averageSlidingWindowStockScores[i];
                 
                 if (predictedMarketDelta > 0) {
-                    double amountToSell = traderPrincipal * maxPercentTraderPrincipalToSellPerTransaction * predictedMarketDelta;
-                    traderPrincipal -= amountToSell;
-                    traderCashAccount += amountToSell;
+                    double amountToSell = ongoingTraderPrincipal * maxPercentTraderPrincipalToSellPerTransaction * predictedMarketDelta;
+                    ongoingTraderPrincipal -= amountToSell;
+                    ongoingTraderCashAccount += amountToSell;
                 }
                 else if (predictedMarketDelta < 0) {
-                    double amountToBuy = traderCashAccount * maxPercentTraderPrincipalToSellPerTransaction * predictedMarketDelta;
-                    traderPrincipal += amountToBuy;
-                    traderCashAccount -= amountToBuy;
+                    double amountToBuy = ongoingTraderCashAccount * maxPercentTraderPrincipalToSellPerTransaction * predictedMarketDelta;
+                    ongoingTraderPrincipal += amountToBuy;
+                    ongoingTraderCashAccount -= amountToBuy;
                 }
-                double totalPortfolioValueAfterTrade = traderPrincipal + traderCashAccount;
+                double totalPortfolioValueAfterTrade = ongoingTraderPrincipal + ongoingTraderCashAccount;
                 actualTradingResults.push_back(totalPortfolioValueAfterTrade);
             }
             
-            /// AWS Online setup -->
-            // need to concat output from prev day. Maybe write day closing vals to DDB. Also write the covariance val to DDB.
+            double dailyProfit = actualTradingResults[actualTradingResults.size() - 1] - stockDataResult[stockDataResult.size() - 1] * startingSharesInMarket;
+            
+            Aws::Map<Aws::String, Aws::DynamoDB::Model::AttributeValue> item;
+
+            item["trader_type_with_date"] =  Aws::DynamoDB::Model::AttributeValue().SetS("inverted_yield_trader_" + getDateDaysAgo(0));
+            item["covariance_confidence_score"] = Aws::DynamoDB::Model::AttributeValue().SetN(confidenceScore);
+            item["market_position_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(ongoingMarketValue);
+            item["trader_position_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(ongoingTraderPrincipal);
+            item["trader_cash_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(ongoingTraderCashAccount);
+            item["daily_profit"] = Aws::DynamoDB::Model::AttributeValue().SetN(dailyProfit);
+
+            dynamoDBClient.putDailyResultItem(item, tableName);
+            
             // PK: inverted_yield_trader_date
             // Indexes: covariance (just use inflation for now), market data time series of shares * stock value, trader principal, trader cash, daily profit
             // ~500 datapoints per DDB entry
@@ -131,9 +168,9 @@ int main(int argc, char **argv) {
             
             // graph in quicksights
             // graph the traderP + traderCash, market Value, and potentially the % increase of each, and the delta % between them
-            for (int i = 0; i < actualTradingResults.size(); ++i) {
-                std::cout << actualTradingResults[i] - stockDataResult[i] * startingSharesInMarket << std::endl;
-            }
+//            for (int i = 0; i < actualTradingResults.size(); ++i) {
+//                std::cout << actualTradingResults[i] - stockDataResult[i] * startingSharesInMarket << std::endl;
+//            }
         }
     }
 
