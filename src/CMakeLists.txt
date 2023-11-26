@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.13)
 set(CMAKE_PREFIX_PATH "/Users/ryanhamby/Desktop/aws-sdk-cpp-install")
 
 # Set the AWS service components used by this project.
-set(SERVICE_COMPONENTS athena s3)
+set(SERVICE_COMPONENTS athena s3 dynamodb)
 
 set(CMAKE_CXX_COMPILER g++)
 set(CMAKE_C_COMPILER gcc)

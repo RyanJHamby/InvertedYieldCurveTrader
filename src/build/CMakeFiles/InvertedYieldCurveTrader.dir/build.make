@@ -216,6 +216,7 @@ InvertedYieldCurveTrader: CMakeFiles/InvertedYieldCurveTrader.dir/DataProcessors
 InvertedYieldCurveTrader: CMakeFiles/InvertedYieldCurveTrader.dir/build.make
 InvertedYieldCurveTrader: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-cpp-sdk-athena.dylib
 InvertedYieldCurveTrader: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-cpp-sdk-s3.dylib
+InvertedYieldCurveTrader: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-cpp-sdk-dynamodb.dylib
 InvertedYieldCurveTrader: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-cpp-sdk-core.dylib
 InvertedYieldCurveTrader: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-crt-cpp.dylib
 InvertedYieldCurveTrader: /Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-c-mqtt.1.0.0.dylib

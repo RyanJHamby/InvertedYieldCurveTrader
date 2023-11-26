@@ -268,14 +268,14 @@ aws-cpp-sdk-athena_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cma
 //The directory containing a CMake configuration file for aws-cpp-sdk-core.
 aws-cpp-sdk-core_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core
 
+//The directory containing a CMake configuration file for aws-cpp-sdk-dynamodb.
+aws-cpp-sdk-dynamodb_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-dynamodb
+
 //The directory containing a CMake configuration file for aws-cpp-sdk-s3.
 aws-cpp-sdk-s3_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-s3
 
 //The directory containing a CMake configuration file for aws-crt-cpp.
 aws-crt-cpp_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/aws-crt-cpp/cmake
-
-//The directory containing a CMake configuration file for nlohmann_json.
-nlohmann_json_DIR:PATH=nlohmann_json_DIR-NOTFOUND
 
 
 ########################

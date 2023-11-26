@@ -117,6 +117,20 @@ int main(int argc, char **argv) {
                 double totalPortfolioValueAfterTrade = traderPrincipal + traderCashAccount;
                 actualTradingResults.push_back(totalPortfolioValueAfterTrade);
             }
+            
+            /// AWS Online setup -->
+            // need to concat output from prev day. Maybe write day closing vals to DDB. Also write the covariance val to DDB.
+            // PK: inverted_yield_trader_date
+            // Indexes: covariance (just use inflation for now), market data time series of shares * stock value, trader principal, trader cash, daily profit
+            // ~500 datapoints per DDB entry
+            // Sub out any hardcoding of date, should just overwrite the same key a few times to start
+            
+            // set up lambda to run this code with script.
+            // may need to write the ouput to DDB between script runs. Account for this latency
+            // set up eventbridge to run this code daily
+            
+            // graph in quicksights
+            // graph the traderP + traderCash, market Value, and potentially the % increase of each, and the delta % between them
             for (int i = 0; i < actualTradingResults.size(); ++i) {
                 std::cout << actualTradingResults[i] - stockDataResult[i] * startingSharesInMarket << std::endl;
             }
