@@ -7,6 +7,7 @@
 #include "InflationDataProcessor.hpp"
 #include "../AwsClients/S3ObjectRetriever.hpp"
 #include "../Lambda/AlphaVantageDataRetriever.hpp"
+#include "../Utils/Date.hpp"
 #include "StatsCalculator.hpp"
 #include <nlohmann/json.hpp>
 #include <iostream>
@@ -32,7 +33,8 @@ std::vector<double> InflationDataProcessor::process() {
 
     // Temporary hardcode
     // TODO: Configure to be the most recent day once EventBridge gets set up
-    std::string objectKey = objectKeyPrefix + "/2023-09-21";
+    // need to figure out mondays, does it skip?
+    std::string objectKey = objectKeyPrefix + "/" + getDateDaysAgo(1);
 
     std::string bucketName = "alpha-insights";
     S3ObjectRetriever s3ObjectRetriever(bucketName, objectKey);
