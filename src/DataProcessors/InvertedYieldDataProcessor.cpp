@@ -8,6 +8,7 @@
 #include "InvertedYieldStatsCalculator.hpp"
 #include "../AwsClients/S3ObjectRetriever.hpp"
 #include "../Lambda/AlphaVantageDataRetriever.hpp"
+#include "../Utils/Date.hpp"
 #include "StatsCalculator.hpp"
 #include <nlohmann/json.hpp>
 #include <iostream>
@@ -35,8 +36,8 @@ void InvertedYieldDataProcessor::process() {
 
     // Temporary hardcode
     // TODO: Configure to be the most recent day once EventBridge gets set up
-    std::string objectKey10Year = objectKeyPrefix10Year + "/2023-09-21";
-    std::string objectKey2Year = objectKeyPrefix2Year + "/2023-09-21";
+    std::string objectKey10Year = objectKeyPrefix10Year + "/" + getDateDaysAgo(1);
+    std::string objectKey2Year = objectKeyPrefix2Year + "/" + getDateDaysAgo(1);
 
     std::string bucketName = "alpha-insights";
     S3ObjectRetriever s3ObjectRetriever10Year(bucketName, objectKey10Year);

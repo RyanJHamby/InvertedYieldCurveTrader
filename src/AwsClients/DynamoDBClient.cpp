@@ -41,6 +41,7 @@ double DynamoDBClient::getDoubleItem(std::string tableNameString,
     } else {
         std::cerr << "Error: " << getItemOutcome.GetError().GetMessage() << std::endl;
     }
+    return 0.0;
 };
 
 void DynamoDBClient::putDailyResultItem(Aws::Map<Aws::String, Aws::DynamoDB::Model::AttributeValue> item,

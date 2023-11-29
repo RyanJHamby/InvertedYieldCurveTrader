@@ -25,6 +25,9 @@ std::string getDateDaysAgo(int daysAgo = 0) {
     int year = localTime->tm_year + 1900; // Years since 1900
     int month = localTime->tm_mon + 1;    // Months are zero-based
     int day = localTime->tm_mday;
+    
+    std::string monthString = month < 10 ? "0" + std::to_string(month) : std::to_string(month);
+    std::string dayString = day < 10 ? "0" + std::to_string(day) : std::to_string(day);
 
-    return std::to_string(year) + "_" + std::to_string(month) + "_" + std::to_string(day);
+    return std::to_string(year) + "_" + monthString + "_" + dayString;
 }
