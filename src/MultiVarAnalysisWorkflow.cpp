@@ -120,9 +120,7 @@ int main(int argc, char **argv) {
             double ongoingMarketValue = prevDayMarketClosingValue;
             double ongoingTraderPrincipal = prevDayStartingTraderPrincipal;
             double ongoingTraderCashAccount = prevDayStartingTraderCashAccount;
-            
-            double originalMarketPrincipal = 2000.0;
-            
+                        
             double maxPercentTraderPrincipalToSellPerTransaction = 0.02;
             double maxPercentTraderCashAccountToBuyPerTransaction = 0.02;
             
@@ -167,13 +165,14 @@ int main(int argc, char **argv) {
             item["trader_position_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(ongoingTraderPrincipal);
             item["trader_cash_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(ongoingTraderCashAccount);
             item["daily_profit"] = Aws::DynamoDB::Model::AttributeValue().SetN(dailyProfit);
+            item["market_starting_shares"] = Aws::DynamoDB::Model::AttributeValue().SetN(startingSharesInMarket);
             item["performance_per_minute"] = Aws::DynamoDB::Model::AttributeValue().SetS(jsonStringTradingResultsPerMinuteComparedToMarket);
 
             dynamoDBClient.putDailyResultItem(item, tableName);
                         
             // set up lambda to run this code with script.
             // may need to write the ouput to DDB between script runs. Account for this latency. Let's try with just local file to prevent latency issues
-            // set up eventbridge to run this code daily
+            // set up eventbridge to run this code daily, already setup eventbridge to run lambda for s3 objects at 12 UTC
             
             // graph in quicksights
             // graph the traderP + traderCash, market Value, and potentially the % increase of each, and the delta % between them
