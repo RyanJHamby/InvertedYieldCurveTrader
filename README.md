@@ -1,7 +1,7 @@
 # InvertedYieldCurveTrader
 Optimizes stock trade profits based on trends in the inverted yield curve
 
-![InvertedYieldCurveTraderDiagram](https://github.com/RyanJHamby/InvertedYieldCurveTrader/blob/main/images/InvertedYieldTrader.drawio.png)
+![InvertedYieldCurveTraderDiagram](https://github.com/RyanJHamby/InvertedYieldCurveTrader/blob/main/images/InvertedYieldTrader.drawio.jpg)
 
 # How I worked on this project
 - I enjoy reading articles all over the web about tech and finance, and stumbled upon a Forbes article that referenced the [strongest stock market indicators](https://www.forbes.com/uk/advisor/investing/stock-market-indicators-investors-need-to-know/), and multiple view points called out inverted yield as potentially the strongest indicator of a recession. Seeing this article sparked curiousity to create a trader that would take these factors into account and calculate their covariance with the inverted yield curve.
