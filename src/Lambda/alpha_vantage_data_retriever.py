@@ -122,4 +122,5 @@ def fetch(event, context):
     with open(json_file_path, 'r') as file:
         api_constants = json.load(file)
         for key, val in api_constants.items():
-            stock_data = data_retriever.fetch_data_and_upload_to_s3(val["api_template_url"], bucket_name, val["s3_object_key_prefix"])
+            object_key = val["s3_object_key_prefix"] + "/" + str(date.today())
+            stock_data = data_retriever.fetch_data_and_upload_to_s3(val["api_template_url"], bucket_name, object_key)
