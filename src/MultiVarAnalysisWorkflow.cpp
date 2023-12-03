@@ -98,16 +98,16 @@ int main(int argc, char **argv) {
 
             std::vector<double> averageSlidingWindowStockScores = stockDataProcessor.analyzeStockData(stockDataResult);
             std::vector<double> actualTradingResults;
-            
+
             DynamoDBClient dynamoDBClient(clientConfig);
-            
+
             std::string tableName = "InvertedYieldTrader";
-            
+
             double prevDayMarketClosingValue = dynamoDBClient.getDoubleItem(tableName,
                                              "trader_type_with_date",
                                              "inverted_yield_trader_" + getDateDaysAgo(1),
                                              "market_position_value");
-            
+
             double prevDayStartingTraderPrincipal = dynamoDBClient.getDoubleItem(tableName,
                                          "trader_type_with_date",
                                          "inverted_yield_trader_" + getDateDaysAgo(1),
@@ -115,12 +115,12 @@ int main(int argc, char **argv) {
             double prevDayStartingTraderCashAccount = dynamoDBClient.getDoubleItem(tableName,
                                          "trader_type_with_date",
                                          "inverted_yield_trader_" +  getDateDaysAgo(1),
-                                         "trader_cash_account_value");
-            
+                                         "trader_cash_value");
+
             double ongoingMarketValue = prevDayMarketClosingValue;
             double ongoingTraderPrincipal = prevDayStartingTraderPrincipal;
             double ongoingTraderCashAccount = prevDayStartingTraderCashAccount;
-                        
+
             double maxPercentTraderPrincipalToSellPerTransaction = 0.02;
             double maxPercentTraderCashAccountToBuyPerTransaction = 0.02;
             
@@ -129,11 +129,11 @@ int main(int argc, char **argv) {
                                        "trader_type_with_date",
                                        "inverted_yield_trader_" +  getDateDaysAgo(1),
                                        "market_starting_shares");
-            
+
             for (int i = 0; i < averageSlidingWindowStockScores.size(); ++i) {
                 // combine confidence score found from covariances with per-minute trading stock data
                 double predictedMarketDelta = confidenceScore * averageSlidingWindowStockScores[i];
-                
+
                 if (predictedMarketDelta > 0) {
                     double amountToSell = ongoingTraderPrincipal * maxPercentTraderPrincipalToSellPerTransaction * predictedMarketDelta;
                     ongoingTraderPrincipal -= amountToSell;
@@ -147,16 +147,16 @@ int main(int argc, char **argv) {
                 double totalPortfolioValueAfterTrade = ongoingTraderPrincipal + ongoingTraderCashAccount;
                 actualTradingResults.push_back(totalPortfolioValueAfterTrade);
             }
-            
+
             double dailyProfit = actualTradingResults[actualTradingResults.size() - 1] - stockDataResult[stockDataResult.size() - 1] * startingSharesInMarket;
-            
+
             std::vector<double> tradingResultsPerMinuteComparedToMarket;
             for (int i = 0; i < actualTradingResults.size(); ++i) {
                 tradingResultsPerMinuteComparedToMarket.push_back(actualTradingResults[i] - stockDataResult[i] * startingSharesInMarket);
             }
             nlohmann::json jsonTradingResultsPerMinuteComparedToMarket = tradingResultsPerMinuteComparedToMarket;
             std::string jsonStringTradingResultsPerMinuteComparedToMarket = jsonTradingResultsPerMinuteComparedToMarket.dump();
-            
+
             Aws::Map<Aws::String, Aws::DynamoDB::Model::AttributeValue> item;
 
             item["trader_type_with_date"] =  Aws::DynamoDB::Model::AttributeValue().SetS("inverted_yield_trader_" + getDateDaysAgo(0));

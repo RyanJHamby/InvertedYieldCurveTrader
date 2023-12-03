@@ -10,6 +10,7 @@
 #include <aws/dynamodb/model/PutItemRequest.h>
 #include <aws/dynamodb/model/GetItemRequest.h>
 #include "../Utils/Date.hpp"
+#include <iostream>
 
 DynamoDBClient::DynamoDBClient(Aws::Client::ClientConfiguration clientConfig) {
     Aws::DynamoDB::DynamoDBClient dynamoClient(clientConfig);
@@ -22,7 +23,7 @@ double DynamoDBClient::getDoubleItem(std::string tableNameString,
     const char* tableName = tableNameString.c_str();
 
     Aws::DynamoDB::Model::AttributeValue keyAttributeValue;
-    keyAttributeValue.SetS(pkValuePrefix + getDateDaysAgo(1));
+    keyAttributeValue.SetS(pkValuePrefix);
 
     Aws::DynamoDB::Model::GetItemRequest getItemRequest;
     getItemRequest.SetTableName(tableName);
@@ -30,6 +31,9 @@ double DynamoDBClient::getDoubleItem(std::string tableNameString,
 
     auto getItemOutcome = dynamoClient.GetItem(getItemRequest);
 
+    std::cout << tableNameString << std::endl;
+    std::cout << pkValuePrefix << std::endl;
+    
     if (getItemOutcome.IsSuccess()) {
         const auto& item = getItemOutcome.GetResult().GetItem();
         if (!item.empty()) {
