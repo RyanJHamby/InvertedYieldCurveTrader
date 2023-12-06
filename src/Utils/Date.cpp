@@ -29,5 +29,5 @@ std::string getDateDaysAgo(int daysAgo = 0) {
     std::string monthString = month < 10 ? "0" + std::to_string(month) : std::to_string(month);
     std::string dayString = day < 10 ? "0" + std::to_string(day) : std::to_string(day);
 
-    return std::to_string(year) + "_" + monthString + "_" + dayString;
+    return std::to_string(year) + "-" + monthString + "-" + dayString;
 }
