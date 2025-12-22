@@ -32,6 +32,10 @@ file(GLOB UTILS_SRC
      "*Utils/*.cpp"
 )
 
+file(GLOB DATA_PROVIDERS_SRC
+     "*DataProviders/*.cpp"
+)
+
 if (WINDOWS_BUILD) # Set the location where CMake can find the installed libraries for the AWS SDK.
     string(REPLACE ";" "/aws-cpp-sdk-all;" SYSTEM_MODULE_PATH "${CMAKE_SYSTEM_PREFIX_PATH}/aws-cpp-sdk-all")
     list(APPEND CMAKE_PREFIX_PATH ${SYSTEM_MODULE_PATH})
@@ -59,16 +63,19 @@ add_executable(${PROJECT_NAME}
         MultiVarAnalysisWorkflow.cpp
         ${DATA_PROCESSORS_SRC}
         ${AWS_CLIENTS_SRC}
-        ${UTILS_SRC})
+        ${UTILS_SRC}
+        ${DATA_PROVIDERS_SRC})
 
 include_directories("${CMAKE_SOURCE_DIR}/src")
 include_directories(${AWSSDK_INCLUDE_DIRS})
 include_directories(${GTEST_INCLUDE_DIRS})
 include_directories("${CMAKE_SOURCE_DIR}/include")
+include_directories("/opt/homebrew/opt/nlohmann-json/include")
 
 target_link_libraries(${PROJECT_NAME}
         ${AWSSDK_LINK_LIBRARIES}
-        ${AWSSDK_LIBRARIES})
+        ${AWSSDK_LIBRARIES}
+        curl)
         
 target_link_libraries(test
         ${AWSSDK_LINK_LIBRARIES}

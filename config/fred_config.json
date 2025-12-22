@@ -1,0 +1,41 @@
+{
+  "fred_api": {
+    "api_key": "YOUR_FRED_API_KEY_HERE",
+    "base_url": "https://api.stlouisfed.org/fred/series/observations",
+    "timeout_seconds": 10,
+    "default_limit": 100
+  },
+  "series_ids": {
+    "inflation": "CPIAUCSL",
+    "treasury_10y": "DGS10",
+    "treasury_2y": "DGS2",
+    "fed_funds_rate": "FEDFUNDS",
+    "unemployment": "UNRATE",
+    "gdp": "A191RL1Q225SBEA",
+    "consumer_sentiment": "UMCSENT",
+    "ism_manufacturing": "NAPM"
+  },
+  "fetch_defaults": {
+    "inflation_values": 10,
+    "treasury_values": 90,
+    "fed_funds_values": 12,
+    "unemployment_values": 12,
+    "gdp_values": 8,
+    "consumer_sentiment_values": 12,
+    "ism_manufacturing_values": 12,
+    "yield_curve_days": 10
+  },
+  "notes": {
+    "api_key_instructions": "Get your free API key from https://fred.stlouisfed.org/",
+    "rate_limits": "FRED API has no rate limits for standard usage",
+    "data_frequency": {
+      "inflation": "Monthly",
+      "treasury_yields": "Daily (business days)",
+      "fed_funds_rate": "Monthly",
+      "unemployment": "Monthly",
+      "gdp": "Quarterly",
+      "consumer_sentiment": "Monthly",
+      "ism_manufacturing": "Monthly"
+    }
+  }
+}
