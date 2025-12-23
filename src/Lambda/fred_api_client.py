@@ -28,7 +28,7 @@ class FREDAPIClient:
         'unemployment': 'UNRATE',          # Unemployment Rate
         'gdp': 'A191RL1Q225SBEA',          # Real GDP Growth Rate
         'consumer_sentiment': 'UMCSENT',   # University of Michigan Consumer Sentiment
-        'ism_manufacturing': 'NAPM'        # ISM Manufacturing PMI
+        'ism_manufacturing': 'NAPMPMI'     # ISM Manufacturing PMI Composite Index
     }
 
     def __init__(self, api_key: str):

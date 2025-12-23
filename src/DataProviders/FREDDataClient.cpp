@@ -27,8 +27,9 @@ const std::map<std::string, std::string> FREDDataClient::SERIES_IDS = {
     {"fed_funds_rate", "FEDFUNDS"},         // Federal Funds Rate
     {"unemployment", "UNRATE"},             // Unemployment Rate
     {"gdp", "A191RL1Q225SBEA"},             // Real GDP Growth Rate
-    {"consumer_sentiment", "UMCSENT"},      // University of Michigan Consumer Sentiment
-    {"ism_manufacturing", "NAPM"}           // ISM Manufacturing PMI
+    {"consumer_sentiment", "UMCSENT"}       // University of Michigan Consumer Sentiment
+    // Note: ISM Manufacturing PMI not available on FRED (proprietary data)
+    // VIX handled separately via Yahoo Finance (not a FRED series)
 };
 
 FREDDataClient::FREDDataClient(const std::string& apiKey) : apiKey_(apiKey) {
@@ -94,9 +95,12 @@ std::string FREDDataClient::fetchSeries(
     try {
         json jsonData = json::parse(response);
         if (!jsonData.contains("observations")) {
-            throw std::runtime_error("Invalid FRED API response: missing 'observations' key");
+            // Print the actual response for debugging
+            std::cerr << "FRED API Response (first 500 chars): " << response.substr(0, 500) << "\n";
+            throw std::runtime_error("Invalid FRED API response: missing 'observations' key. Check response above.");
         }
     } catch (const json::exception& e) {
+        std::cerr << "FRED API Response (first 500 chars): " << response.substr(0, 500) << "\n";
         throw std::runtime_error("Failed to parse FRED API response: " + std::string(e.what()));
     }
 

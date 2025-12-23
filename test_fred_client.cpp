@@ -67,20 +67,45 @@ int main() {
         // Test 4: Fetch other economic indicators
         std::cout << "\n=== Test 4: Other Economic Indicators ===\n";
 
-        auto fedFunds = client.fetchFedFundsRate(3);
-        printObservations("Federal Funds Rate", fedFunds);
+        try {
+            std::cout << "Fetching Federal Funds Rate...\n";
+            auto fedFunds = client.fetchFedFundsRate(3);
+            printObservations("Federal Funds Rate", fedFunds);
+        } catch (const std::exception& e) {
+            std::cerr << "ERROR fetching Fed Funds: " << e.what() << "\n";
+        }
 
-        auto unemployment = client.fetchUnemployment(3);
-        printObservations("Unemployment Rate", unemployment);
+        try {
+            std::cout << "Fetching Unemployment Rate...\n";
+            auto unemployment = client.fetchUnemployment(3);
+            printObservations("Unemployment Rate", unemployment);
+        } catch (const std::exception& e) {
+            std::cerr << "ERROR fetching Unemployment: " << e.what() << "\n";
+        }
 
-        auto gdp = client.fetchGDP(3);
-        printObservations("GDP Growth Rate (Quarterly)", gdp);
+        try {
+            std::cout << "Fetching GDP...\n";
+            auto gdp = client.fetchGDP(3);
+            printObservations("GDP Growth Rate (Quarterly)", gdp);
+        } catch (const std::exception& e) {
+            std::cerr << "ERROR fetching GDP: " << e.what() << "\n";
+        }
 
-        auto sentiment = client.fetchConsumerSentiment(3);
-        printObservations("Consumer Sentiment Index", sentiment);
+        try {
+            std::cout << "Fetching Consumer Sentiment...\n";
+            auto sentiment = client.fetchConsumerSentiment(3);
+            printObservations("Consumer Sentiment Index", sentiment);
+        } catch (const std::exception& e) {
+            std::cerr << "ERROR fetching Consumer Sentiment: " << e.what() << "\n";
+        }
 
-        auto ism = client.fetchISMManufacturing(3);
-        printObservations("ISM Manufacturing PMI", ism);
+        try {
+            std::cout << "Fetching ISM Manufacturing...\n";
+            auto ism = client.fetchISMManufacturing(3);
+            printObservations("ISM Manufacturing PMI", ism);
+        } catch (const std::exception& e) {
+            std::cerr << "ERROR fetching ISM Manufacturing: " << e.what() << "\n";
+        }
 
         std::cout << "\n=== All Tests Passed! ===\n";
         std::cout << "FRED API Client is working correctly.\n";

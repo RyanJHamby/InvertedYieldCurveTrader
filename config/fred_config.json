@@ -12,9 +12,9 @@
     "fed_funds_rate": "FEDFUNDS",
     "unemployment": "UNRATE",
     "gdp": "A191RL1Q225SBEA",
-    "consumer_sentiment": "UMCSENT",
-    "ism_manufacturing": "NAPM"
+    "consumer_sentiment": "UMCSENT"
   },
+  "note": "ISM Manufacturing PMI not available on FRED. VIX from Yahoo Finance.",
   "fetch_defaults": {
     "inflation_values": 10,
     "treasury_values": 90,
