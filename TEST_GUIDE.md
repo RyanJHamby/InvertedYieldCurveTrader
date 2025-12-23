@@ -9,6 +9,8 @@ Unit tests verify code logic using mock data. They **don't need any API keys**.
 **Files:**
 - `test/FREDDataClientUnitTest.cpp` - FRED API parsing and data structures
 - `test/VIXDataProcessorUnitTest.cpp` - VIX data parsing and sorting
+- `test/DataAlignerUnitTest.cpp` - Frequency alignment (daily/monthly/quarterly)
+- `test/CovarianceCalculatorUnitTest.cpp` - 8x8 covariance matrix calculations
 
 **Run:**
 ```bash
@@ -18,7 +20,9 @@ Unit tests verify code logic using mock data. They **don't need any API keys**.
 **Coverage:**
 - 20 FRED tests: JSON parsing, data validation, yield curve calculations
 - 17 VIX tests: JSON parsing, data sorting, value ranges, error handling
-- **Total: 37 unit tests**
+- 13 DataAligner tests: Downsampling, interpolation, full alignment
+- 30+ CovarianceCalculator tests: Symmetry, diagonal, Frobenius norm, backward compatibility
+- **Total: 80+ unit tests**
 - Runtime: < 1 second
 
 ## Integration Tests (Requires API Keys)

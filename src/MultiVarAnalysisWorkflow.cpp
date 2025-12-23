@@ -25,6 +25,11 @@
 #include "DataProcessors/StatsCalculator.hpp"
 #include "DataProcessors/InvertedYieldStatsCalculator.hpp"
 #include "DataProcessors/StockDataProcessor.hpp"
+#include "DataProcessors/DataAligner.hpp"
+#include "DataProcessors/FedFundsProcessor.hpp"
+#include "DataProcessors/UnemploymentProcessor.hpp"
+#include "DataProcessors/ConsumerSentimentProcessor.hpp"
+#include "DataProcessors/VIXDataProcessor.hpp"
 #include "AwsClients/DynamoDBClient.hpp"
 #include "Utils/Date.hpp"
 
@@ -50,34 +55,82 @@ int main(int argc, char **argv) {
         }
         
         if (std::strcmp(argv[1], "covariance") == 0) {
-            // Will only use inflation data for the time being, due to API throttling
-            
-            InflationDataProcessor inflationDataProcessor;
-            InvertedYieldDataProcessor invertedYieldDataProcessor;
-            
-            std::vector<double> inflationResult = inflationDataProcessor.process();
-            invertedYieldDataProcessor.process();
-            std::vector<double> yieldResult = invertedYieldDataProcessor.getRecentValues();
-            
-            StatsCalculator statsCalculator;
-            InvertedYieldStatsCalculator invertedYieldStatsCalculator;
-            CovarianceCalculator covarianceCalculator;
-            
-            double inflationKpiMean = statsCalculator.calculateMean(inflationResult);
-            double invertedYieldMean = invertedYieldStatsCalculator.calculateMean(yieldResult);
-            double inflationCovariance = covarianceCalculator.calculateCovarianceWithInvertedYield(inflationResult, yieldResult, inflationKpiMean, invertedYieldMean);
-            
-            double averageMagnitudeOfCovariance = (abs(inflationCovariance));
-            
-            // Need to write intermediate result to output file to avoid API throttling, then will rerun with different instrumentation after a minute
-            std::ofstream outputFile("./output.txt");
-            if (!outputFile.is_open()) {
-                std::cerr << "Failed to open the file for writing." << std::endl;
+            // Calculate 8x8 multivariate covariance matrix for all economic indicators
+
+            try {
+                // Fetch all 8 economic indicators
+                std::map<std::string, std::vector<double>> rawData;
+
+                // Get API keys from environment (or constants)
+                const char* fredApiKey = std::getenv("FRED_API_KEY");
+                const char* alphaVantageKey = std::getenv("ALPHA_VANTAGE_API_KEY");
+
+                if (!fredApiKey || !alphaVantageKey) {
+                    std::cerr << "Error: FRED_API_KEY and ALPHA_VANTAGE_API_KEY environment variables must be set" << std::endl;
+                    return 1;
+                }
+
+                std::string fredKeyStr(fredApiKey);
+                std::string alphaKeyStr(alphaVantageKey);
+
+                std::cout << "Fetching all 8 economic indicators..." << std::endl;
+
+                // Fetch FRED data
+                InflationDataProcessor inflationProcessor;
+                FedFundsProcessor fedFundsProcessor;
+                UnemploymentProcessor unemploymentProcessor;
+                ConsumerSentimentProcessor sentimentProcessor;
+                GDPDataProcessor gdpProcessor;
+                InterestRateDataProcessor interestRateProcessor;
+                InvertedYieldDataProcessor invertedYieldProcessor;
+                VIXDataProcessor vixProcessor;
+
+                rawData["inflation"] = inflationProcessor.process(fredKeyStr, 10);
+                rawData["fed_funds"] = fedFundsProcessor.process(fredKeyStr, 12);
+                rawData["unemployment"] = unemploymentProcessor.process(fredKeyStr, 12);
+                rawData["consumer_sentiment"] = sentimentProcessor.process(fredKeyStr, 12);
+                rawData["gdp"] = gdpProcessor.process(fredKeyStr, 8);
+
+                // Fetch treasury yields and calculate inverted yield curve
+                invertedYieldProcessor.process(fredKeyStr);
+                rawData["inverted_yield"] = invertedYieldProcessor.getRecentValues();
+
+                // Fetch VIX from Alpha Vantage
+                rawData["vix"] = vixProcessor.process(alphaKeyStr, 30);
+
+                std::cout << "Aligning all indicators to monthly frequency..." << std::endl;
+
+                // Align all indicators to monthly frequency
+                auto alignedData = DataAligner::alignAllIndicators(rawData);
+
+                std::cout << "Calculating 8x8 covariance matrix..." << std::endl;
+
+                // Calculate 8x8 covariance matrix
+                CovarianceCalculator covCalculator;
+                CovarianceMatrix covMatrix = covCalculator.calculateCovarianceMatrix(alignedData);
+
+                // Get signal strength from Frobenius norm
+                double signalStrength = covMatrix.getFrobeniusNorm();
+
+                std::cout << "Covariance matrix calculated successfully." << std::endl;
+                covMatrix.print();
+
+                // Write signal strength to output file (replaces old average magnitude)
+                std::ofstream outputFile("./output.txt");
+                if (!outputFile.is_open()) {
+                    std::cerr << "Failed to open the file for writing." << std::endl;
+                    return 1;
+                }
+
+                outputFile << signalStrength << std::endl;
+                outputFile.close();
+
+                std::cout << "Signal strength written to output.txt: " << signalStrength << std::endl;
+
+            } catch (const std::exception& e) {
+                std::cerr << "Error in covariance calculation: " << e.what() << std::endl;
                 return 1;
             }
-            
-            outputFile << averageMagnitudeOfCovariance << std::endl;
-            outputFile.close();
         } else if (std::strcmp(argv[1], "trade") == 0) {
             StockDataProcessor stockDataProcessor;
             std::vector<double> stockDataResult = stockDataProcessor.retrieve();

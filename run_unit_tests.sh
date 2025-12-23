@@ -17,6 +17,12 @@ CXX_FLAGS="-std=c++20"
 
 FRED_CLIENT="src/DataProviders/FREDDataClient.cpp"
 VIX_PROC="src/DataProcessors/VIXDataProcessor.cpp"
+DATA_ALIGNER="src/DataProcessors/DataAligner.cpp"
+COVARIANCE_CALC="src/DataProcessors/CovarianceCalculator.cpp"
+
+# Add Eigen include
+EIGEN_INCLUDE="-I/opt/homebrew/opt/eigen/include/eigen3"
+INCLUDES="$INCLUDES $EIGEN_INCLUDE"
 
 echo "1. Compiling FRED Data Client unit tests..."
 g++ $CXX_FLAGS $INCLUDES \
@@ -31,6 +37,20 @@ g++ $CXX_FLAGS $INCLUDES \
     test/VIXDataProcessorUnitTest.cpp \
     $LIBS $GTEST_LIBS \
     -o test_vix_processor_unit || { echo "❌ Failed to compile VIX unit tests"; exit 1; }
+
+echo "3. Compiling DataAligner unit tests..."
+g++ $CXX_FLAGS $INCLUDES \
+    $DATA_ALIGNER \
+    test/DataAlignerUnitTest.cpp \
+    $LIBS $GTEST_LIBS \
+    -o test_data_aligner_unit || { echo "❌ Failed to compile DataAligner unit tests"; exit 1; }
+
+echo "4. Compiling CovarianceCalculator unit tests..."
+g++ $CXX_FLAGS $INCLUDES \
+    $COVARIANCE_CALC \
+    test/CovarianceCalculatorUnitTest.cpp \
+    $LIBS $GTEST_LIBS \
+    -o test_covariance_calculator_unit || { echo "❌ Failed to compile CovarianceCalculator unit tests"; exit 1; }
 
 echo ""
 echo "✅ All unit tests compiled successfully!"
@@ -48,6 +68,14 @@ echo "--- VIX Data Processor Unit Tests ---"
 ./test_vix_processor_unit || { echo "❌ VIX unit tests failed"; exit 1; }
 
 echo ""
+echo "--- DataAligner Unit Tests ---"
+./test_data_aligner_unit || { echo "❌ DataAligner unit tests failed"; exit 1; }
+
+echo ""
+echo "--- CovarianceCalculator Unit Tests ---"
+./test_covariance_calculator_unit || { echo "❌ CovarianceCalculator unit tests failed"; exit 1; }
+
+echo ""
 echo "========================================="
 echo "✅ ALL UNIT TESTS PASSED!"
 echo "========================================="
@@ -59,9 +87,11 @@ echo "  ✅ Yield curve calculations"
 echo "  ✅ VIX Data Processor (JSON parsing, data structures)"
 echo "  ✅ Data sorting and filtering"
 echo "  ✅ Value range validation"
+echo "  ✅ DataAligner (frequency alignment, downsampling, interpolation)"
+echo "  ✅ CovarianceCalculator (8x8 matrix, Frobenius norm, symmetry)"
 echo "  ✅ Error handling"
 echo ""
-echo "Total: 30+ unit test cases"
+echo "Total: 80+ unit test cases"
 echo ""
 echo "To run integration tests (requires API keys):"
 echo "  export FRED_API_KEY=\"your_fred_api_key\""
