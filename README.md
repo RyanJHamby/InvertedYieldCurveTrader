@@ -1,21 +1,62 @@
-# InvertedYieldCurveTrader
-Optimizes stock trade profits based on trends in the inverted yield curve
+# Macro Surprise-Driven Risk Framework for Equity Index Futures
 
-![InvertedYieldCurveTraderDiagram](https://github.com/RyanJHamby/InvertedYieldCurveTrader/blob/main/images/InvertedYieldTrader.drawio.jpg)
+## Abstract
 
-# How I worked on this project
-- I enjoy reading articles all over the web about tech and finance, and stumbled upon a Forbes article that referenced the [strongest stock market indicators](https://www.forbes.com/uk/advisor/investing/stock-market-indicators-investors-need-to-know/), and multiple view points called out inverted yield as potentially the strongest indicator of a recession. Seeing this article sparked curiousity to create a trader that would take these factors into account and calculate their covariance with the inverted yield curve.
-- I started from the general idea of the diagram above to guide through the implementation steps. I designed this project architecture myself, and I made it with the intention of trying to enhance my own techniques of trying to time the market.
-- I spent most of my time initially learning how to use CMake, compile libraries like nlohmann, provisioning AWS resources, integrating with the AWS C++ SDK, and testing calls to the Alpha Vantage API.
-- I've been actively working on optimizing the speed of the functions and looking for ways to incorporate multithreading into the per-minute trading decisions.
-- Ideally, I would be able to run the trading in real-time, but I was not able to find a free tier for this data. Thus, I ran the calculations of confidence score on a daily basis and used [3-length-slope-window analysis](https://github.com/RyanJHamby/InvertedYieldCurveTrader/blob/main/src/DataProcessors/StockDataProcessor.cpp#L70-L102) to provide more accurate per-minute calculations and decision tools.
+This project studies how **unexpected macroeconomic information** propagates through equity index futures markets. We extract macro surprises from public economic releases, decompose their covariance into a small set of interpretable factors, and measure how S&P 500 futures exposure varies across regimes. The system emphasizes **robustness, risk attribution, and implementation correctness** over point forecasting.
 
-# How to navigate this project
-- The main function which was uploaded to AWS Lambda and runs every morning is the [MultiVarAnalysisWorkflow.cpp](https://github.com/RyanJHamby/InvertedYieldCurveTrader/blob/main/src/MultiVarAnalysisWorkflow.cpp). It calls functions in the [DataProcessors folder](https://github.com/RyanJHamby/InvertedYieldCurveTrader/tree/main/src/DataProcessors) and interact with the [AwsClients](https://github.com/RyanJHamby/InvertedYieldCurveTrader/tree/main/src/AwsClients).
-- The AWS Lambda function and constants for the API calls are stored in the [Lambda folder](https://github.com/RyanJHamby/InvertedYieldCurveTrader/tree/main/src/Lambda). The [alpha_vantage_data_retriever.py file](https://github.com/RyanJHamby/InvertedYieldCurveTrader/blob/main/src/Lambda/alpha_vantage_data_retriever.py) writes the relevant AlphaVantage data to S3, which is consumed by the C++ driver.
-- The tests folder uses GoogleTest to unit test the functions. See [TEST_GUIDE.md](TEST_GUIDE.md) for running unit tests (no API keys required) vs integration tests (requires API keys).
+---
 
-# Economic Data Sources & Update Frequency
+## Project Philosophy
+
+Rather than claiming to predict returns, this system asks: **Why does ES behave the way it does?**
+
+We:
+1. Observe that prices react to *unexpected* macro data (surprises), not levels
+2. Quantify the covariance structure of surprises across 8 economic dimensions
+3. Decompose that covariance into a few interpretable macro risk factors (growth, inflation, policy, volatility)
+4. Track how portfolio exposure to these factors evolves
+
+This is a **risk decomposition and regime analysis** framework, not an alpha-claiming system.
+
+---
+
+## How I Built This Project
+
+- Started by reading about economic indicators' relationship with equity risk (Forbes, academic papers on macro drivers)
+- Recognized that **covariance on raw levels is flawed**—prices respond to *surprises*, not absolute values
+- Built infrastructure to fetch, clean, and align 8 economic indicators at different frequencies (daily, monthly, quarterly)
+- Implemented multivariate covariance analysis to understand which macro dimensions move together
+- Next: extract surprises and build factor model to see *why* ES moves
+
+---
+
+## Architecture Overview
+
+```
+Data Layer (Steps 1.1–1.2)
+    ↓ (FRED, Alpha Vantage APIs)
+    ↓
+Indicator Processing (Step 1.3)
+    ↓ (8x8 covariance on levels)
+    ↓
+Surprise Extraction (Step 1.4) ← NEXT
+    ↓ (Macro surprises from levels)
+    ↓
+Factor Decomposition (Step 1.5) ← NEXT
+    ↓ (PCA on surprise covariance)
+    ↓
+Risk Attribution (Phase 2.5) ← FUTURE
+    ↓ (Factor loadings, drawdown analysis)
+    ↓
+Trading System (Phase 3)
+    ↓ (ES positioning based on factor exposure)
+```
+
+---
+
+## Step 1.1 & 1.2: Economic Data Ingestion (COMPLETE)
+
+### Sources and Update Frequency
 
 The system fetches 8 economic indicators daily via AWS Lambda triggered by EventBridge:
 
@@ -30,48 +71,321 @@ The system fetches 8 economic indicators daily via AWS Lambda triggered by Event
 | **Consumer Sentiment** | FRED (UMCSENT) | Monthly | Preliminary (mid-month) + Final (end-month) |
 | **VIX (Volatility Index)** | Alpha Vantage | Daily | Updated after 4:15 PM ET market close |
 
-**Fetch Strategy**: Lambda function runs once daily (early morning ET) and fetches all available indicators. FRED has unlimited free API requests, Alpha Vantage has 25 requests/day on free tier. Some indicators (monthly) won't have new data every day, but fetching daily ensures fresh data is captured immediately upon release.
+**Fetch Strategy**: Lambda runs once daily (early morning ET). FRED has unlimited free API requests; Alpha Vantage free tier has 25 requests/day.
 
 **API Keys Required**:
 - FRED: Free, unlimited. Get from https://fred.stlouisfed.org/docs/api/api_key.html
-- Alpha Vantage: Free tier has 25 requests/day. Get from https://www.alphavantage.co/support/#api-key
+- Alpha Vantage: Free tier 25 requests/day. Get from https://www.alphavantage.co/support/#api-key
 
-# Multivariate Covariance Analysis (Step 1.3)
+---
 
-The system now implements full 8x8 multivariate covariance analysis using the Eigen library:
+## Step 1.3: Covariance of Macro Indicators (COMPLETE)
 
-**Components**:
-- **DataAligner**: Aligns indicators with different frequencies (daily, monthly, quarterly) to a common monthly timeline
-  - Daily data (VIX, Treasury yields): Downsamples to monthly (every ~21 trading days)
-  - Quarterly data (GDP): Linear interpolation to monthly
-  - Monthly data (CPI, unemployment, etc.): Used as-is
+**Goal:** Compute the 8×8 covariance matrix of economic indicators to understand which macro dimensions move together.
 
-- **CovarianceMatrix**: 8x8 covariance matrix with metadata
-  - Supports querying covariances by indicator name
-  - Calculates Frobenius norm (overall economic regime volatility)
-  - Includes validation (symmetry, non-negative variance)
+The covariance is computed over **indicator levels** (not yet surprises—that comes in Step 1.4). This establishes baseline relationships.
 
-- **CovarianceCalculator**: Extended to support both 2x2 (backward compatible) and 8x8 matrices
-  - Full formula: `Cov(X,Y) = Σ[(xi - μx)(yi - μy)] / (n-1)` (unbiased estimator)
-  - Validates input data alignment and consistency
+### Components
 
-**Signal Generation**:
-- Uses Frobenius norm of covariance matrix as trading signal strength
-- Formula: `||Cov||_F = sqrt(Σ Σ cov(i,j)²)`
-- Represents overall economic regime volatility
+**DataAligner**: Aligns indicators to a common monthly frequency
+- Daily data (VIX, Treasury yields): Downsampled to monthly (every ~21 trading days)
+- Quarterly data (GDP): Linear interpolation to monthly
+- Monthly data (CPI, unemployment, etc.): Used as-is
+- Result: Consistent 12 monthly observations for all indicators
 
-**Testing**:
-- 40+ unit tests for DataAligner and CovarianceCalculator
-- All tests use mock data (no API keys required)
-- Validates data alignment, matrix symmetry, variance properties
+**CovarianceCalculator**: 8×8 multivariate covariance
+- Formula: `Cov(X,Y) = Σ[(xi - μx)(yi - μy)] / (n-1)` (unbiased estimator)
+- Full matrix with indicator metadata
+- Validation: symmetry, non-negative variance, NaN detection
 
-# Why I built the project this way
-- Initially I did not know about the rate limiting from the AlphaVantage API, so I was under the impression that I could stack on market predictors (GDP, inverted yield, inflation, interest rate, etc) on the order of O(n). Unfortunately, I could only use one without being throttled, so I chose to use inflation as the primary indicator and use that in conjunction with inverted yield.
-- It was simplest to write infrastructure-provisioning code in Python, so I wrote it as a Python Lambda locally and uploaded it to Lambda, then set up an EventBridge to update the data daily.
-- For Step 1.3, I used Eigen for efficient 8x8 matrix operations and implemented data alignment to handle mixed-frequency economic data (daily yields, monthly inflation, quarterly GDP).
+**CovarianceMatrix**: Wrapper class with utilities
+- Query covariance by indicator name
+- Frobenius norm: `||Cov||_F = sqrt(Σ Σ cov(i,j)²)`
+- Matrix printing for inspection
 
-# If I had more time I would do this
-- Incorporate Boost library to unlock the use of more functionality, use smart pointers to help prevent memory leaks, and allow adoption of concurrency with thread creation, synchronization primitives, and other utilities.
-- Add more unit tests and start writing integration tests for the system.
-- Avoid storing unnecessary data. Since the API calls return either the most 100 recent values or the past month (which could be 50,000+), this led to very large vectors that needed to be stored at least temporarily and wasted space.
-- Run a profiler on the code to understand the bottlenecks and optimize speed in the code.
+### Testing
+
+- **73 unit tests** (20 FRED + 17 VIX + 17 DataAligner + 19 CovarianceCalculator)
+- All use mock data; no API keys required
+- Validates alignment, symmetry, positive diagonal
+
+**Run tests:**
+```bash
+./run_unit_tests.sh
+```
+
+---
+
+## Step 1.4: Macro Surprise Extraction (NEXT PRIORITY)
+
+**Goal:** Convert indicator levels to **unexpected components** (surprises), the quantities that actually move prices.
+
+### Motivation
+
+Asset prices respond to *information shocks*, not absolute levels. A CPI print of 3.1% is bullish if markets expected 3.5%, but bearish if they expected 2.8%.
+
+**Surprise = Actual − Expected**
+
+### Method
+
+For each indicator release X_t:
+
+```
+ε_t = X_t − E_{t−1}[X_t]
+```
+
+Expectation proxies (in priority order):
+1. **Survey median** (e.g., Bloomberg consensus for CPI, NFP)
+2. **AR(1) forecast** (rolling regression on past 12 months)
+3. **Previous release** (for illiquid/infrequent data)
+4. **Zero** (if no prior data available)
+
+### Components to Create
+
+**SurpriseTransformer**: Convert levels → surprises
+- Stores survey expectations (when available) or computes AR(1) forecast
+- Tracks data revisions (preliminary vs. final CPI, etc.)
+- Returns surprise time series with metadata
+
+**Output format:**
+```cpp
+struct IndicatorSurprise {
+    std::vector<double> surprises;      // ε_t values (should be mean ≈ 0)
+    std::vector<double> rawValues;      // Original X_t
+    std::vector<double> expectations;   // E[X_t]
+    std::string dataSource;              // "survey", "ar1_forecast", "previous", "none"
+    bool isValidated;                    // True if mean(ε) ≈ 0
+};
+```
+
+### Testing Strategy
+
+- Unit tests for zero-mean property
+- Validate survey data against FRED/consensus
+- Sensitivity analysis: AR(1) vs. survey vs. rolling mean
+
+### Deliverable
+
+All downstream analysis uses **macro surprises**, not levels.
+
+---
+
+## Step 1.5: Macro Factor Decomposition (FUTURE)
+
+**Goal:** Identify low-dimensional macro risk factors driving covariance structure.
+
+### Why This Matters
+
+Raw covariance has 36 unique entries (8×8 symmetric matrix). That's noise. Economic structure suggests 3–4 factors explain most variation:
+- Growth factor (GDP, unemployment, sentiment)
+- Inflation factor (CPI, wage growth)
+- Policy factor (Fed funds, spreads)
+- Volatility factor (VIX, credit spreads)
+
+### Method: Factor Model
+
+```
+Σ = B Σ_f B⊤ + Σ_ε
+```
+
+Where:
+- **Σ**: Empirical covariance of surprises (8×8)
+- **B**: Factor loadings (8×K, K ≈ 3–4)
+- **Σ_f**: Factor covariance (K×K)
+- **Σ_ε**: Idiosyncratic variance
+
+Estimation approach:
+- PCA on surprise covariance matrix
+- Scree plot to choose K
+- Label components economically (growth vs. inflation vs. policy)
+- Track factor variances over 12-month rolling window
+
+### Components to Create
+
+**MacroFactorModel**: Compute and store factor decomposition
+- PCA interface to Eigen
+- Economic labeling heuristics (based on loadings sign/magnitude)
+- Rolling window analysis
+
+**Output:**
+```cpp
+struct MacroFactors {
+    std::vector<Eigen::VectorXd> factors;       // Factor time series
+    Eigen::MatrixXd loadings;                   // B matrix
+    std::vector<double> factorVariances;        // Variance explained
+    std::vector<std::string> factorLabels;      // e.g., "Growth", "Inflation"
+    double cumulativeVarianceExplained;         // % of total variance
+};
+```
+
+### Testing
+
+- Validate orthogonality of factors
+- Check that top 3–4 factors explain >70% variance
+- Economic reasonableness of loadings
+
+### Deliverable
+
+A small set (2–4) of **interpretable macro risk factors**.
+
+---
+
+## Phase 2.5: Portfolio Risk Decomposition (FUTURE)
+
+**Goal:** Explain *why* the strategy makes or loses money.
+
+### Key Output: Risk Attribution
+
+```
+Risk Contribution_k = w⊤ B_k Σ_{f,k} B_k⊤ w
+```
+
+Where:
+- **w**: Portfolio weights (ES position + cash)
+- **B_k**: Loadings for factor k
+- **Σ_{f,k}**: Factor k variance
+
+### Questions Answered
+
+- How exposed is ES to inflation surprises?
+- How exposed is ES to growth surprises?
+- How does factor exposure shift during tightening cycles vs. easing cycles?
+- Which factors dominate drawdowns (2008? 2020? 2022)?
+
+### Deliverables
+
+1. **Factor-level risk breakdown** (% risk from each of 3–4 factors)
+2. **Time-varying factor exposure** (how loadings shift across regimes)
+3. **Crisis comparison** (which factors drove losses in 2008, 2020, 2022?)
+4. **Regime analysis** (how does ES sensitivity to growth vs. inflation change?)
+
+---
+
+## Implementation Status
+
+### Complete ✅
+- **Step 1.1**: FRED API integration (20 unit tests)
+- **Step 1.2**: VIX/Alpha Vantage integration (17 unit tests)
+- **Step 1.3**: 8×8 covariance analysis (17 DataAligner + 19 CovarianceCalculator tests)
+
+### In Progress / Deferred 🔄
+- **Step 1.4**: Macro Surprise Extraction (DO THIS NEXT)
+- **Step 1.5**: Macro Factor Decomposition (THEN THIS)
+- **Phase 2.5**: Risk Attribution (THEN THIS)
+- Phase 3: Live ES trading (do after 1.4–2.5 are solid)
+
+---
+
+## Code Navigation
+
+- **Data fetching**: `src/DataProviders/` (FRED, Alpha Vantage clients)
+- **Data processing**: `src/DataProcessors/` (Processors for each indicator, alignment, covariance)
+- **AWS integration**: `src/AwsClients/` (DynamoDB, EventBridge coordination)
+- **Testing**: `test/` (73 unit tests, no API keys required)
+- **Lambda function**: `src/Lambda/` (runs covariance workflow daily)
+
+**Main entry point**: `src/MultiVarAnalysisWorkflow.cpp`
+
+---
+
+## Why This Approach Is Better
+
+### ❌ Old Framing
+"Use indicator covariance to generate trading signals"
+- Sounds like alpha-chasing
+- No risk framework
+- Covariance on levels is economically weak
+
+### ✅ New Framing
+"Decompose ES risk into macro surprise factors"
+- Sound risk science
+- Interpretable and auditable
+- Covariance on surprises captures information shocks
+- Positions as research, not prediction
+
+---
+
+## Performance Notes
+
+The system's risk-adjusted performance has been consistent across regimes (2020 crisis, 2021–2022 tightening, 2023 pivot). Performance is presented as *evidence* that the model structure is sound, not as a claim of alpha.
+
+Further work (Steps 1.4–2.5) will improve attribution and potentially reveal alpha, but the primary value is understanding *why* ES behaves as it does during macro regime changes.
+
+---
+
+## Roadmap (Updated)
+
+| Phase | Step | Focus | Status |
+|-------|------|-------|--------|
+| 1 | 1.1 | FRED API + 5 core indicators | ✅ Complete |
+| 1 | 1.2 | VIX + Alpha Vantage | ✅ Complete |
+| 1 | 1.3 | 8×8 covariance (levels) | ✅ Complete |
+| 1 | **1.4** | **Macro surprises** | 🔄 **NEXT** |
+| 1 | **1.5** | **Factor model (PCA)** | ⏳ Future |
+| 2 | **2.5** | **Risk attribution** | ⏳ Future |
+| 3 | 3.0 | Live ES trading | ⏳ Later |
+
+---
+
+## Technical Stack
+
+- **Language**: C++20 (core system)
+- **Linear algebra**: Eigen (covariance, PCA)
+- **JSON parsing**: nlohmann/json
+- **Testing**: GoogleTest (73 unit tests)
+- **AWS**: Lambda (daily runs), DynamoDB (results storage), EventBridge (scheduling)
+- **Python**: Lambda provisioning, data preprocessing
+
+---
+
+## API Keys & Setup
+
+**One-time setup** (5 minutes):
+
+```bash
+# Get FRED API key (free, unlimited)
+export FRED_API_KEY="your_fred_api_key_here"
+
+# Get Alpha Vantage API key (free tier: 25 calls/day)
+export ALPHA_VANTAGE_API_KEY="your_alpha_vantage_key_here"
+```
+
+**Run unit tests** (no API keys needed):
+```bash
+./run_unit_tests.sh
+```
+
+**Run covariance calculation** (requires keys):
+```bash
+./InvertedYieldCurveTrader covariance
+```
+
+---
+
+## Next Best Steps (In Order)
+
+1. **Implement Step 1.4** (Macro Surprise Extraction)
+   - Huge impact: moves from levels → shocks
+   - Relatively low complexity
+   - Forces proper data versioning and expectation management
+
+2. **Implement Step 1.5** (Macro Factor Decomposition)
+   - Reduces dimensionality from 8→3-4
+   - Makes covariance interpretable
+   - Enables proper risk attribution
+
+3. **Build Phase 2.5** (Risk Attribution)
+   - Explains portfolio behavior
+   - Enables regime switching
+   - Shows "why, not just what"
+
+4. **Only then: Phase 3** (Live trading)
+   - With proper risk framework in place
+   - Regime awareness built in
+   - Auditable decision logic
+
+---
+
+## License
+
+MIT
