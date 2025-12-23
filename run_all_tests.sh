@@ -28,29 +28,29 @@ UNEMPLOYMENT_PROC="src/DataProcessors/UnemploymentProcessor.cpp"
 SENTIMENT_PROC="src/DataProcessors/ConsumerSentimentProcessor.cpp"
 VIX_PROC="src/DataProcessors/VIXDataProcessor.cpp"
 
-echo "1. Compiling FREDDataClient tests..."
+echo "1. Compiling FREDDataClient integration tests..."
 g++ $CXX_FLAGS $INCLUDES \
     $FRED_CLIENT \
-    test/FREDDataClientTest.cpp \
+    test/FREDDataClientIntegrationTest.cpp \
     $LIBS $GTEST_LIBS \
-    -o test_fred_client || { echo "❌ Failed to compile FREDDataClient tests"; exit 1; }
+    -o test_fred_client_integration || { echo "❌ Failed to compile FREDDataClient integration tests"; exit 1; }
 
-echo "2. Compiling FRED Processors tests..."
+echo "2. Compiling FRED Processors integration tests..."
 g++ $CXX_FLAGS $INCLUDES \
     $FRED_CLIENT \
     $FED_FUNDS_PROC \
     $UNEMPLOYMENT_PROC \
     $SENTIMENT_PROC \
-    test/FREDDataProcessorsTest.cpp \
+    test/FREDDataProcessorsIntegrationTest.cpp \
     $LIBS $GTEST_LIBS \
-    -o test_fred_processors || { echo "❌ Failed to compile FRED Processors tests"; exit 1; }
+    -o test_fred_processors_integration || { echo "❌ Failed to compile FRED Processors integration tests"; exit 1; }
 
-echo "3. Compiling VIX Processor tests..."
+echo "3. Compiling VIX Processor integration tests..."
 g++ $CXX_FLAGS $INCLUDES \
     $VIX_PROC \
-    test/VIXDataProcessorTest.cpp \
+    test/VIXDataProcessorIntegrationTest.cpp \
     $LIBS $GTEST_LIBS \
-    -o test_vix_processor || { echo "❌ Failed to compile VIX Processor tests"; exit 1; }
+    -o test_vix_processor_integration || { echo "❌ Failed to compile VIX Processor integration tests"; exit 1; }
 
 echo ""
 echo "✅ All tests compiled successfully!"
@@ -61,29 +61,32 @@ echo "========================================"
 echo ""
 
 # Run each test suite
-echo "--- FREDDataClient Tests ---"
-./test_fred_client || { echo "❌ FREDDataClient tests failed"; exit 1; }
+echo "--- FREDDataClient Integration Tests (requires FRED_API_KEY) ---"
+./test_fred_client_integration || { echo "❌ FREDDataClient integration tests failed"; exit 1; }
 
 echo ""
-echo "--- FRED Processors Tests ---"
-./test_fred_processors || { echo "❌ FRED Processors tests failed"; exit 1; }
+echo "--- FRED Processors Integration Tests (requires FRED_API_KEY) ---"
+./test_fred_processors_integration || { echo "❌ FRED Processors integration tests failed"; exit 1; }
 
 echo ""
-echo "--- VIX Processor Tests ---"
-./test_vix_processor || { echo "❌ VIX Processor tests failed"; exit 1; }
+echo "--- VIX Processor Integration Tests (requires ALPHA_VANTAGE_API_KEY) ---"
+./test_vix_processor_integration || { echo "❌ VIX Processor integration tests failed"; exit 1; }
 
 echo ""
 echo "========================================"
 echo "✅ ALL TESTS PASSED!"
 echo "========================================"
 echo ""
-echo "Test Coverage:"
-echo "  ✅ FREDDataClient (base API client)"
-echo "  ✅ FedFundsProcessor"
-echo "  ✅ UnemploymentProcessor"
-echo "  ✅ ConsumerSentimentProcessor"
-echo "  ✅ VIXDataProcessor"
-echo "  ✅ Integration tests"
-echo "  ✅ Error handling tests"
+echo "Test Coverage (Integration Tests - Requires API Keys):"
+echo "  ✅ FREDDataClient (live API integration)"
+echo "  ✅ FedFundsProcessor (live API)"
+echo "  ✅ UnemploymentProcessor (live API)"
+echo "  ✅ ConsumerSentimentProcessor (live API)"
+echo "  ✅ VIXDataProcessor (live API)"
+echo "  ✅ Yield curve calculations"
+echo "  ✅ Error handling with real API responses"
 echo ""
-echo "Total: 50+ test cases across 3 test suites"
+echo "Total: 30+ integration test cases across 3 test suites"
+echo ""
+echo "For unit tests (no API keys required):"
+echo "  ./run_unit_tests.sh"
