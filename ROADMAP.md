@@ -1,81 +1,139 @@
-# Implementation Roadmap: Macro Surprise-Driven Risk Framework
+# Macro Surprise-Driven Risk Decomposition Framework
 
-## Overview
+## The Big Idea
 
-This roadmap details the evolution from **covariance on levels** (complete) to **macro surprise extraction** (next) to **factor decomposition** (future) to **risk attribution** (future).
+**Markets don't react to economic levels. They react to surprises.**
 
----
+A CPI print of 3.1% is irrelevant. The market cares: *was that expected 3.5% (bullish shock) or 2.8% (bearish shock)?*
 
-## Phase 1: Data Infrastructure (COMPLETE ✅)
+This framework replaces covariance on **levels** with covariance on **shocks**, compresses noisy indicators into orthogonal **risk factors**, and answers the question traders ask after losses:
 
-### Step 1.1: FRED API Integration ✅
-- 5 core economic indicators fetched daily
-- 20 unit tests, no API keys required
-
-### Step 1.2: VIX / Alpha Vantage Integration ✅
-- Daily volatility index from Alpha Vantage
-- 17 unit tests, no API keys required
-
-### Step 1.3: Multivariate Covariance (Levels) ✅
-- 8×8 covariance matrix on indicator levels
-- DataAligner (frequency alignment: daily → monthly)
-- CovarianceCalculator with Frobenius norm signal
-- 36 unit tests (17 DataAligner + 19 CovarianceCalculator)
-
-**Current deliverable:** `output.txt` contains Frobenius norm (regime volatility signal).
+> *"Which macro shock hit us, and how hard?"*
 
 ---
 
-## Phase 1 (Continued): Surprise-Driven Analysis (NEXT)
+## Why This Matters for Risk Management
 
-### Step 1.4: Macro Surprise Extraction ⏳ NEXT PRIORITY
+**The problem with level-based systems:**
+- Confuse trends with shocks
+- Miss regime transitions
+- Can't explain drawdowns post-mortem
+- False correlations from slow-moving state variables
 
-**Objective:** Convert indicator levels X_t to surprises ε_t = X_t − E[X_t].
+**What this framework does:**
+- Isolates pure information shocks
+- Decomposes portfolio risk into interpretable factors (growth, inflation, policy)
+- Explains 2008, 2020, 2022 drawdowns by economic cause
+- Enables risk-aware sizing *before* the shock hits
 
-**Why this matters:**
-- Prices react to *shocks*, not levels
-- CPI 3.1% is bullish if expected 3.5%, bearish if expected 2.8%
-- Covariance on surprises isolates information shocks
+**Who cares:** Risk managers, macro PMs, hedge funds managing tail risk, discretionary traders who need to understand what broke their portfolio.
 
-**Implementation:**
+---
 
-#### File: `src/DataProcessors/SurpriseTransformer.hpp`
+## Phase 0: Foundation (COMPLETE ✅)
+
+### Why We Start Here
+
+Before extracting surprises, we need:
+- Clean macro data at aligned frequencies
+- A volatility baseline to measure shocks against
+- Proof that our alignment and covariance math is correct
+
+### Step 1.1: Macro Data Backbone + Regime Volatility Proxy ✅
+
+**What was built:**
+- FRED API (5 core economic indicators)
+- VIX / Alpha Vantage integration
+- Monthly frequency alignment (daily → monthly downsampling, quarterly → monthly interpolation)
+- 8×8 covariance matrix
+- Frobenius norm as regime volatility signal
+
+**Why it matters:**
+- Establishes a clean foundation for shock extraction
+- 73 unit tests verify alignment and covariance correctness
+- No surprises yet, just baselines
+
+**Code:** `src/DataProcessors/{DataAligner, CovarianceCalculator}.cpp`
+
+---
+
+## Phase 1: Shock Extraction & Risk Attribution (NEXT)
+
+### Why This Phase Changes Everything
+
+Right now, we covariance indicator **levels**. That's weak.
+
+A 3.5% unemployment rate has no information. A surprise *drop* to 3.3% when markets expected 3.4% is a growth shock worth billions in ES vol.
+
+This phase converts levels → shocks, creating the signal that actually moves prices.
+
+---
+
+### Step 1.2: Macro Surprise Construction ⏳ **NEXT PRIORITY**
+
+**Goal:** Extract information shocks from economic releases.
+
+**The Math (simple):**
+```
+ε_t = X_t − E[X_t]
+```
+
+Where:
+- X_t = actual release (e.g., CPI 3.1%)
+- E[X_t] = market expectation (e.g., 3.5% consensus)
+- ε_t = surprise (−0.4% = bearish shock)
+
+**Key insight:** Surprises have near-zero mean over time (if expectations are good), and their *covariance* captures correlated macro shocks, not correlated trends.
+
+---
+
+#### Implementation: `SurpriseTransformer`
+
+**File:** `src/DataProcessors/SurpriseTransformer.hpp`
+
 ```cpp
 struct IndicatorSurprise {
     std::vector<double> surprises;      // ε_t (should be mean ≈ 0)
     std::vector<double> rawValues;      // X_t
     std::vector<double> expectations;   // E[X_t]
-    std::string dataSource;              // "survey", "ar1", "previous", "none"
-    bool isValidated;                    // mean(ε) close to 0?
+    std::string expectationSource;      // "survey", "ar1_forecast", "previous"
+    bool isValidated;                   // mean(ε) close to 0?
 };
 
 class SurpriseTransformer {
 public:
-    // Convert levels → surprises for each indicator
-    static IndicatorSurprise transformToSurprise(
+    // Core method: convert levels → surprises
+    static IndicatorSurprise extractSurprise(
         const std::vector<double>& levels,
         const std::string& indicator,
         int lookbackMonths = 12
     );
 
-    // Validate zero-mean property
-    static bool validateSurprise(const IndicatorSurprise& surprise);
-
-    // Load survey expectations from CSV/JSON (CPI consensus, NFP, etc.)
-    static std::vector<double> loadSurveyExpectations(const std::string& indicator);
+    // Validate that surprises have zero mean
+    // (If not, expectations were systematically biased)
+    static bool validateZeroMean(
+        const IndicatorSurprise& surprise,
+        double tolerance = 0.05
+    );
 
 private:
-    // AR(1) forecast: forecast next value based on past 12 months
-    static double forecastAR1(const std::vector<double>& historicalValues);
+    // Expectation sources (tried in order):
+    // 1. Survey consensus (Bloomberg, Wall Street Journal median)
+    // 2. AR(1) rolling forecast (if no survey)
+    // 3. Previous release (for low-frequency data like CPI)
+    // 4. Zero (first data point)
+
+    static std::vector<double> loadSurveyExpectations(const std::string& indicator);
+    static double forecastAR1(const std::vector<double>& history);
 };
 ```
 
-#### File: `src/DataProcessors/SurpriseTransformer.cpp`
+**File:** `src/DataProcessors/SurpriseTransformer.cpp`
 
-**Key logic:**
+**Core logic:**
 
 ```cpp
-IndicatorSurprise SurpriseTransformer::transformToSurprise(
+IndicatorSurprise SurpriseTransformer::extractSurprise(
     const std::vector<double>& levels,
     const std::string& indicator,
     int lookbackMonths)
@@ -86,28 +144,27 @@ IndicatorSurprise SurpriseTransformer::transformToSurprise(
     result.expectations.resize(levels.size());
 
     for (size_t i = 0; i < levels.size(); i++) {
-        // Try survey first, then AR(1), then previous, then zero
         double expected = 0.0;
         std::string source = "none";
 
-        // 1. Check if survey data exists for this indicator at time i
-        auto surveyExp = loadSurveyExpectations(indicator);
-        if (i < surveyExp.size() && surveyExp[i] != 0) {
-            expected = surveyExp[i];
+        // 1. Try survey data first (most accurate market expectations)
+        auto surveyData = loadSurveyExpectations(indicator);
+        if (i < surveyData.size() && surveyData[i] != 0) {
+            expected = surveyData[i];
             source = "survey";
         }
-        // 2. Otherwise, use AR(1) forecast from previous 12 months
-        else if (i >= 12) {
+        // 2. Fall back to AR(1) forecast (self-generating expectations)
+        else if (i >= lookbackMonths) {
             std::vector<double> history(levels.begin(), levels.begin() + i);
             expected = forecastAR1(history);
-            source = "ar1";
+            source = "ar1_forecast";
         }
-        // 3. Or use previous release (for low-frequency data like CPI)
+        // 3. Or use previous release (crude but works for sticky data)
         else if (i > 0) {
             expected = levels[i - 1];
             source = "previous";
         }
-        // 4. Else zero (for first release)
+        // 4. Default to zero
         else {
             expected = 0.0;
             source = "none";
@@ -117,19 +174,19 @@ IndicatorSurprise SurpriseTransformer::transformToSurprise(
         result.surprises[i] = levels[i] - expected;
     }
 
-    // Validate zero-mean
+    // Check zero-mean property
     double mean = 0.0;
     for (double s : result.surprises) mean += s;
     mean /= result.surprises.size();
-    result.isValidated = (std::abs(mean) < 0.01);  // Allow small bias
+    result.isValidated = (std::abs(mean) < 0.05);
+    result.expectationSource = source;
 
-    result.dataSource = source;
     return result;
 }
 
 double SurpriseTransformer::forecastAR1(const std::vector<double>& history) {
-    // Simple AR(1): forecast = α + β * last_value
-    // For robustness, use rolling regression on past 12 months
+    // AR(1): X_t = α + β X_{t-1} + noise
+    // Estimated via rolling regression on past 12 months
     if (history.size() < 2) return 0.0;
 
     double sumXY = 0.0, sumX2 = 0.0, meanX = 0.0, meanY = 0.0;
@@ -151,298 +208,316 @@ double SurpriseTransformer::forecastAR1(const std::vector<double>& history) {
 
     double beta = (sumX2 > 1e-10) ? sumXY / sumX2 : 0.0;
     double alpha = meanY - beta * meanX;
-
     return alpha + beta * history.back();
 }
 ```
 
-#### File: `test/SurpriseTransformerUnitTest.cpp`
+**Why this matters:**
+
+This single step fixes the biggest weakness in the current system:
+- Separates trends (slow-moving levels) from shocks (surprises)
+- Enables covariance to capture *correlated macro shocks*, not correlated drifts
+- Proves whether expectations were rational (zero-mean surprises)
+- Serves as input to all downstream analysis
 
 **Unit tests (target: 15+ tests):**
 
 ```cpp
+// Surprises should be zero-mean (if expectations were rational)
 TEST(SurpriseTransformerTest, ZeroMeanProperty) {
-    // Surprises should have mean ≈ 0
-    std::vector<double> levels = {100, 102, 101, 103, 99, 104};
-    auto surprise = SurpriseTransformer::transformToSurprise(levels, "test");
+    std::vector<double> levels = {100, 102, 101, 103, 99, 104, 102, 105};
+    auto surprise = SurpriseTransformer::extractSurprise(levels, "test");
 
     double mean = 0.0;
     for (auto s : surprise.surprises) mean += s;
     mean /= surprise.surprises.size();
 
-    EXPECT_NEAR(mean, 0.0, 0.1);
+    EXPECT_NEAR(mean, 0.0, 0.05);
     EXPECT_TRUE(surprise.isValidated);
 }
 
-TEST(SurpriseTransformerTest, AR1Forecast) {
+// AR(1) forecast should be reasonable
+TEST(SurpriseTransformerTest, AR1ForecastIsRational) {
     std::vector<double> levels = {100, 101, 102, 103, 104, 105};
-    auto surprise = SurpriseTransformer::transformToSurprise(levels, "test");
+    auto surprise = SurpriseTransformer::extractSurprise(levels, "test");
 
-    // AR(1) should forecast 106 (roughly)
-    EXPECT_NEAR(surprise.expectations.back(), 105.5, 1.0);
+    // Uptrend → AR(1) should forecast ~106
+    EXPECT_GT(surprise.expectations.back(), 105.0);
 }
 
-TEST(SurpriseTransformerTest, SurveyExpectation) {
-    // If survey says CPI expected 3.0%, actual 3.1%
-    // Surprise should be +0.1%
-    // (requires mock survey data)
+// Validation should fail for strongly biased expectations
+TEST(SurpriseTransformerTest, ValidationFailsOnBias) {
+    std::vector<double> levels = {1000, 1001, 1002, 1003, 1004, 1005};
+    auto surprise = SurpriseTransformer::extractSurprise(levels, "test");
+    EXPECT_FALSE(surprise.isValidated);  // Strongly trending, not zero-mean
 }
 
-TEST(SurpriseTransformerTest, ValidationFails) {
-    // Highly biased data should fail validation
-    std::vector<double> levels = {1000, 1001, 1002, 1003, 1004};
-    auto surprise = SurpriseTransformer::transformToSurprise(levels, "test");
-    EXPECT_FALSE(surprise.isValidated);
+// Survey data should be preferred over AR(1)
+TEST(SurpriseTransformerTest, SurveyTakesPrecedence) {
+    // Mock: CPI actual 3.1%, survey expected 3.5%, AR(1) predicted 3.0%
+    // Surprise should be −0.4% (vs actual − survey), not +0.1%
 }
 ```
 
-**Integration:**
-- Update `MultiVarAnalysisWorkflow.cpp` to use `SurpriseTransformer`
-- Replace covariance on levels with covariance on surprises
-- Store both levels and surprises for debugging
+---
+
+## Phase 2: Macro Factor Discovery (INTERPRETABILITY)
+
+### Why Factor Decomposition Matters
+
+The 8×8 covariance matrix of surprises has 36 unique entries. That's noise and overfitting.
+
+Economic theory says 3–4 factors drive everything:
+- **Growth:** Impacts GDP, employment, sentiment; inverse on unemployment
+- **Inflation:** CPI, wage pressure; inverse on real rates
+- **Policy:** Fed funds, central bank actions; directly impacts spreads
+- **Volatility:** VIX shocks; tail risk
+
+This phase **compresses 8 dimensions → 3–4 factors** without losing signal.
 
 ---
 
-### Step 1.5: Macro Factor Decomposition ⏳ FUTURE (after 1.4)
+### Step 2.1: Surprise-Based Factor Decomposition ⏳ **AFTER 1.2**
 
-**Objective:** Decompose 8×8 surprise covariance into 3–4 interpretable factors.
+**Goal:** PCA on surprise covariance → interpretable macro risk factors.
 
-**Why this matters:**
-- 8×8 covariance has 36 unique entries (overfitting-prone)
-- Economic theory suggests 3–4 factors drive everything
-- PCA extracts factors automatically; economic labeling makes them interpretable
-
-**Implementation:**
-
-#### File: `src/DataProcessors/MacroFactorModel.hpp`
+**Deliverable:**
 
 ```cpp
 struct MacroFactors {
-    std::vector<Eigen::VectorXd> factors;           // Factor time series (K × T)
-    Eigen::MatrixXd loadings;                       // B matrix (8 × K)
-    std::vector<double> factorVariances;            // Var(factor_k)
-    std::vector<std::string> factorLabels;          // e.g., "Growth", "Inflation"
-    double cumulativeVarianceExplained;             // % of total variance
-    Eigen::MatrixXd residualCovariance;             // Σ_ε (8 × 8)
+    std::vector<Eigen::VectorXd> factors;           // 3–4 factor time series
+    Eigen::MatrixXd loadings;                       // Which indicators load on which factors
+    std::vector<double> factorVariances;            // % of total variance per factor
+    std::vector<std::string> factorLabels;          // "Growth", "Inflation", "Policy", "Volatility"
+    double cumulativeVarianceExplained;             // Should be >70%
 };
+```
 
+**Implementation outline:**
+
+```cpp
 class MacroFactorModel {
 public:
     // Decompose surprise covariance using PCA
-    static MacroFactors decomposeCovariance(
+    static MacroFactors decomposeSurpriseCovariance(
         const CovarianceMatrix& surpriseCov,
         int numFactors = 3
     );
 
-    // Label factors economically based on loadings
-    static std::string labelFactor(
+    // Economically label factors based on loadings
+    // (Which indicators have highest weights?)
+    static std::string labelFactorEconomically(
         const Eigen::VectorXd& loading,
         const std::vector<std::string>& indicatorNames
     );
 
-    // Rolling-window factor decomposition (for regime tracking)
-    static std::vector<MacroFactors> rollingDecomposition(
-        const std::map<std::string, std::vector<double>>& alignedSurprises,
+    // Rolling-window decomposition for regime tracking
+    static std::vector<MacroFactors> rollingFactorDecomposition(
+        const std::map<std::string, std::vector<double>>& surprises,
         int windowMonths = 12,
         int numFactors = 3
     );
 };
 ```
 
-#### File: `src/DataProcessors/MacroFactorModel.cpp`
+**Why this matters:**
 
-**Key logic (PCA via Eigen):**
+Traders and risk managers don't hedge "GDP × unemployment × sentiment."
 
-```cpp
-MacroFactors MacroFactorModel::decomposeCovariance(
-    const CovarianceMatrix& surpriseCov,
-    int numFactors)
-{
-    MacroFactors result;
+They hedge **growth risk**: "We're long equities, short growth."
 
-    Eigen::MatrixXd cov = surpriseCov.getMatrix();
-    auto indicatorNames = surpriseCov.getIndicatorNames();
-
-    // Compute eigendecomposition
-    Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> solver(cov);
-
-    Eigen::VectorXd eigenvalues = solver.eigenvalues().reverse();  // Descending
-    Eigen::MatrixXd eigenvectors = solver.eigenvectors().rowwise().reverse();
-
-    // Extract top K factors
-    Eigen::MatrixXd topEigenvectors = eigenvectors.leftCols(numFactors);
-    Eigen::VectorXd topEigenvalues = eigenvalues.head(numFactors);
-
-    // Loadings: B = U * sqrt(Λ)
-    result.loadings = topEigenvectors * topEigenvalues.cwiseSqrt().asDiagonal();
-    result.factorVariances = topEigenvalues.head(numFactors).reshaped<Eigen::RowMajor>().eval();
-
-    // Label factors
-    for (int k = 0; k < numFactors; k++) {
-        std::string label = labelFactor(result.loadings.col(k), indicatorNames);
-        result.factorLabels.push_back(label);
-    }
-
-    // Cumulative variance explained
-    double totalVar = eigenvalues.sum();
-    result.cumulativeVarianceExplained = topEigenvalues.sum() / totalVar;
-
-    // Residual covariance: Σ_ε = Σ - B B^T
-    result.residualCovariance = cov - result.loadings * result.loadings.transpose();
-
-    return result;
-}
-
-std::string MacroFactorModel::labelFactor(
-    const Eigen::VectorXd& loading,
-    const std::vector<std::string>& indicatorNames)
-{
-    // Heuristic: sort by absolute loading magnitude
-    // Growth: high on GDP, unemployment↓, sentiment; low on inflation, policy
-    // Inflation: high on CPI; low on unemployment
-    // Policy: high on Fed Funds, spreads
-    // Volatility: high on VIX
-
-    std::map<std::string, double> loadingMap;
-    for (size_t i = 0; i < indicatorNames.size(); i++) {
-        loadingMap[indicatorNames[i]] = loading(i);
-    }
-
-    // Score each factor type
-    double growthScore = 0.0, inflationScore = 0.0, policyScore = 0.0, volScore = 0.0;
-
-    if (loadingMap.count("gdp")) growthScore += loadingMap["gdp"];
-    if (loadingMap.count("unemployment")) growthScore -= loadingMap["unemployment"];
-    if (loadingMap.count("sentiment")) growthScore += loadingMap["sentiment"];
-
-    if (loadingMap.count("inflation")) inflationScore += loadingMap["inflation"];
-    if (loadingMap.count("cpi")) inflationScore += loadingMap["cpi"];
-
-    if (loadingMap.count("fed_funds")) policyScore += loadingMap["fed_funds"];
-
-    if (loadingMap.count("vix")) volScore += loadingMap["vix"];
-
-    // Return label with highest score
-    if (std::abs(volScore) > std::max({std::abs(growthScore), std::abs(inflationScore), std::abs(policyScore)})) {
-        return "Volatility";
-    }
-    if (std::abs(inflationScore) > std::max({std::abs(growthScore), std::abs(policyScore)})) {
-        return "Inflation";
-    }
-    if (std::abs(policyScore) > std::abs(growthScore)) {
-        return "Policy";
-    }
-    return "Growth";
-}
-```
-
-#### File: `test/MacroFactorModelUnitTest.cpp`
-
-**Unit tests (target: 12+ tests):**
-
-```cpp
-TEST(MacroFactorModelTest, DecomposeCovariance) {
-    // Create mock 8x8 covariance (known structure)
-    CovarianceMatrix cov = createMockCov();
-
-    MacroFactors factors = MacroFactorModel::decomposeCovariance(cov, 3);
-
-    // Should have 3 factors
-    EXPECT_EQ(factors.loadings.cols(), 3);
-    EXPECT_EQ(factors.factorLabels.size(), 3);
-
-    // Variance explained should be >70% for 3 factors
-    EXPECT_GT(factors.cumulativeVarianceExplained, 0.7);
-}
-
-TEST(MacroFactorModelTest, FactorOrthogonality) {
-    MacroFactors factors = MacroFactorModel::decomposeCovariance(cov, 3);
-
-    // Factors should be approximately orthogonal
-    for (int i = 0; i < 3; i++) {
-        for (int j = i + 1; j < 3; j++) {
-            double dot = factors.loadings.col(i).dot(factors.loadings.col(j));
-            EXPECT_NEAR(dot, 0.0, 1e-6);
-        }
-    }
-}
-
-TEST(MacroFactorModelTest, FactorLabels) {
-    MacroFactors factors = MacroFactorModel::decomposeCovariance(cov, 3);
-
-    // Labels should be one of: Growth, Inflation, Policy, Volatility
-    for (const auto& label : factors.factorLabels) {
-        EXPECT_TRUE(label == "Growth" || label == "Inflation" ||
-                    label == "Policy" || label == "Volatility");
-    }
-}
-```
+This phase translates noisy correlations into business language.
 
 ---
 
-## Phase 2: Risk Attribution (FUTURE)
+## Phase 3: Portfolio Risk Attribution (THE MONEY QUESTION)
 
-### Phase 2.5: Portfolio Risk Decomposition ⏳ AFTER 1.5
+### Why Risk Attribution Wins
 
-**Objective:** Explain ES drawdowns using factor exposure.
+After a 5% drawdown, a PM asks: *"Was that a growth shock? Inflation shock? Volatility? Policy?"*
 
-**Key output:**
+A system that answers this has real value. It explains history and informs future positioning.
+
+---
+
+### Step 3.1: Factor-Based Risk Decomposition ⏳ **AFTER 2.1**
+
+**Goal:** Explain portfolio volatility and drawdowns via macro shocks.
+
+**Core equation:**
 ```
 Risk Contribution_k = w^T B_k Σ_{f,k} B_k^T w
 ```
 
-**Questions answered:**
-- How much of ES risk comes from growth shocks?
-- How much from inflation shocks?
-- Which factors dominated 2008? 2020? 2022 drawdowns?
+Where:
+- **w** = ES portfolio weights (long/short exposure + cash)
+- **B_k** = Factor loadings (how much does each indicator expose to factor k?)
+- **Σ_{f,k}** = Factor k volatility
+- **RC_k** = Risk contribution from factor k
+
+**What this enables:**
+
+1. **Post-mortem drawdown decomposition:**
+   - 2008: Growth collapse (GDP shock) + credit tightening (policy shock)
+   - 2020: Volatility spike (VIX shock) + policy emergency response
+   - 2022: Inflation shock (CPI surprise) → policy tightening (rate shock)
+
+2. **Risk awareness before the shock:**
+   - "Current portfolio is 60% exposed to growth shocks, 30% inflation, 10% policy"
+   - "If growth shocks spike 2σ, we lose X% of equity"
+   - Allows *ex-ante* position sizing
+
+3. **Regime-specific risk:**
+   - Inflation regime: Growth shocks are benign, inflation shocks are lethal
+   - Tightening regime: Policy shocks dominate
+   - Easing regime: Growth shocks matter most
 
 **Implementation outline:**
-- `src/Analysis/PortfolioRiskAnalyzer.cpp/hpp`
-- Compute time-varying risk attribution
-- Compare crisis periods (2008, 2020, 2022)
-- Generate regime heatmaps
+
+```cpp
+class PortfolioRiskAnalyzer {
+public:
+    // Decompose portfolio risk by factor
+    struct RiskDecomposition {
+        std::vector<double> factorRiskContributions;  // % of total risk per factor
+        std::vector<std::string> factorLabels;
+        double totalPortfolioRisk;
+    };
+
+    static RiskDecomposition analyzeRisk(
+        const Eigen::VectorXd& weights,              // ES position + cash
+        const MacroFactors& factors,
+        const CovarianceMatrix& surpriseCov
+    );
+
+    // Crisis case studies: what factors drove losses?
+    static RiskDecomposition crisesComparison(
+        const std::vector<double>& returnsTo2008,   // Historical ES returns
+        const std::vector<double>& returnsTo2020,
+        const std::vector<double>& returnsTo2022,
+        const std::vector<MacroFactors>& factorsOverTime
+    );
+
+    // Risk dashboard: time-varying factor exposure
+    static std::vector<RiskDecomposition> rollingRiskDecomposition(
+        const Eigen::VectorXd& weights,
+        const std::vector<MacroFactors>& factorsOverTime,
+        int windowMonths = 12
+    );
+};
+```
+
+**Why this matters:**
+
+This is where the system becomes *actionable*. It's not just analytics—it's risk intelligence.
 
 ---
 
-## Phase 3: Trading System (FUTURE)
+## Phase 4: Factor-Aware Positioning (OPTIONAL, STRATEGIC)
 
-### Phase 3.0: ES Positioning Based on Factor Exposure ⏳ AFTER 2.5
+### Step 4.1: Risk-Constrained ES Exposure ⏳ **AFTER 3.1**
 
-**Objective:** Build ES trading strategy that respects factor structure.
+**Goal:** Position sizing that respects macro regime and factor exposure.
 
-**Key idea:**
-- Don't size by raw Frobenius norm
-- Size based on factor exposures (growth, inflation, policy)
-- Reduce size during high-volatility regimes
-- Hedge inflation risk during tightening cycles
+**NOT a signal engine.** This is risk management.
+
+**Principle:**
+- Size ES exposure conditional on factor volatility
+- Reduce size during high-uncertainty regimes (multiple factors elevated)
+- Explicitly hedge identified factor risks (e.g., buy inflation protection during tightening)
+- Answer: *"How much ES should we own given current macro risk?"*
+
+**Example sizing rule:**
+
+```
+ES Position = Base Size × (1 / Factor Volatility Multiplier)
+
+Where Factor Volatility Multiplier =
+    (1 + w_growth × Vol_growth + w_inflation × Vol_inflation + ...)
+```
+
+If growth shocks are 2σ high, reduce size. Simple.
 
 ---
 
-## Summary: Next Steps
+## What This Signals to Hiring Teams
 
-| Step | Focus | Complexity | Impact | Timeline |
-|------|-------|-----------|--------|----------|
-| **1.4** | Extract surprises (AR1, survey) | Medium | **Huge** (fixes levels problem) | 2–3 days |
-| **1.5** | PCA factor decomposition | Medium | **High** (makes covariance interpretable) | 3–4 days |
-| **2.5** | Risk attribution (backtesting) | Medium | **High** (explains returns) | 4–5 days |
-| **3.0** | Factor-aware trading | High | **Depends on 2.5** | 5–7 days |
+**Implicit:** Without saying it explicitly, this system demonstrates:
 
-**Recommendation:** Do 1.4 → 1.5 → 2.5 in sequence. Each unlocks the next.
+✅ You understand macro shocks vs trends (levels vs surprises)
+
+✅ You think in factors and regimes, not signals
+
+✅ You care about drawdowns and tail risk, not Sharpe cosplay
+
+✅ You can explain risk in language traders use ("growth shock", "inflation regime")
+
+✅ You build systems that survive regime shifts
+
+✅ You prioritize interpretability over black boxes
+
+**That** is what elite macro, quant, and risk teams look for.
 
 ---
 
-## Code References
+## Timeline & Complexity
 
-- `src/DataProcessors/CovarianceCalculator.cpp` (existing, will wrap with surprises)
-- `src/MultiVarAnalysisWorkflow.cpp` (will orchestrate surprise pipeline)
-- `test/` (new: SurpriseTransformerUnitTest, MacroFactorModelUnitTest)
+| Phase | Step | Focus | Complexity | Impact | Est. Time |
+|-------|------|-------|-----------|--------|-----------|
+| 0 | 1.1 | Data backbone + covariance | ✅ Complete | Foundation | Done |
+| 1 | **1.2** | **Surprise extraction** | Medium | **Huge** (fixes core problem) | 2–3 days |
+| 2 | **2.1** | **PCA factor decomposition** | Medium | **High** (interpretability) | 3–4 days |
+| 3 | **3.1** | **Risk attribution** | Medium | **Very High** (explainability) | 4–5 days |
+| 4 | **4.1** | **Risk-aware sizing** | Medium | Depends on 3.1 | 2–3 days |
+
+**Recommendation:** 1.2 → 2.1 → 3.1 in strict sequence. Each unlocks the next.
+
+---
+
+## What Winning Looks Like
+
+After step 3.1, you can say:
+
+> *"On March 2020, ES dropped 10% because markets repriced growth expectations (−2σ GDP shock) while simultaneously experiencing a volatility spike (VIX shock). Our system predicted that exposure ex-ante and sized accordingly."*
+
+After step 4.1:
+
+> *"We monitor factor volatility in real-time and adjust ES position size to target constant risk-adjusted exposure. During the 2022 inflation shock, we automatically reduced size to avoid drawn-down scenarios."*
+
+That's a system that trades firms pay for.
+
+---
+
+## Code Structure
+
+```
+src/DataProcessors/
+  ├── SurpriseTransformer.cpp/hpp         (Step 1.2)
+  ├── MacroFactorModel.cpp/hpp            (Step 2.1)
+  └── PortfolioRiskAnalyzer.cpp/hpp       (Step 3.1)
+
+test/
+  ├── SurpriseTransformerUnitTest.cpp     (15+ tests)
+  ├── MacroFactorModelUnitTest.cpp        (12+ tests)
+  └── PortfolioRiskAnalyzerUnitTest.cpp   (10+ tests)
+```
 
 ---
 
 ## Success Criteria
 
-- [ ] SurpriseTransformer validates surprises have mean ≈ 0
-- [ ] MacroFactorModel reduces 8×8 → 3-4 factors with >70% variance explained
-- [ ] PortfolioRiskAnalyzer explains past drawdowns
-- [ ] All unit tests pass (20+ new tests)
-- [ ] README remains public-facing; ROADMAP contains implementation detail
+- [ ] **Step 1.2:** Surprises validate zero-mean; source attribution works
+- [ ] **Step 2.1:** 3–4 factors explain >70% variance; labels are economically sensible
+- [ ] **Step 3.1:** Can explain 2008, 2020, 2022 drawdowns by factor
+- [ ] **Step 4.1:** Risk-aware sizing reduces drawdowns vs. static sizing
+- [ ] **All:** 40+ new unit tests; no API keys required for testing
+
+---
+
+## Next Move
+
+Start with **Step 1.2: Macro Surprise Extraction.**
+
+This single step upgrades your project more than any other piece of work.
+
+It changes the framing from *"macro analytics library"* to *"macro shock detection system."*
