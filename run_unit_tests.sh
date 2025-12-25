@@ -60,6 +60,15 @@ g++ $CXX_FLAGS $INCLUDES \
     $LIBS $GTEST_LIBS \
     -o test_surprise_transformer_unit || { echo "❌ Failed to compile SurpriseTransformer unit tests"; exit 1; }
 
+echo "6. Compiling MacroFactorModel unit tests..."
+MACRO_FACTOR_MODEL="src/DataProcessors/MacroFactorModel.cpp"
+g++ $CXX_FLAGS $INCLUDES \
+    $MACRO_FACTOR_MODEL \
+    $COVARIANCE_CALC \
+    test/MacroFactorModelUnitTest.cpp \
+    $LIBS $GTEST_LIBS \
+    -o test_macro_factor_model_unit || { echo "❌ Failed to compile MacroFactorModel unit tests"; exit 1; }
+
 echo ""
 echo "✅ All unit tests compiled successfully!"
 echo ""
@@ -88,6 +97,10 @@ echo "--- SurpriseTransformer Unit Tests ---"
 ./test_surprise_transformer_unit || { echo "❌ SurpriseTransformer unit tests failed"; exit 1; }
 
 echo ""
+echo "--- MacroFactorModel Unit Tests ---"
+./test_macro_factor_model_unit || { echo "❌ MacroFactorModel unit tests failed"; exit 1; }
+
+echo ""
 echo "========================================="
 echo "✅ ALL UNIT TESTS PASSED!"
 echo "========================================="
@@ -102,9 +115,10 @@ echo "  ✅ Value range validation"
 echo "  ✅ DataAligner (frequency alignment, downsampling, interpolation)"
 echo "  ✅ CovarianceCalculator (8x8 matrix, Frobenius norm, symmetry)"
 echo "  ✅ SurpriseTransformer (AR(1) forecasting, zero-mean validation)"
-echo "  ✅ Error handling"
+echo "  ✅ MacroFactorModel (PCA decomposition, archetype matching, stability tracking)"
+echo "  ✅ Error handling and edge cases"
 echo ""
-echo "Total: 100+ unit test cases"
+echo "Total: 125+ unit test cases"
 echo ""
 echo "To run integration tests (requires API keys):"
 echo "  export FRED_API_KEY=\"your_fred_api_key\""
