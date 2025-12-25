@@ -1,0 +1,57 @@
+# Build environment for AWS Lambda
+# Uses Amazon Linux 2 (same as Lambda runtime)
+
+FROM public.ecr.aws/lambda/provided:al2 as builder
+
+# Install build tools
+RUN yum install -y \
+    gcc-c++ \
+    cmake \
+    git \
+    curl-devel \
+    openssl-devel \
+    zlib-devel \
+    make && \
+    yum clean all
+
+# Install Eigen
+RUN yum install -y eigen3-devel && yum clean all
+
+# Install nlohmann-json headers
+RUN mkdir -p /usr/local/include && \
+    curl -L https://github.com/nlohmann/json/releases/download/v3.11.2/json.hpp -o /usr/local/include/json.hpp
+
+# Copy AWS SDK installation (must be available locally)
+COPY aws-sdk-cpp-install /opt/aws-sdk-cpp-install
+
+# Set up build environment
+ENV CMAKE_PREFIX_PATH=/opt/aws-sdk-cpp-install
+
+# Copy source
+WORKDIR /build
+COPY . .
+
+# Build the project
+RUN cd src && \
+    mkdir -p build && \
+    cd build && \
+    cmake .. \
+      -DCMAKE_PREFIX_PATH=/opt/aws-sdk-cpp-install \
+      -DCMAKE_BUILD_TYPE=Release && \
+    make -j4
+
+# Runtime stage - minimal image
+FROM public.ecr.aws/lambda/provided:al2
+
+# Copy built binary from builder
+COPY --from=builder /build/src/build/InvertedYieldCurveTrader ${LAMBDA_TASK_ROOT}/
+
+# Copy shared libraries
+COPY --from=builder /opt/aws-sdk-cpp-install/lib/*.dylib* ${LAMBDA_TASK_ROOT}/lib/ 2>/dev/null || true
+COPY --from=builder /opt/aws-sdk-cpp-install/lib/*.so* ${LAMBDA_TASK_ROOT}/lib/ 2>/dev/null || true
+
+# Set Lambda handler
+ENV LD_LIBRARY_PATH=${LAMBDA_TASK_ROOT}/lib:$LD_LIBRARY_PATH
+
+# Default command
+CMD ["./InvertedYieldCurveTrader", "covariance"]

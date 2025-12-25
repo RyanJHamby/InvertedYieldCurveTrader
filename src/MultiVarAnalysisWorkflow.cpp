@@ -6,17 +6,14 @@
 //
 
 #include <aws/core/Aws.h>
-#include <aws/athena/AthenaClient.h>
+#include <aws/s3/S3Client.h>
+#include <aws/s3/model/PutObjectRequest.h>
 #include <nlohmann/json.hpp>
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <ctime>
 #include <aws/core/auth/AWSCredentialsProviderChain.h>
-#include <aws/dynamodb/DynamoDBClient.h>
-#include <aws/dynamodb/model/PutItemRequest.h>
-#include <aws/dynamodb/model/GetItemRequest.h>
-#include <aws/dynamodb/model/AttributeValue.h>
-#include <aws/athena/model/StartQueryExecutionRequest.h>
-#include <aws/athena/model/ResultConfiguration.h>
 #include "DataProcessors/InflationDataProcessor.hpp"
 #include "DataProcessors/GDPDataProcessor.hpp"
 #include "DataProcessors/InterestRateDataProcessor.hpp"
@@ -32,8 +29,11 @@
 #include "DataProcessors/VIXDataProcessor.hpp"
 #include "DataProcessors/SurpriseTransformer.hpp"
 #include "DataProcessors/MacroFactorModel.hpp"
-#include "AwsClients/DynamoDBClient.hpp"
+#include "DataProcessors/PortfolioRiskAnalyzer.hpp"
+#include "DataProcessors/PositionSizer.hpp"
 #include "Utils/Date.hpp"
+#include "Utils/Logger.hpp"
+#include "Utils/SecretsManager.hpp"
 
 using json = nlohmann::json;
 using namespace Aws;
@@ -63,20 +63,26 @@ int main(int argc, char **argv) {
             // Step 2.1: Decompose surprise covariance into macro factors (Growth, Inflation, Policy, Volatility)
 
             try {
+                Logger::info("Analysis started", {
+                    {"phase", "1"},
+                    {"mode", "covariance"},
+                    {"timestamp", std::time(nullptr)}
+                });
+
                 // Fetch all 8 economic indicators
                 std::map<std::string, std::vector<double>> rawData;
 
-                // Get API keys from environment (or constants)
-                const char* fredApiKey = std::getenv("FRED_API_KEY");
-                const char* alphaVantageKey = std::getenv("ALPHA_VANTAGE_API_KEY");
-
-                if (!fredApiKey || !alphaVantageKey) {
-                    std::cerr << "Error: FRED_API_KEY and ALPHA_VANTAGE_API_KEY environment variables must be set" << std::endl;
+                // Get API keys securely
+                std::map<std::string, std::string> secrets;
+                try {
+                    secrets = SecretsManager::getAllSecrets();
+                } catch (const std::exception& e) {
+                    Logger::critical("Failed to retrieve API keys", e);
                     return 1;
                 }
 
-                std::string fredKeyStr(fredApiKey);
-                std::string alphaKeyStr(alphaVantageKey);
+                std::string fredKeyStr = secrets["fred_api_key"];
+                std::string alphaKeyStr = secrets["alpha_vantage_api_key"];
 
                 std::cout << "=========================================" << std::endl;
                 std::cout << "PHASE 1: Macro Surprise-Driven Analysis" << std::endl;
@@ -85,26 +91,36 @@ int main(int argc, char **argv) {
 
                 // STEP 1: Fetch all 8 economic indicators
                 std::cout << "Step 1: Fetching all 8 economic indicators..." << std::endl;
+                Logger::info("Fetching economic indicators");
 
-                InflationDataProcessor inflationProcessor;
-                FedFundsProcessor fedFundsProcessor;
-                UnemploymentProcessor unemploymentProcessor;
-                ConsumerSentimentProcessor sentimentProcessor;
-                GDPDataProcessor gdpProcessor;
-                InterestRateDataProcessor interestRateProcessor;
-                InvertedYieldDataProcessor invertedYieldProcessor;
-                VIXDataProcessor vixProcessor;
+                try {
+                    InflationDataProcessor inflationProcessor;
+                    FedFundsProcessor fedFundsProcessor;
+                    UnemploymentProcessor unemploymentProcessor;
+                    ConsumerSentimentProcessor sentimentProcessor;
+                    GDPDataProcessor gdpProcessor;
+                    InterestRateDataProcessor interestRateProcessor;
+                    InvertedYieldDataProcessor invertedYieldProcessor;
+                    VIXDataProcessor vixProcessor;
 
-                rawData["inflation"] = inflationProcessor.process(fredKeyStr, 10);
-                rawData["fed_funds"] = fedFundsProcessor.process(fredKeyStr, 12);
-                rawData["unemployment"] = unemploymentProcessor.process(fredKeyStr, 12);
-                rawData["consumer_sentiment"] = sentimentProcessor.process(fredKeyStr, 12);
-                rawData["gdp"] = gdpProcessor.process(fredKeyStr, 8);
+                    rawData["inflation"] = inflationProcessor.process(fredKeyStr, 10);
+                    rawData["fed_funds"] = fedFundsProcessor.process(fredKeyStr, 12);
+                    rawData["unemployment"] = unemploymentProcessor.process(fredKeyStr, 12);
+                    rawData["consumer_sentiment"] = sentimentProcessor.process(fredKeyStr, 12);
+                    rawData["gdp"] = gdpProcessor.process(fredKeyStr, 8);
 
-                invertedYieldProcessor.process(fredKeyStr);
-                rawData["inverted_yield"] = invertedYieldProcessor.getRecentValues();
+                    invertedYieldProcessor.process(fredKeyStr);
+                    rawData["inverted_yield"] = invertedYieldProcessor.getRecentValues();
 
-                rawData["vix"] = vixProcessor.process(alphaKeyStr, 30);
+                    rawData["vix"] = vixProcessor.process(alphaKeyStr, 30);
+
+                    Logger::info("Data fetch successful", {
+                        {"indicators_fetched", rawData.size()}
+                    });
+                } catch (const std::exception& e) {
+                    Logger::error("Data fetch failed", e);
+                    return 1;
+                }
 
                 std::cout << "✓ Fetched " << rawData.size() << " indicators" << std::endl;
                 std::cout << std::endl;
@@ -183,126 +199,244 @@ int main(int argc, char **argv) {
                     std::cout << std::endl;
                 }
 
-                // Write results to file
-                std::ofstream outputFile("./output.txt");
-                if (!outputFile.is_open()) {
-                    std::cerr << "Failed to open the file for writing." << std::endl;
-                    return 1;
+                // PHASE 2: Risk Attribution and Position Sizing
+                std::cout << std::endl;
+                std::cout << "=========================================" << std::endl;
+                std::cout << "PHASE 2: Risk Attribution & Position Sizing" << std::endl;
+                std::cout << "=========================================" << std::endl;
+                std::cout << std::endl;
+
+                // STEP 6: Analyze ES portfolio risk attribution (Step 3.1)
+                std::cout << "Step 6 (3.1): Computing ES portfolio risk attribution..." << std::endl;
+                std::cout << "  RC_k = γ_k (Σ_f γ)_k  (exact risk contribution formula)" << std::endl;
+                std::cout << std::endl;
+
+                // Create ES portfolio sensitivities (typical ES exposure pattern)
+                // ES is: positive to growth, negative to volatility/risk-off signals
+                Eigen::VectorXd esPortfolioBeta(factors.indicatorNames.size());
+                esPortfolioBeta(0) = 0.3;   // fed_funds: tightening bad for ES
+                esPortfolioBeta(1) = -0.5;  // unemployment: falling is good
+                esPortfolioBeta(2) = 0.4;   // sentiment: positive
+                esPortfolioBeta(3) = 0.6;   // GDP: strong growth good
+                esPortfolioBeta(4) = -0.2;  // inflation: high inflation hurts valuations
+                esPortfolioBeta(5) = -0.1;  // treasury_10y: slightly negative
+                esPortfolioBeta(6) = -0.8;  // VIX: strong negative
+                if (factors.indicatorNames.size() > 7) {
+                    esPortfolioBeta(7) = -0.7;  // MOVE: negative
                 }
 
-                // Write summary (Frobenius norm + factor labels for downstream use)
-                outputFile << frobenius << std::endl;
-                for (int k = 0; k < factors.numFactors; k++) {
-                    outputFile << factors.factorLabels[k] << ":" << factors.labelConfidences[k] << std::endl;
+                RiskDecomposition portfolioRisk = PortfolioRiskAnalyzer::analyzeRisk(esPortfolioBeta, factors);
+
+                std::cout << "Portfolio Total Risk (Daily Vol): " << portfolioRisk.totalRisk << std::endl;
+                std::cout << "Portfolio Total Variance: " << portfolioRisk.totalVariance << std::endl;
+                std::cout << std::endl;
+
+                std::cout << "Risk Attribution by Macro Factor:" << std::endl;
+                for (int k = 0; k < portfolioRisk.numFactors; k++) {
+                    std::cout << "  " << portfolioRisk.factorLabels[k] << ":" << std::endl;
+                    std::cout << "    Sensitivity (γ_k): " << portfolioRisk.factorSensitivities[k] << std::endl;
+                    std::cout << "    Risk Contribution: " << portfolioRisk.factorRiskContributions[k] << std::endl;
+                    std::cout << "    % of Total Risk: " << (portfolioRisk.componentContributions[k] * 100.0) << "%" << std::endl;
                 }
-                outputFile.close();
+                std::cout << std::endl;
+
+                // STEP 7: Classify market regime and size position (Step 4.1)
+                std::cout << "Step 7 (4.1): Classifying market regime and sizing ES position..." << std::endl;
+                std::cout << std::endl;
+
+                // Create macro regime from market observables
+                // For demonstration, use reasonable baseline values
+                double currentVIX = 18.0;       // Example calm market VIX
+                double currentMOVE = 100.0;     // Bond volatility
+                double creditSpread = 110.0;    // BAA-AAA spread (bps)
+                double yieldCurveSlope = 120.0; // 2s10s (bps)
+                double putCallRatio = 0.92;     // Option positioning
+
+                MacroRegime currentRegime = PositionSizer::classifyRegime(
+                    currentVIX, currentMOVE, creditSpread, yieldCurveSlope, putCallRatio
+                );
+
+                std::cout << "Current Market Regime:" << std::endl;
+                std::cout << "  VIX Level: " << currentVIX << std::endl;
+                std::cout << "  MOVE Index: " << currentMOVE << std::endl;
+                std::cout << "  Credit Spread: " << creditSpread << " bps" << std::endl;
+                std::cout << "  Yield Curve Slope: " << yieldCurveSlope << " bps" << std::endl;
+                std::cout << "  Put/Call Ratio: " << putCallRatio << std::endl;
+                std::cout << std::endl;
+
+                std::cout << "Regime Classification:" << std::endl;
+                std::cout << "  Risk Label: " << currentRegime.riskLabel << std::endl;
+                std::cout << "  Inflation Sensitivity: " << currentRegime.inflationLabel << std::endl;
+                std::cout << "  Stability: " << currentRegime.fragileLabel << std::endl;
+                std::cout << "  Volatility Multiplier: " << currentRegime.volatilityMultiplier << std::endl;
+                std::cout << "  Confidence: " << (currentRegime.confidence * 100.0) << "%" << std::endl;
+                std::cout << std::endl;
+
+                // Compute position sizing
+                double baseNotional = 5000000.0;  // $5M base size
+                PositionConstraint constraints;
+                constraints.maxNotional = 10000000.0;         // $10M max
+                constraints.maxLeverageMultiple = 2.0;        // 2x leverage
+                constraints.maxFactorExposure["Growth"] = 1.0;
+                constraints.maxFactorExposure["Inflation"] = 0.5;
+                constraints.maxFactorExposure["Volatility"] = 1.0;
+                constraints.maxDailyLoss = 100000.0;
+                constraints.maxDrawdownFromPeak = 500000.0;
+
+                PositionSizing sizing = PositionSizer::computePositionSize(
+                    baseNotional, portfolioRisk, currentRegime, constraints
+                );
+
+                std::cout << "Position Sizing Recommendation:" << std::endl;
+                std::cout << "  Base Notional: $" << baseNotional << std::endl;
+                std::cout << "  Recommended Notional: $" << sizing.recommendedNotional << std::endl;
+                std::cout << "  Recommended Shares (ES contracts): " << sizing.recommendedShares << std::endl;
+                std::cout << "  Recommended Leverage: " << sizing.recommendedLeverage << "x" << std::endl;
+                std::cout << std::endl;
+
+                std::cout << "Risk Metrics at Recommended Size:" << std::endl;
+                std::cout << "  Expected Daily Volatility: $" << sizing.expectedDailyVol << std::endl;
+                std::cout << "  Expected Worst Case (2σ): $" << sizing.expectedWorstCaseDaily << std::endl;
+                std::cout << "  Max Monthly Drawdown: $" << sizing.maxMonthlyDrawdown << std::endl;
+                std::cout << std::endl;
+
+                std::cout << "Position Status:" << std::endl;
+                std::cout << "  Within Constraints: " << (sizing.isWithinConstraints ? "YES" : "NO") << std::endl;
+                if (!sizing.isWithinConstraints) {
+                    std::cout << "  Breaches:" << std::endl;
+                    for (const auto& breach : sizing.constraintBreaches) {
+                        std::cout << "    - " << breach << std::endl;
+                    }
+                }
+                std::cout << "  Should Reduce Size: " << (sizing.shouldReduceSize ? "YES" : "NO") << std::endl;
+                std::cout << "  Should Add Hedge: " << (sizing.shouldAddHedge ? "YES" : "NO") << std::endl;
+                std::cout << std::endl;
+
+                // Hedging recommendation
+                if (sizing.shouldAddHedge) {
+                    HedgingStrategy hedge = PositionSizer::recommendHedge(
+                        sizing.recommendedNotional, portfolioRisk, currentRegime
+                    );
+
+                    std::cout << "Hedging Recommendation:" << std::endl;
+                    std::cout << "  Instrument: " << hedge.hedgeInstrument << std::endl;
+                    std::cout << "  Hedge Ratio: " << (hedge.hedgeRatio * 100.0) << "%" << std::endl;
+                    std::cout << "  Hedge Size: $" << hedge.hedgeSize << std::endl;
+                    std::cout << "  Estimated Annual Cost: $" << hedge.estimatedCost << " (" << hedge.costPercent << "%)" << std::endl;
+                    std::cout << "  Rationale: " << hedge.rationale << std::endl;
+                    std::cout << "  Hedged Risks:" << std::endl;
+                    for (const auto& risk : hedge.hedgedRisks) {
+                        std::cout << "    - " << risk << std::endl;
+                    }
+                }
+                std::cout << std::endl;
+
+                // Write results to file
+                try {
+                    std::ofstream outputFile("./output.txt");
+                    if (!outputFile.is_open()) {
+                        Logger::error("Failed to open output.txt for writing");
+                        return 1;
+                    }
+
+                    // Write summary (Frobenius norm + factor labels + position sizing for downstream use)
+                    outputFile << frobenius << std::endl;
+                    for (int k = 0; k < factors.numFactors; k++) {
+                        outputFile << factors.factorLabels[k] << ":" << factors.labelConfidences[k] << std::endl;
+                    }
+                    outputFile << "POSITION_SIZING:" << sizing.recommendedNotional << ":" << sizing.recommendedShares << std::endl;
+                    outputFile << "REGIME:" << currentRegime.riskLabel << ":" << currentRegime.volatilityMultiplier << std::endl;
+
+                    outputFile.close();
+
+                    Logger::info("Analysis completed successfully", {
+                        {"factors", factors.numFactors},
+                        {"variance_explained", factors.cumulativeVarianceExplained},
+                        {"position_notional", sizing.recommendedNotional},
+                        {"regime", currentRegime.riskLabel}
+                    });
+
+                } catch (const std::exception& e) {
+                    Logger::error("Failed to write output file", e);
+                    return 1;
+                }
 
                 std::cout << "=========================================" << std::endl;
                 std::cout << "✓ Results written to output.txt" << std::endl;
                 std::cout << "=========================================" << std::endl;
 
             } catch (const std::exception& e) {
-                std::cerr << "Error in Phase 1 analysis: " << e.what() << std::endl;
+                Logger::critical("Phase 1 analysis failed", e);
                 return 1;
             }
-        } else if (std::strcmp(argv[1], "trade") == 0) {
-            StockDataProcessor stockDataProcessor;
-            std::vector<double> stockDataResult = stockDataProcessor.retrieve();
+        } else if (std::strcmp(argv[1], "upload-daily") == 0) {
+            // Upload the daily analysis results to S3
+            // This is called after "covariance" mode generates output.txt
 
-            double confidenceScore = 0;
-            
-            // read the average magnitude of covariance from an input file to start trading day
-            std::ifstream inputFile("output.txt");
-            if (!inputFile.is_open()) {
-                std::cerr << "Failed to open the file." << std::endl;
-                return 1; // Exit the program with an error code
-            }
-            std::string line;
-            while (std::getline(inputFile, line)) {
-                confidenceScore = std::stod(line);
-            }
-            inputFile.close();
+            Logger::info("S3 upload started");
 
-            std::vector<double> averageSlidingWindowStockScores = stockDataProcessor.analyzeStockData(stockDataResult);
-            std::vector<double> actualTradingResults;
+            // Get S3 bucket name from environment or use default
+            const char* s3BucketEnv = std::getenv("S3_BUCKET");
+            std::string s3Bucket = s3BucketEnv ? s3BucketEnv : "inverted-yield-trader-daily-results";
 
-            DynamoDBClient dynamoDBClient(clientConfig);
-
-            std::string tableName = "InvertedYieldTrader";
-
-            double prevDayMarketClosingValue = dynamoDBClient.getDoubleItem(tableName,
-                                             "trader_type_with_date",
-                                             "inverted_yield_trader_" + getDateDaysAgo(1),
-                                             "market_position_value");
-
-            double prevDayStartingTraderPrincipal = dynamoDBClient.getDoubleItem(tableName,
-                                         "trader_type_with_date",
-                                         "inverted_yield_trader_" + getDateDaysAgo(1),
-                                         "trader_position_value");
-            double prevDayStartingTraderCashAccount = dynamoDBClient.getDoubleItem(tableName,
-                                         "trader_type_with_date",
-                                         "inverted_yield_trader_" +  getDateDaysAgo(1),
-                                         "trader_cash_value");
-
-            double ongoingMarketValue = prevDayMarketClosingValue;
-            double ongoingTraderPrincipal = prevDayStartingTraderPrincipal;
-            double ongoingTraderCashAccount = prevDayStartingTraderCashAccount;
-
-            double maxPercentTraderPrincipalToSellPerTransaction = 0.02;
-            double maxPercentTraderCashAccountToBuyPerTransaction = 0.02;
-            
-            // TODO: calculate shares in market on first day and write to DDB --> manually write to DDB table
-            double startingSharesInMarket = dynamoDBClient.getDoubleItem(tableName,
-                                       "trader_type_with_date",
-                                       "inverted_yield_trader_" +  getDateDaysAgo(1),
-                                       "market_starting_shares");
-
-            for (int i = 0; i < averageSlidingWindowStockScores.size(); ++i) {
-                // combine confidence score found from covariances with per-minute trading stock data
-                double predictedMarketDelta = confidenceScore * averageSlidingWindowStockScores[i];
-
-                if (predictedMarketDelta > 0) {
-                    double amountToSell = ongoingTraderPrincipal * maxPercentTraderPrincipalToSellPerTransaction * predictedMarketDelta;
-                    ongoingTraderPrincipal -= amountToSell;
-                    ongoingTraderCashAccount += amountToSell;
+            try {
+                // Read the local output.txt file
+                std::ifstream inputFile("./output.txt");
+                if (!inputFile.is_open()) {
+                    Logger::error("output.txt not found. Run 'covariance' mode first.");
+                    return 1;
                 }
-                else if (predictedMarketDelta < 0) {
-                    double amountToBuy = ongoingTraderCashAccount * maxPercentTraderPrincipalToSellPerTransaction * predictedMarketDelta;
-                    ongoingTraderPrincipal += amountToBuy;
-                    ongoingTraderCashAccount -= amountToBuy;
+
+                // Get today's date for S3 key
+                std::string today = getDateDaysAgo(0);
+
+                // Create the S3 key structure: positions/YYYY-MM-DD.json
+                std::string s3Key = "positions/" + today + ".json";
+
+                // Read output.txt and wrap in JSON with metadata
+                std::stringstream buffer;
+                buffer << inputFile.rdbuf();
+                inputFile.close();
+
+                json dailyResult;
+                dailyResult["date"] = today;
+                dailyResult["timestamp"] = std::time(nullptr);
+                dailyResult["output"] = buffer.str();
+
+                std::string jsonContent = dailyResult.dump(2);
+
+                Logger::info("Uploading to S3", {
+                    {"bucket", s3Bucket},
+                    {"key", s3Key},
+                    {"size_bytes", jsonContent.size()}
+                });
+
+                // Upload to S3
+                Aws::S3::S3Client s3Client;
+                Aws::S3::Model::PutObjectRequest putRequest;
+                putRequest.SetBucket(s3Bucket);
+                putRequest.SetKey(s3Key);
+                putRequest.SetBody(std::make_shared<std::stringstream>(jsonContent));
+
+                auto outcome = s3Client.PutObject(putRequest);
+
+                if (outcome.IsSuccess()) {
+                    Logger::info("S3 upload successful", {
+                        {"bucket", s3Bucket},
+                        {"key", s3Key}
+                    });
+                    std::cout << "✅ Successfully uploaded to s3://" << s3Bucket << "/" << s3Key << std::endl;
+                } else {
+                    Logger::error("S3 upload failed", {
+                        {"error", outcome.GetError().GetMessage()}
+                    });
+                    return 1;
                 }
-                double totalPortfolioValueAfterTrade = ongoingTraderPrincipal + ongoingTraderCashAccount;
-                actualTradingResults.push_back(totalPortfolioValueAfterTrade);
+
+            } catch (const std::exception& e) {
+                Logger::critical("S3 upload failed", e);
+                return 1;
             }
-
-            double dailyProfit = actualTradingResults[actualTradingResults.size() - 1] - stockDataResult[stockDataResult.size() - 1] * startingSharesInMarket;
-
-            std::vector<double> tradingResultsPerMinuteComparedToMarket;
-            for (int i = 0; i < actualTradingResults.size(); ++i) {
-                tradingResultsPerMinuteComparedToMarket.push_back(actualTradingResults[i] - stockDataResult[i] * startingSharesInMarket);
-            }
-            nlohmann::json jsonTradingResultsPerMinuteComparedToMarket = tradingResultsPerMinuteComparedToMarket;
-            std::string jsonStringTradingResultsPerMinuteComparedToMarket = jsonTradingResultsPerMinuteComparedToMarket.dump();
-
-            Aws::Map<Aws::String, Aws::DynamoDB::Model::AttributeValue> item;
-
-            item["trader_type_with_date"] =  Aws::DynamoDB::Model::AttributeValue().SetS("inverted_yield_trader_" + getDateDaysAgo(0));
-            item["covariance_confidence_score"] = Aws::DynamoDB::Model::AttributeValue().SetN(confidenceScore);
-            item["market_position_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(ongoingMarketValue);
-            item["trader_position_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(ongoingTraderPrincipal);
-            item["trader_cash_value"] = Aws::DynamoDB::Model::AttributeValue().SetN(ongoingTraderCashAccount);
-            item["daily_profit"] = Aws::DynamoDB::Model::AttributeValue().SetN(dailyProfit);
-            item["market_starting_shares"] = Aws::DynamoDB::Model::AttributeValue().SetN(startingSharesInMarket);
-            item["performance_per_minute"] = Aws::DynamoDB::Model::AttributeValue().SetS(jsonStringTradingResultsPerMinuteComparedToMarket);
-
-            dynamoDBClient.putDailyResultItem(item, tableName);
-                        
-            // set up lambda to run this code with script.
-            // may need to write the ouput to DDB between script runs. Account for this latency. Let's try with just local file to prevent latency issues
-            // set up eventbridge to run this code daily, already setup eventbridge to run lambda for s3 objects at 12 UTC
-            
-            // graph in quicksights
-            // graph the traderP + traderCash, market Value, and potentially the % increase of each, and the delta % between them
         }
     }
 

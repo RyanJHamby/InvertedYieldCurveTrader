@@ -4205,3 +4205,2723 @@ events:
         - "/Network/Library/Frameworks"
         - "/System/Library/Frameworks"
 ...
+
+---
+events:
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:85 (find_file)"
+      - "CMakeLists.txt:49 (find_package)"
+    mode: "file"
+    variable: "AWSSDK_CORE_HEADER_FILE"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "Aws.h"
+    candidate_directories:
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/"
+      - "/Users/ryanhamby/.local/bin/"
+      - "/Users/ryanhamby/.codeium/windsurf/bin/"
+      - "/opt/homebrew/bin/"
+      - "/opt/homebrew/sbin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.13/bin/"
+      - "/usr/local/bin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/Users/ryanhamby/Library/Android/sdk/emulator/"
+      - "/Users/ryanhamby/Library/Android/sdk/platform-tools/"
+      - "/Users/ryanhamby/Library/Android/sdk/tools/"
+      - "/Users/ryanhamby/Library/Android/sdk/tools/bin/"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/"
+      - "/opt/homebrew/include/"
+      - "/opt/homebrew/"
+      - "/usr/local/include/"
+      - "/usr/local/"
+      - "/usr/include/"
+      - "/usr/"
+      - "/include/"
+      - "/usr/X11R6/include/"
+      - "/usr/X11R6/"
+      - "/usr/pkg/include/"
+      - "/usr/pkg/"
+      - "/opt/include/"
+      - "/opt/"
+      - "/sw/include/"
+      - "/sw/"
+      - "/opt/local/include/"
+      - "/opt/local/"
+      - "/usr/include/X11/"
+      - "/Users/ryanhamby/Library/Frameworks/"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks/"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks/"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/"
+      - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/"
+      - "/Library/Frameworks/"
+      - "/Network/Library/Frameworks/"
+      - "/System/Library/Frameworks/"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/"
+      - "/usr/include/aws/core/"
+      - "/usr/local/include/aws/core/"
+      - "C:/Progra~1/AWSSDK/include/aws/core/"
+      - "C:/Program Files/AWSSDK/include/aws/core/"
+      - "C:/Program Files/aws-cpp-sdk-all/include/aws/core/"
+      - "C:/Program Files (x86)/aws-cpp-sdk-all/include/aws/core/"
+      - "C:/AWSSDK/include/aws/core/"
+    searched_directories:
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/Aws.h"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/Aws.h"
+      - "/Users/ryanhamby/.local/bin/Aws.h"
+      - "/Users/ryanhamby/.codeium/windsurf/bin/Aws.h"
+      - "/opt/homebrew/bin/Aws.h"
+      - "/opt/homebrew/sbin/Aws.h"
+      - "/Library/Frameworks/Python.framework/Versions/3.13/bin/Aws.h"
+      - "/usr/local/bin/Aws.h"
+      - "/System/Cryptexes/App/usr/bin/Aws.h"
+      - "/usr/bin/Aws.h"
+      - "/bin/Aws.h"
+      - "/usr/sbin/Aws.h"
+      - "/sbin/Aws.h"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/Aws.h"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/Aws.h"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/Aws.h"
+      - "/Library/Apple/usr/bin/Aws.h"
+      - "/Users/ryanhamby/Library/Android/sdk/emulator/Aws.h"
+      - "/Users/ryanhamby/Library/Android/sdk/platform-tools/Aws.h"
+      - "/Users/ryanhamby/Library/Android/sdk/tools/Aws.h"
+      - "/Users/ryanhamby/Library/Android/sdk/tools/bin/Aws.h"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/Aws.h"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/Aws.h"
+      - "/opt/homebrew/include/Aws.h"
+      - "/opt/homebrew/Aws.h"
+      - "/usr/local/include/Aws.h"
+      - "/usr/local/Aws.h"
+      - "/usr/include/Aws.h"
+      - "/usr/Aws.h"
+      - "/include/Aws.h"
+      - "/usr/X11R6/include/Aws.h"
+      - "/usr/X11R6/Aws.h"
+      - "/usr/pkg/include/Aws.h"
+      - "/usr/pkg/Aws.h"
+      - "/opt/include/Aws.h"
+      - "/opt/Aws.h"
+      - "/sw/include/Aws.h"
+      - "/sw/Aws.h"
+      - "/opt/local/include/Aws.h"
+      - "/opt/local/Aws.h"
+      - "/usr/include/X11/Aws.h"
+      - "/Users/ryanhamby/Library/Frameworks/Aws.h"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks/Aws.h"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks/Aws.h"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Aws.h"
+      - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Aws.h"
+      - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Aws.h"
+      - "/Library/Frameworks/Aws.h"
+      - "/Network/Library/Frameworks/Aws.h"
+      - "/System/Library/Frameworks/Aws.h"
+    found: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/Aws.h"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_INCLUDE_PATH:
+        - "/usr/include/X11"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:116 (find_library)"
+      - "CMakeLists.txt:49 (find_package)"
+    mode: "library"
+    variable: "AWSSDK_CORE_LIB_FILE"
+    description: "Path to a library."
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "aws-cpp-sdk-core"
+    candidate_directories:
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/"
+    found: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-cpp-sdk-core.dylib"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_LIBRARY_PATH:
+        - "/usr/lib/X11"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "/opt/homebrew/share/cmake/Modules/CheckCSourceCompiles.cmake:103 (cmake_check_source_compiles)"
+      - "/opt/homebrew/share/cmake/Modules/FindThreads.cmake:97 (check_c_source_compiles)"
+      - "/opt/homebrew/share/cmake/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/aws-c-common-config.cmake:7 (find_package)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-io/aws-c-io-config.cmake:7 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-http/aws-c-http-config.cmake:3 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cpp-config.cmake:3 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake:13 (find_dependency)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/CMakeScratch/TryCompile-Wv1nps"
+      binary: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/CMakeScratch/TryCompile-Wv1nps"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake;/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake;/opt/homebrew/lib/cmake;/usr/local/lib/cmake;/usr/lib/cmake;//lib/cmake;/opt/homebrew/lib/cmake;/usr/local/lib/cmake;/usr/X11R6/lib/cmake;/usr/pkg/lib/cmake;/opt/lib/cmake;/sw/lib/cmake;/opt/local/lib/cmake;/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+      CMAKE_OSX_ARCHITECTURES: ""
+      CMAKE_OSX_DEPLOYMENT_TARGET: ""
+      CMAKE_OSX_SYSROOT: ""
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: '/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/CMakeScratch/TryCompile-Wv1nps'
+        
+        Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8321e/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_8321e.dir/build.make CMakeFiles/cmTC_8321e.dir/build
+        Building C object CMakeFiles/cmTC_8321e.dir/src.c.o
+        /usr/bin/gcc -DCMAKE_HAVE_LIBC_PTHREAD  -arch arm64 -MD -MT CMakeFiles/cmTC_8321e.dir/src.c.o -MF CMakeFiles/cmTC_8321e.dir/src.c.o.d -o CMakeFiles/cmTC_8321e.dir/src.c.o -c /Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/CMakeScratch/TryCompile-Wv1nps/src.c
+        Linking C executable cmTC_8321e
+        /opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8321e.dir/link.txt --verbose=1
+        /usr/bin/gcc  -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_8321e.dir/src.c.o -o cmTC_8321e
+        
+      exitCode: 0
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-io/aws-c-io-config.cmake:7 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-http/aws-c-http-config.cmake:3 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cpp-config.cmake:3 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake:13 (find_dependency)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-c-common"
+    configs:
+      -
+        filename: "aws-c-commonConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-c-common-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-c-common"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-commonConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-common-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-commonConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-common-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/aws-c-commonConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/aws-c-common-config.cmake"
+      mode: "config"
+      version: ""
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-io/aws-c-io-config.cmake:8 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-http/aws-c-http-config.cmake:3 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cpp-config.cmake:3 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake:13 (find_dependency)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-c-cal"
+    configs:
+      -
+        filename: "aws-c-calConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-c-cal-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-c-cal"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-calConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-cal-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-calConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-cal-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-cal/aws-c-calConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-cal/aws-c-cal-config.cmake"
+      mode: "config"
+      version: ""
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-http/aws-c-http-config.cmake:3 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cpp-config.cmake:3 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake:13 (find_dependency)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-c-io"
+    configs:
+      -
+        filename: "aws-c-ioConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-c-io-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-c-io"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-ioConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-io-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-ioConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-io-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-io/aws-c-ioConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-io/aws-c-io-config.cmake"
+      mode: "config"
+      version: ""
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-http/aws-c-http-config.cmake:4 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cpp-config.cmake:3 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake:13 (find_dependency)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-c-compression"
+    configs:
+      -
+        filename: "aws-c-compressionConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-c-compression-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-c-compression"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-compressionConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-compression-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-compressionConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-compression-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-compression/aws-c-compressionConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-compression/aws-c-compression-config.cmake"
+      mode: "config"
+      version: ""
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cpp-config.cmake:3 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake:13 (find_dependency)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-c-http"
+    configs:
+      -
+        filename: "aws-c-httpConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-c-http-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-c-http"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-httpConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-http-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-httpConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-http-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-http/aws-c-httpConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-http/aws-c-http-config.cmake"
+      mode: "config"
+      version: ""
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cpp-config.cmake:4 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake:13 (find_dependency)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-c-mqtt"
+    configs:
+      -
+        filename: "aws-c-mqttConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-c-mqtt-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-c-mqtt"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-mqttConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-mqtt-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-mqttConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-mqtt-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-mqtt/aws-c-mqttConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-mqtt/aws-c-mqtt-config.cmake"
+      mode: "config"
+      version: ""
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-auth/aws-c-auth-config.cmake:7 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cpp-config.cmake:6 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake:13 (find_dependency)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-c-sdkutils"
+    configs:
+      -
+        filename: "aws-c-sdkutilsConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-c-sdkutils-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-c-sdkutils"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-sdkutilsConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-sdkutils-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-sdkutilsConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-sdkutils-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-sdkutils/aws-c-sdkutilsConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-sdkutils/aws-c-sdkutils-config.cmake"
+      mode: "config"
+      version: ""
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cpp-config.cmake:6 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake:13 (find_dependency)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-c-auth"
+    configs:
+      -
+        filename: "aws-c-authConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-c-auth-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-c-auth"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-authConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-auth-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-authConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-auth-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-auth/aws-c-authConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-auth/aws-c-auth-config.cmake"
+      mode: "config"
+      version: ""
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-event-stream/aws-c-event-stream-config.cmake:3 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cpp-config.cmake:7 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake:13 (find_dependency)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-checksums"
+    configs:
+      -
+        filename: "aws-checksumsConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-checksums-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-checksums"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-checksumsConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-checksums-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-checksumsConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-checksums-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-checksums/aws-checksumsConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-checksums/aws-checksums-config.cmake"
+      mode: "config"
+      version: ""
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cpp-config.cmake:7 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake:13 (find_dependency)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-c-event-stream"
+    configs:
+      -
+        filename: "aws-c-event-streamConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-c-event-stream-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-c-event-stream"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-event-streamConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-event-stream-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-event-streamConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-event-stream-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-event-stream/aws-c-event-streamConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-event-stream/aws-c-event-stream-config.cmake"
+      mode: "config"
+      version: ""
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cpp-config.cmake:8 (find_dependency)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake:13 (find_dependency)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-c-s3"
+    configs:
+      -
+        filename: "aws-c-s3Config.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-c-s3-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-c-s3"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-s3Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-c-s3-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-s3Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-c-s3-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-s3/aws-c-s3Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-s3/aws-c-s3-config.cmake"
+      mode: "config"
+      version: ""
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeFindDependencyMacro.cmake:78 (find_package)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake:13 (find_dependency)"
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-crt-cpp"
+    configs:
+      -
+        filename: "aws-crt-cppConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-crt-cpp-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-crt-cpp"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-crt-cppConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-crt-cpp-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-crt-cppConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-crt-cpp-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cppConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp/aws-crt-cpp-config.cmake"
+      mode: "config"
+      version: "0.36.1"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-cpp-sdk-core"
+    configs:
+      -
+        filename: "aws-cpp-sdk-coreConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-cpp-sdk-core-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-cpp-sdk-core"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-cpp-sdk-coreConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-cpp-sdk-core-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-cpp-sdk-coreConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-cpp-sdk-core-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-coreConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core/aws-cpp-sdk-core-config.cmake"
+      mode: "config"
+      version: "1.11.717"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-cpp-sdk-dynamodb"
+    configs:
+      -
+        filename: "aws-cpp-sdk-dynamodbConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-cpp-sdk-dynamodb-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-cpp-sdk-dynamodb"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-cpp-sdk-dynamodbConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-cpp-sdk-dynamodb-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-cpp-sdk-dynamodbConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-cpp-sdk-dynamodb-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-dynamodb/aws-cpp-sdk-dynamodbConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-dynamodb/aws-cpp-sdk-dynamodb-config.cmake"
+      mode: "config"
+      version: "1.11.717"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-cpp-sdk-s3"
+    configs:
+      -
+        filename: "aws-cpp-sdk-s3Config.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-cpp-sdk-s3-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-cpp-sdk-s3"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-cpp-sdk-s3Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-cpp-sdk-s3-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-cpp-sdk-s3Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-cpp-sdk-s3-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-s3/aws-cpp-sdk-s3Config.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-s3/aws-cpp-sdk-s3-config.cmake"
+      mode: "config"
+      version: "1.11.717"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK/AWSSDKConfig.cmake:310 (find_package)"
+      - "CMakeLists.txt:49 (find_package)"
+    name: "aws-cpp-sdk-athena"
+    configs:
+      -
+        filename: "aws-cpp-sdk-athenaConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "aws-cpp-sdk-athena-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "required_explicit"
+      quiet: false
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "aws-cpp-sdk-athena"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/.local/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/.local/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/.codeium/windsurf/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/.codeium/windsurf/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/opt/homebrew/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/opt/homebrew/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Library/Frameworks/Python.framework/Versions/3.13/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Library/Frameworks/Python.framework/Versions/3.13/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/local/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/System/Cryptexes/App/usr/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/System/Cryptexes/App/usr/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/usr/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Library/Apple/usr/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Library/Apple/usr/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Library/Android/sdk/emulator/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Library/Android/sdk/emulator/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Library/Android/sdk/platform-tools/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Library/Android/sdk/platform-tools/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/opt/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/opt/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Library/Frameworks/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Library/Frameworks/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/System/Library/Frameworks/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/System/Library/Frameworks/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Applications/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Applications/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/Xcode.app/Contents/Applications/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/Xcode.app/Contents/Applications/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/Xcode.app/Contents/Developer/Applications/aws-cpp-sdk-athenaConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Applications/Xcode.app/Contents/Developer/Applications/aws-cpp-sdk-athena-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found: null
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+      CMAKE_MODULE_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/lib/cmake"
+        - "//lib/cmake"
+        - "/opt/homebrew/lib/cmake"
+        - "/usr/local/lib/cmake"
+        - "/usr/X11R6/lib/cmake"
+        - "/usr/pkg/lib/cmake"
+        - "/opt/lib/cmake"
+        - "/sw/lib/cmake"
+        - "/opt/local/lib/cmake"
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common/modules"
+...
+
+---
+events:
+  -
+    kind: "find_package-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/FindGTest.cmake:337 (find_package)"
+      - "CMakeLists.txt:50 (find_package)"
+    name: "GTest"
+    configs:
+      -
+        filename: "GTestConfig.cmake"
+        kind: "cmake"
+      -
+        filename: "gtest-config.cmake"
+        kind: "cmake"
+    version_request:
+      exact: false
+    settings:
+      required: "optional"
+      quiet: true
+      global: false
+      policy_scope: true
+      bypass_provider: false
+      names:
+        - "GTest"
+      path_suffixes:
+        - ""
+      paths:
+        CMAKE_FIND_USE_CMAKE_PATH: true
+        CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+        CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+        CMAKE_FIND_USE_INSTALL_PREFIX: true
+        CMAKE_FIND_USE_PACKAGE_ROOT_PATH: true
+        CMAKE_FIND_USE_CMAKE_PACKAGE_REGISTRY: true
+        CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY: true
+        CMAKE_FIND_ROOT_PATH_MODE: "BOTH"
+    candidates:
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/GTestConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src/CMakeFiles/pkgRedirects/gtest-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/GTestConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/Desktop/aws-sdk-cpp-install/gtest-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/.local/GTestConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/.local/gtest-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/.codeium/windsurf/GTestConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/Users/ryanhamby/.codeium/windsurf/gtest-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/opt/homebrew/GTestConfig.cmake"
+        mode: "config"
+        reason: "no_exist"
+      -
+        path: "/opt/homebrew/gtest-config.cmake"
+        mode: "config"
+        reason: "no_exist"
+    found:
+      path: "/opt/homebrew/lib/cmake/GTest/GTestConfig.cmake"
+      mode: "config"
+      version: "1.17.0"
+    search_context:
+      CMAKE_PREFIX_PATH:
+        - "/Users/ryanhamby/Desktop/aws-sdk-cpp-install"
+      ENV{PATH}:
+        - "/Users/ryanhamby/.local/bin"
+        - "/Users/ryanhamby/.codeium/windsurf/bin"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.13/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/ryanhamby/Library/Android/sdk/emulator"
+        - "/Users/ryanhamby/Library/Android/sdk/platform-tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools"
+        - "/Users/ryanhamby/Library/Android/sdk/tools/bin"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/opt/homebrew"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+        - "/sw"
+        - "/opt/local"
+      CMAKE_SYSTEM_FRAMEWORK_PATH:
+        - "~/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/Network/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks"
+        - "/Applications/Xcode.app/Contents/Developer/Library/Frameworks"
+        - "/Library/Frameworks"
+        - "/Network/Library/Frameworks"
+        - "/System/Library/Frameworks"
+...

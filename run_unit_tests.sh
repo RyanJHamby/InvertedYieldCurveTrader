@@ -89,6 +89,17 @@ g++ $CXX_FLAGS $INCLUDES \
     $LIBS $GTEST_LIBS \
     -o test_portfolio_risk_analyzer_unit || { echo "❌ Failed to compile PortfolioRiskAnalyzer unit tests"; exit 1; }
 
+echo "9. Compiling PositionSizer unit tests..."
+POSITION_SIZER="src/DataProcessors/PositionSizer.cpp"
+g++ $CXX_FLAGS $INCLUDES \
+    $POSITION_SIZER \
+    $PORTFOLIO_RISK_ANALYZER \
+    $MACRO_FACTOR_MODEL \
+    $COVARIANCE_CALC \
+    test/PositionSizerUnitTest.cpp \
+    $LIBS $GTEST_LIBS \
+    -o test_position_sizer_unit || { echo "❌ Failed to compile PositionSizer unit tests"; exit 1; }
+
 echo ""
 echo "✅ All unit tests compiled successfully!"
 echo ""
@@ -129,6 +140,10 @@ echo "--- PortfolioRiskAnalyzer Unit Tests ---"
 ./test_portfolio_risk_analyzer_unit || { echo "❌ PortfolioRiskAnalyzer unit tests failed"; exit 1; }
 
 echo ""
+echo "--- PositionSizer Unit Tests ---"
+./test_position_sizer_unit || { echo "❌ PositionSizer unit tests failed"; exit 1; }
+
+echo ""
 echo "========================================="
 echo "✅ ALL UNIT TESTS PASSED!"
 echo "========================================="
@@ -146,9 +161,10 @@ echo "  ✅ SurpriseTransformer (AR(1) forecasting, zero-mean validation)"
 echo "  ✅ MacroFactorModel (PCA decomposition, archetype matching, stability tracking)"
 echo "  ✅ Phase 1 Integration (Full pipeline: Levels → Surprises → Factors)"
 echo "  ✅ PortfolioRiskAnalyzer (Exact risk attribution RC_k, scenario analysis, drawdown decomposition)"
+echo "  ✅ PositionSizer (Risk-aware ES sizing, regime classification, hedging recommendations)"
 echo "  ✅ Error handling and edge cases"
 echo ""
-echo "Total: 155+ unit test cases"
+echo "Total: 180+ unit test cases"
 echo ""
 echo "To run integration tests (requires API keys):"
 echo "  export FRED_API_KEY=\"your_fred_api_key\""

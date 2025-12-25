@@ -14,8 +14,14 @@
 # EXTERNAL cache entries
 ########################
 
+//Path to a file.
+AWSSDK_CORE_HEADER_FILE:FILEPATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/include/aws/core/Aws.h
+
+//Path to a library.
+AWSSDK_CORE_LIB_FILE:FILEPATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/libaws-cpp-sdk-core.dylib
+
 //The directory containing a CMake configuration file for AWSSDK.
-AWSSDK_DIR:PATH=AWSSDK_DIR-NOTFOUND
+AWSSDK_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/AWSSDK
 
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=CMAKE_ADDR2LINE-NOTFOUND
@@ -228,6 +234,13 @@ CMAKE_TAPI:FILEPATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeD
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Flag to upgrade the C++ standard used. The default is 11. The
+// minimum is 11.
+CPP_STANDARD:STRING=11
+
+//The directory containing a CMake configuration file for GTest.
+GTest_DIR:PATH=/opt/homebrew/lib/cmake/GTest
+
 //Value Computed by CMake
 InvertedYieldCurveTrader_BINARY_DIR:STATIC=/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src
 
@@ -236,6 +249,54 @@ InvertedYieldCurveTrader_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 InvertedYieldCurveTrader_SOURCE_DIR:STATIC=/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src
+
+//The directory containing a CMake configuration file for aws-c-auth.
+aws-c-auth_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-auth
+
+//The directory containing a CMake configuration file for aws-c-cal.
+aws-c-cal_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-cal
+
+//The directory containing a CMake configuration file for aws-c-common.
+aws-c-common_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-common
+
+//The directory containing a CMake configuration file for aws-c-compression.
+aws-c-compression_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-compression
+
+//The directory containing a CMake configuration file for aws-c-event-stream.
+aws-c-event-stream_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-event-stream
+
+//The directory containing a CMake configuration file for aws-c-http.
+aws-c-http_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-http
+
+//The directory containing a CMake configuration file for aws-c-io.
+aws-c-io_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-io
+
+//The directory containing a CMake configuration file for aws-c-mqtt.
+aws-c-mqtt_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-mqtt
+
+//The directory containing a CMake configuration file for aws-c-s3.
+aws-c-s3_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-s3
+
+//The directory containing a CMake configuration file for aws-c-sdkutils.
+aws-c-sdkutils_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-c-sdkutils
+
+//The directory containing a CMake configuration file for aws-checksums.
+aws-checksums_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-checksums
+
+//The directory containing a CMake configuration file for aws-cpp-sdk-athena.
+aws-cpp-sdk-athena_DIR:PATH=aws-cpp-sdk-athena_DIR-NOTFOUND
+
+//The directory containing a CMake configuration file for aws-cpp-sdk-core.
+aws-cpp-sdk-core_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-core
+
+//The directory containing a CMake configuration file for aws-cpp-sdk-dynamodb.
+aws-cpp-sdk-dynamodb_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-dynamodb
+
+//The directory containing a CMake configuration file for aws-cpp-sdk-s3.
+aws-cpp-sdk-s3_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-cpp-sdk-s3
+
+//The directory containing a CMake configuration file for aws-crt-cpp.
+aws-crt-cpp_DIR:PATH=/Users/ryanhamby/Desktop/aws-sdk-cpp-install/lib/cmake/aws-crt-cpp
 
 
 ########################
@@ -310,6 +371,8 @@ CMAKE_GENERATOR_INSTANCE:INTERNAL=
 CMAKE_GENERATOR_PLATFORM:INTERNAL=
 //Name of generator toolset.
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
+//Test CMAKE_HAVE_LIBC_PTHREAD
+CMAKE_HAVE_LIBC_PTHREAD:INTERNAL=1
 //Source directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=/Users/ryanhamby/Documents/InvertedYieldCurveTrader/src
@@ -379,4 +442,14 @@ CMAKE_TAPI-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding GTest
+FIND_PACKAGE_MESSAGE_DETAILS_GTest:INTERNAL=[/opt/homebrew/lib/cmake/GTest/GTestConfig.cmake][ ][v1.17.0()]
+//Details about finding Threads
+FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
+//The OpenSSL include directory
+LibCrypto_INCLUDE_DIR:INTERNAL=
+//The OpenSSL crypto shared library
+LibCrypto_SHARED_LIBRARY:INTERNAL=
+//The OpenSSL crypto static library
+LibCrypto_STATIC_LIBRARY:INTERNAL=
 
