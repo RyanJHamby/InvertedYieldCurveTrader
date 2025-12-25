@@ -52,6 +52,14 @@ g++ $CXX_FLAGS $INCLUDES \
     $LIBS $GTEST_LIBS \
     -o test_covariance_calculator_unit || { echo "❌ Failed to compile CovarianceCalculator unit tests"; exit 1; }
 
+echo "5. Compiling SurpriseTransformer unit tests..."
+SURPRISE_TRANSFORMER="src/DataProcessors/SurpriseTransformer.cpp"
+g++ $CXX_FLAGS $INCLUDES \
+    $SURPRISE_TRANSFORMER \
+    test/SurpriseTransformerUnitTest.cpp \
+    $LIBS $GTEST_LIBS \
+    -o test_surprise_transformer_unit || { echo "❌ Failed to compile SurpriseTransformer unit tests"; exit 1; }
+
 echo ""
 echo "✅ All unit tests compiled successfully!"
 echo ""
@@ -76,6 +84,10 @@ echo "--- CovarianceCalculator Unit Tests ---"
 ./test_covariance_calculator_unit || { echo "❌ CovarianceCalculator unit tests failed"; exit 1; }
 
 echo ""
+echo "--- SurpriseTransformer Unit Tests ---"
+./test_surprise_transformer_unit || { echo "❌ SurpriseTransformer unit tests failed"; exit 1; }
+
+echo ""
 echo "========================================="
 echo "✅ ALL UNIT TESTS PASSED!"
 echo "========================================="
@@ -89,9 +101,10 @@ echo "  ✅ Data sorting and filtering"
 echo "  ✅ Value range validation"
 echo "  ✅ DataAligner (frequency alignment, downsampling, interpolation)"
 echo "  ✅ CovarianceCalculator (8x8 matrix, Frobenius norm, symmetry)"
+echo "  ✅ SurpriseTransformer (AR(1) forecasting, zero-mean validation)"
 echo "  ✅ Error handling"
 echo ""
-echo "Total: 80+ unit test cases"
+echo "Total: 100+ unit test cases"
 echo ""
 echo "To run integration tests (requires API keys):"
 echo "  export FRED_API_KEY=\"your_fred_api_key\""
