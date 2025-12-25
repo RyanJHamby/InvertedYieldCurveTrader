@@ -69,6 +69,16 @@ g++ $CXX_FLAGS $INCLUDES \
     $LIBS $GTEST_LIBS \
     -o test_macro_factor_model_unit || { echo "❌ Failed to compile MacroFactorModel unit tests"; exit 1; }
 
+echo "7. Compiling Phase 1 Integration tests..."
+SURPRISE_TRANSFORMER="src/DataProcessors/SurpriseTransformer.cpp"
+g++ $CXX_FLAGS $INCLUDES \
+    $SURPRISE_TRANSFORMER \
+    $MACRO_FACTOR_MODEL \
+    $COVARIANCE_CALC \
+    test/Phase1IntegrationTest.cpp \
+    $LIBS $GTEST_LIBS \
+    -o test_phase1_integration || { echo "❌ Failed to compile Phase 1 integration tests"; exit 1; }
+
 echo ""
 echo "✅ All unit tests compiled successfully!"
 echo ""
@@ -101,6 +111,10 @@ echo "--- MacroFactorModel Unit Tests ---"
 ./test_macro_factor_model_unit || { echo "❌ MacroFactorModel unit tests failed"; exit 1; }
 
 echo ""
+echo "--- Phase 1 Integration Tests ---"
+./test_phase1_integration || { echo "❌ Phase 1 integration tests failed"; exit 1; }
+
+echo ""
 echo "========================================="
 echo "✅ ALL UNIT TESTS PASSED!"
 echo "========================================="
@@ -116,9 +130,10 @@ echo "  ✅ DataAligner (frequency alignment, downsampling, interpolation)"
 echo "  ✅ CovarianceCalculator (8x8 matrix, Frobenius norm, symmetry)"
 echo "  ✅ SurpriseTransformer (AR(1) forecasting, zero-mean validation)"
 echo "  ✅ MacroFactorModel (PCA decomposition, archetype matching, stability tracking)"
+echo "  ✅ Phase 1 Integration (Full pipeline: Levels → Surprises → Factors)"
 echo "  ✅ Error handling and edge cases"
 echo ""
-echo "Total: 125+ unit test cases"
+echo "Total: 140+ unit test cases"
 echo ""
 echo "To run integration tests (requires API keys):"
 echo "  export FRED_API_KEY=\"your_fred_api_key\""

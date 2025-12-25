@@ -30,6 +30,8 @@
 #include "DataProcessors/UnemploymentProcessor.hpp"
 #include "DataProcessors/ConsumerSentimentProcessor.hpp"
 #include "DataProcessors/VIXDataProcessor.hpp"
+#include "DataProcessors/SurpriseTransformer.hpp"
+#include "DataProcessors/MacroFactorModel.hpp"
 #include "AwsClients/DynamoDBClient.hpp"
 #include "Utils/Date.hpp"
 
@@ -55,7 +57,10 @@ int main(int argc, char **argv) {
         }
         
         if (std::strcmp(argv[1], "covariance") == 0) {
-            // Calculate 8x8 multivariate covariance matrix for all economic indicators
+            // PHASE 1: Extract macro surprises and decompose into interpretable factors
+            // This is the core analytical pipeline:
+            // Step 1.2: Convert economic levels → surprises (information shocks)
+            // Step 2.1: Decompose surprise covariance into macro factors (Growth, Inflation, Policy, Volatility)
 
             try {
                 // Fetch all 8 economic indicators
@@ -73,9 +78,14 @@ int main(int argc, char **argv) {
                 std::string fredKeyStr(fredApiKey);
                 std::string alphaKeyStr(alphaVantageKey);
 
-                std::cout << "Fetching all 8 economic indicators..." << std::endl;
+                std::cout << "=========================================" << std::endl;
+                std::cout << "PHASE 1: Macro Surprise-Driven Analysis" << std::endl;
+                std::cout << "=========================================" << std::endl;
+                std::cout << std::endl;
 
-                // Fetch FRED data
+                // STEP 1: Fetch all 8 economic indicators
+                std::cout << "Step 1: Fetching all 8 economic indicators..." << std::endl;
+
                 InflationDataProcessor inflationProcessor;
                 FedFundsProcessor fedFundsProcessor;
                 UnemploymentProcessor unemploymentProcessor;
@@ -91,44 +101,108 @@ int main(int argc, char **argv) {
                 rawData["consumer_sentiment"] = sentimentProcessor.process(fredKeyStr, 12);
                 rawData["gdp"] = gdpProcessor.process(fredKeyStr, 8);
 
-                // Fetch treasury yields and calculate inverted yield curve
                 invertedYieldProcessor.process(fredKeyStr);
                 rawData["inverted_yield"] = invertedYieldProcessor.getRecentValues();
 
-                // Fetch VIX from Alpha Vantage
                 rawData["vix"] = vixProcessor.process(alphaKeyStr, 30);
 
-                std::cout << "Aligning all indicators to monthly frequency..." << std::endl;
+                std::cout << "✓ Fetched " << rawData.size() << " indicators" << std::endl;
+                std::cout << std::endl;
 
-                // Align all indicators to monthly frequency
+                // STEP 2: Align to monthly frequency
+                std::cout << "Step 2: Aligning all indicators to monthly frequency..." << std::endl;
+
                 auto alignedData = DataAligner::alignAllIndicators(rawData);
 
-                std::cout << "Calculating 8x8 covariance matrix..." << std::endl;
+                std::cout << "✓ Aligned to 12 monthly observations" << std::endl;
+                std::cout << std::endl;
 
-                // Calculate 8x8 covariance matrix
+                // STEP 3: Extract surprises (Step 1.2: Surprise Extraction)
+                std::cout << "Step 3 (1.2): Extracting macro surprises from levels..." << std::endl;
+                std::cout << "  ε_t = X_t − E[X_t]  (information shocks)" << std::endl;
+                std::cout << std::endl;
+
+                std::map<std::string, IndicatorSurprise> allSurprises;
+                std::map<std::string, std::vector<double>> surpriseVectors;
+
+                for (auto& [indicator, levels] : alignedData) {
+                    IndicatorSurprise surprise = SurpriseTransformer::extractSurprise(levels, indicator, 6);
+                    allSurprises[indicator] = surprise;
+                    surpriseVectors[indicator] = surprise.surprises;
+
+                    std::cout << "  " << indicator << ": ";
+                    std::cout << "mean=" << surprise.meanSurprise << ", ";
+                    std::cout << "source=" << surprise.expectationSource << ", ";
+                    std::cout << "validated=" << (surprise.isValidated ? "yes" : "no") << std::endl;
+                }
+                std::cout << std::endl;
+
+                // STEP 4: Calculate covariance of SURPRISES (not levels)
+                std::cout << "Step 4: Computing 8x8 covariance matrix of surprises..." << std::endl;
+                std::cout << "  Σ_ε = Cov(ε_1, ..., ε_8)" << std::endl;
+                std::cout << std::endl;
+
                 CovarianceCalculator covCalculator;
-                CovarianceMatrix covMatrix = covCalculator.calculateCovarianceMatrix(alignedData);
+                CovarianceMatrix surpriseCovMatrix = covCalculator.calculateCovarianceMatrix(surpriseVectors);
 
-                // Get signal strength from Frobenius norm
-                double signalStrength = covMatrix.getFrobeniusNorm();
+                double frobenius = surpriseCovMatrix.getFrobeniusNorm();
+                std::cout << "✓ Covariance matrix computed. Frobenius norm (regime volatility): " << frobenius << std::endl;
+                std::cout << std::endl;
 
-                std::cout << "Covariance matrix calculated successfully." << std::endl;
-                covMatrix.print();
+                // STEP 5: Decompose surprises into macro factors (Step 2.1)
+                std::cout << "Step 5 (2.1): Decomposing surprises into 3 macro factors..." << std::endl;
+                std::cout << "  ε_t = B f_t + u_t  (PCA decomposition)" << std::endl;
+                std::cout << std::endl;
 
-                // Write signal strength to output file (replaces old average magnitude)
+                MacroFactors factors = MacroFactorModel::decomposeSurpriseCovariance(surpriseCovMatrix, 3);
+
+                std::cout << "✓ Factor decomposition complete" << std::endl;
+                std::cout << std::endl;
+
+                // Display factor results
+                std::cout << "=========================================" << std::endl;
+                std::cout << "Macro Factor Results" << std::endl;
+                std::cout << "=========================================" << std::endl;
+                std::cout << std::endl;
+
+                std::cout << "Variance Explained: " << (factors.cumulativeVarianceExplained * 100.0) << "%" << std::endl;
+                std::cout << std::endl;
+
+                for (int k = 0; k < factors.numFactors; k++) {
+                    std::cout << "Factor " << (k + 1) << ": " << factors.factorLabels[k] << std::endl;
+                    std::cout << "  Variance: " << factors.factorVariances[k] << std::endl;
+                    std::cout << "  Confidence: " << (factors.labelConfidences[k] * 100.0) << "%" << std::endl;
+                    std::cout << "  Loadings:" << std::endl;
+
+                    for (int i = 0; i < static_cast<int>(factors.indicatorNames.size()); i++) {
+                        double loading = factors.loadings(i, k);
+                        if (std::abs(loading) > 0.05) {  // Only show meaningful loadings
+                            std::cout << "    " << factors.indicatorNames[i] << ": " << loading << std::endl;
+                        }
+                    }
+                    std::cout << std::endl;
+                }
+
+                // Write results to file
                 std::ofstream outputFile("./output.txt");
                 if (!outputFile.is_open()) {
                     std::cerr << "Failed to open the file for writing." << std::endl;
                     return 1;
                 }
 
-                outputFile << signalStrength << std::endl;
+                // Write summary (Frobenius norm + factor labels for downstream use)
+                outputFile << frobenius << std::endl;
+                for (int k = 0; k < factors.numFactors; k++) {
+                    outputFile << factors.factorLabels[k] << ":" << factors.labelConfidences[k] << std::endl;
+                }
                 outputFile.close();
 
-                std::cout << "Signal strength written to output.txt: " << signalStrength << std::endl;
+                std::cout << "=========================================" << std::endl;
+                std::cout << "✓ Results written to output.txt" << std::endl;
+                std::cout << "=========================================" << std::endl;
 
             } catch (const std::exception& e) {
-                std::cerr << "Error in covariance calculation: " << e.what() << std::endl;
+                std::cerr << "Error in Phase 1 analysis: " << e.what() << std::endl;
                 return 1;
             }
         } else if (std::strcmp(argv[1], "trade") == 0) {
