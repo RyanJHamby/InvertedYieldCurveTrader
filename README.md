@@ -27,18 +27,19 @@ ES moves are driven by changes in expected earnings and discount rates. Both are
 
 ## Architecture
 
-```
-Data Ingestion (FRED, Alpha Vantage)
-    ↓
-Frequency Alignment (daily/monthly/quarterly → monthly)
-    ↓
-Covariance Computation (8×8 matrix of indicators)
-    ↓
-Eigendecomposition (identify principal factors)
-    ↓
-Surprise Extraction [next phase]
-    ↓
-Factor Loadings & Risk Attribution [future]
+```mermaid
+graph TD
+    A["FRED API<br/>(8 indicators)"] --> C["Data Alignment<br/>daily/monthly/quarterly → monthly"]
+    B["Alpha Vantage<br/>(VIX)"] --> C
+    C --> D["Covariance Computation<br/>Σ ∈ ℝ^8×8"]
+    D --> E["Eigendecomposition<br/>Σ = UΛU^T"]
+    E --> F["Principal Factors<br/>λ₁, λ₂, λ₃, ..."]
+    F --> G["Frobenius Norm Signal<br/>‖Σ‖_F → regime"]
+    G --> H["S3 Results<br/>Daily JSON output"]
+
+    E -.->|Phase 1.4| I["Surprise Extraction<br/>Kalman filter"]
+    I -.->|Phase 1.5| J["Factor Loadings<br/>PCA decomposition"]
+    J -.->|Phase 2| K["ES Trading Model<br/>Position sizing"]
 ```
 
 ## Data & Indicators
@@ -92,6 +93,39 @@ This captures overall macro volatility and factor decoupling:
 - High norm: macro factors moving independently, elevated uncertainty
 - Low norm: tight co-movement, stable regime
 
+**Regime Classification**:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Stable: ‖Σ‖_F < μ - σ
+    [*] --> Neutral: μ - σ ≤ ‖Σ‖_F ≤ μ + σ
+    [*] --> Elevated: ‖Σ‖_F > μ + σ
+
+    Stable --> Neutral: Factor decoupling begins
+    Neutral --> Stable: Factors re-couple
+    Neutral --> Elevated: Macro uncertainty spikes
+    Elevated --> Neutral: Volatility recedes
+    Elevated --> Stable: Risk regime normalizes
+
+    note right of Stable
+        Tight co-movement
+        Low uncertainty
+        Position scaling 1.0x
+    end note
+
+    note right of Neutral
+        Mixed signals
+        Moderate uncertainty
+        Position scaling 1.2x
+    end note
+
+    note right of Elevated
+        Factors decouple
+        High uncertainty
+        Position scaling 0.7x
+    end note
+```
+
 ### 4. Eigendecomposition
 
 $$\Sigma = U \Lambda U^T$$
@@ -111,12 +145,48 @@ Built in C++ for speed (covariance computation: 12ms) with AWS Lambda orchestrat
 - CMake 3.28 (build)
 
 **Infrastructure**:
-- AWS Lambda (512 MB, 600s timeout)
-- EventBridge trigger (daily, 12:00 UTC)
-- S3 (versioned results)
-- CloudWatch (logging, metrics)
+
+```mermaid
+graph LR
+    subgraph "Data Sources"
+        FRED["FRED API"]
+        AV["Alpha Vantage"]
+    end
+
+    subgraph "AWS Cloud"
+        EB["EventBridge<br/>Daily 12:00 UTC"]
+        Lambda["Lambda<br/>512MB, 600s"]
+        S3["S3 Bucket<br/>Versioned results"]
+        CW["CloudWatch<br/>Logs & Metrics"]
+    end
+
+    FRED -->|HTTP| Lambda
+    AV -->|HTTP| Lambda
+    EB -->|Trigger| Lambda
+    Lambda -->|Write JSON| S3
+    Lambda -->|Emit logs| CW
+    S3 -->|Archive| S3
+```
 
 **IaC**: AWS CDK 2.x with multi-environment support (dev/staging/prod)
+
+```mermaid
+graph TB
+    App["CDK App"]
+    S3Stack["S3Stack<br/>Results bucket"]
+    IamStack["IamStack<br/>Lambda role"]
+    LambdaStack["LambdaStack<br/>Function + env vars"]
+    EventStack["EventBridgeStack<br/>Daily trigger"]
+
+    App --> S3Stack
+    App --> IamStack
+    App --> LambdaStack
+    App --> EventStack
+
+    S3Stack -->|bucket name| IamStack
+    IamStack -->|role ARN| LambdaStack
+    LambdaStack -->|function ARN| EventStack
+```
 
 ## Current State
 
@@ -131,11 +201,39 @@ Built in C++ for speed (covariance computation: 12ms) with AWS Lambda orchestrat
 **In Progress**:
 - Fix Lambda binary shared library dependencies (exec format error)
 
-**Next**:
-- Surprise extraction via Kalman filter (Phase 1.4)
-- PCA on surprise covariance (Phase 1.5)
-- Factor-based ES trading model (Phase 2)
-- Risk attribution dashboard (Phase 3)
+**Roadmap**:
+
+```mermaid
+timeline
+    title Development Roadmap
+
+    Phase 1: Complete
+        : Data Ingestion ✓
+        : Frequency Alignment ✓
+        : 8x8 Covariance ✓
+        : Eigendecomposition ✓
+        : Lambda Automation ✓
+
+    Phase 1.4 (Q1 2025): Surprise Extraction
+        : Kalman filter for E[X_t]
+        : Real-time surprise signals S_t
+        : Historical surprise covariance
+
+    Phase 1.5 (Q1 2025): Factor Model
+        : PCA on surprise covariance
+        : Factor loadings extraction
+        : Variance explained analysis
+
+    Phase 2 (Q2 2025): Trading Model
+        : Regime classification rules
+        : ES position sizing logic
+        : 2000-2024 backtesting
+
+    Phase 3 (Q3 2025): Dashboard
+        : Real-time factor state
+        : Performance attribution
+        : Risk decomposition UI
+```
 
 ## Testing & Validation
 

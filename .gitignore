@@ -31,4 +31,31 @@
 *.out
 *.app
 
-.DS_store
+# Build directories
+build/
+dist/
+.cdk.staging/
+cdk/node_modules/
+cdk/dist/
+
+# Build artifacts
+aws-sdk-cpp/
+aws-sdk-cpp-install/
+opt/
+include/
+lib/
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+*.swp
+*.swo
+*~
