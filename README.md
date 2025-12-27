@@ -25,16 +25,36 @@ ES moves are driven by changes in expected earnings and discount rates. Both are
 - Build systematic position sizing rules around regime shifts
 - Avoid guessing about direction while still quantifying risk
 
-## Architecture
+## System Architecture
+
+The computational pipeline consists of five sequential stages:
 
 ```mermaid
-graph LR
-    A["FRED API"] --> C["Frequency Align"]
-    B["Alpha Vantage"] --> C
-    C --> D["Covariance<br/>8×8 Matrix"]
-    D --> E["Eigendecompose"]
-    E --> F["Signal Strength"]
-    F --> G["S3 Output"]
+graph TD
+    A["<b>Data Acquisition</b><br/>FRED API: ℝ^8, daily updates<br/>Alpha Vantage: VIX stream<br/>Endpoints: /series/observations"]
+
+    B["<b>Temporal Alignment</b><br/>Input: Mixed frequency<br/>ℝ^8 × [daily, monthly, quarterly]<br/>Output: X ∈ ℝ^8×12<br/>(monthly, n=12)"]
+
+    C["<b>Covariance Estimation</b><br/>Σ = (1/n-1) XX^T ∈ ℝ^8×8<br/>Validation: symmetry, PSD<br/>Condition number: κ(Σ)"]
+
+    D["<b>Spectral Decomposition</b><br/>Σ = UΛU^T<br/>λ₁ ≥ λ₂ ≥ ... ≥ λ₈ ≥ 0<br/>Cumulative variance: Σλᵢ/ΣΣλⱼ"]
+
+    E["<b>Regime Signal</b><br/>Frobenius norm: ‖Σ‖_F<br/>= √(Σᵢⱼ σ²ᵢⱼ)<br/>Maps ℝ⁸ˣ⁸ → ℝ₊"]
+
+    F["<b>Persistence</b><br/>S3 JSON: date-stamped<br/>Schema: Σ, Λ, U,<br/>‖Σ‖_F, κ(Σ)"]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+
+    style A fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style B fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style C fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style D fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style E fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style F fill:#f9f9f9,stroke:#333,stroke-width:2px
 ```
 
 ## Data & Indicators
@@ -88,36 +108,44 @@ This captures overall macro volatility and factor decoupling:
 - High norm: macro factors moving independently, elevated uncertainty
 - Low norm: tight co-movement, stable regime
 
-**Regime Classification**:
+**Regime Classification**: Three macro regimes are defined via threshold-based partitioning on ‖Σ‖_F:
+
+$$\text{Regime}_t = \begin{cases}
+\text{Stable} & \text{if } \|\Sigma_t\|_F < \mu - \sigma \\
+\text{Neutral} & \text{if } \mu - \sigma \leq \|\Sigma_t\|_F \leq \mu + \sigma \\
+\text{Elevated} & \text{if } \|\Sigma_t\|_F > \mu + \sigma
+\end{cases}$$
+
+where $\mu$ and $\sigma$ are computed from rolling 12-month windows of ‖Σ‖_F values.
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Stable: ‖Σ‖_F < μ - σ
-    [*] --> Neutral: μ - σ ≤ ‖Σ‖_F ≤ μ + σ
-    [*] --> Elevated: ‖Σ‖_F > μ + σ
+    [*] --> Stable
+    [*] --> Neutral
+    [*] --> Elevated
 
-    Stable --> Neutral: Factor decoupling begins
-    Neutral --> Stable: Factors re-couple
-    Neutral --> Elevated: Macro uncertainty spikes
-    Elevated --> Neutral: Volatility recedes
-    Elevated --> Stable: Risk regime normalizes
+    Stable --> Neutral: ‖Σ‖_F crosses μ - σ
+    Neutral --> Stable: ‖Σ‖_F falls below μ - σ
+    Neutral --> Elevated: ‖Σ‖_F exceeds μ + σ
+    Elevated --> Neutral: ‖Σ‖_F retreats below μ + σ
+    Elevated --> Stable: Persistent mean reversion
 
     note right of Stable
-        Tight co-movement
-        Low uncertainty
-        Position scaling 1.0x
+        ‖Σ‖_F ∈ [0, μ-σ)
+        Characteristic: tight factor co-movement
+        Interpretation: Low macro uncertainty
     end note
 
     note right of Neutral
-        Mixed signals
-        Moderate uncertainty
-        Position scaling 1.2x
+        ‖Σ‖_F ∈ [μ-σ, μ+σ]
+        Characteristic: mixed signals
+        Interpretation: Moderate uncertainty
     end note
 
     note right of Elevated
-        Factors decouple
-        High uncertainty
-        Position scaling 0.7x
+        ‖Σ‖_F ∈ (μ+σ, ∞)
+        Characteristic: factor decoupling
+        Interpretation: High uncertainty
     end note
 ```
 
@@ -143,24 +171,34 @@ Built in C++ for speed (covariance computation: 12ms) with AWS Lambda orchestrat
 
 ```mermaid
 graph LR
-    subgraph "Data Sources"
-        FRED["FRED API"]
-        AV["Alpha Vantage"]
+    subgraph "External APIs"
+        FRED["<b>FRED</b><br/>https://api.stlouisfed.org<br/>Unlimited free tier<br/>Latency: 340ms avg"]
+        AV["<b>Alpha Vantage</b><br/>https://alphavantage.co<br/>25 req/day (free)<br/>Latency: 450ms avg"]
     end
 
-    subgraph "AWS Cloud"
-        EB["EventBridge<br/>Daily 12:00 UTC"]
-        Lambda["Lambda<br/>512MB, 600s"]
-        S3["S3 Bucket<br/>Versioned results"]
-        CW["CloudWatch<br/>Logs & Metrics"]
+    subgraph "AWS Compute & Orchestration"
+        EB["<b>EventBridge</b><br/>cron(0 12 * * ? *)<br/>UTC daily trigger<br/>Retry: exponential backoff"]
+        Lambda["<b>AWS Lambda</b><br/>provided.al2 runtime<br/>512 MB memory<br/>600s timeout<br/>C++ native binary"]
     end
 
-    FRED -->|HTTP| Lambda
-    AV -->|HTTP| Lambda
-    EB -->|Trigger| Lambda
-    Lambda -->|Write JSON| S3
-    Lambda -->|Emit logs| CW
-    S3 -->|Archive| S3
+    subgraph "AWS Storage & Monitoring"
+        S3["<b>S3 Bucket</b><br/>inverted-yield-trader-{env}<br/>Versioning enabled<br/>SSE-S3 encryption<br/>Lifecycle: 90d archive"]
+        CW["<b>CloudWatch</b><br/>Execution metrics<br/>Error logs & DLQ<br/>Alarms: failures"]
+    end
+
+    FRED -->|HTTP GET| Lambda
+    AV -->|HTTP GET| Lambda
+    EB -->|Event| Lambda
+    Lambda -->|PUT| S3
+    Lambda -->|Emit| CW
+    S3 -.->|Archived| S3
+
+    style FRED fill:#f0f0f0,stroke:#666,stroke-width:2px
+    style AV fill:#f0f0f0,stroke:#666,stroke-width:2px
+    style EB fill:#fff7e6,stroke:#ff9800,stroke-width:2px
+    style Lambda fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+    style S3 fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px
+    style CW fill:#e3f2fd,stroke:#2196f3,stroke-width:2px
 ```
 
 **IaC**: AWS CDK 2.x (TypeScript) with multi-environment support (dev/staging/prod)
