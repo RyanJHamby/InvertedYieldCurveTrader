@@ -1,322 +1,262 @@
-# Macro Surprise-Driven Risk Framework: ES Index Futures
+# Macro Surprise-Driven Risk Framework for ES Futures
 
-**A Quantitative Framework for Regime-Aware Macroeconomic Risk Decomposition**
+A quantitative framework for understanding how macroeconomic surprises propagate through equity index futures. Rather than claiming to predict returns, this project decomposes the covariance structure of economic indicators to identify latent macro risk factors and regime shifts.
 
----
+## Core Hypothesis
 
-## 📊 Executive Summary
+Markets respond to *unexpected* economic information, not levels. If inflation comes in 50bps higher than expected, that moves prices. The same inflation level without surprise does nothing.
 
-This project implements a systematic framework for understanding how **macroeconomic surprises** propagate through equity index futures markets. Rather than claiming point forecasts, we extract surprise signals from 8 economic dimensions, decompose their covariance structure via PCA, and measure how ES exposure varies across latent macroeconomic regimes.
+This means:
+1. Raw covariance of economic levels is misleading—it captures expected relationships, not what actually moves prices
+2. We should be analyzing surprise covariance instead
+3. By decomposing surprise covariance via PCA, we can identify 3-4 interpretable macro factors (growth, inflation, policy, volatility)
+4. We can then measure how ES exposure varies across these factor regimes
 
-**Core Thesis**: Price movements in liquid index futures are primarily driven by *unexpected* economic information, not levels. By quantifying surprise covariance and decomposing it into interpretable factors (growth, inflation, policy, volatility), we can measure regime shifts and portfolio factor exposure in real-time.
-
----
-
-## 🎯 Research Framework
-
-### The Macro Surprise Hypothesis
-
-Standard macro-finance models use raw economic levels to explain returns:
-
+Standard macro-finance models:
 $$E[r_t | X_t] = \alpha + \beta X_t + \epsilon_t$$
 
-This is **empirically weak** because:
-1. Markets are forward-looking; they price in expectations, not current values
-2. **Surprises**, not levels, move prices: $\Delta X_t - E_t[X_t]$ is what matters
-3. Covariance structure of levels ≠ covariance structure of surprises
+This is empirically weak because markets don't react to $X_t$ directly. They react to $\Delta X_t - E_t[\Delta X_t]$.
 
-**Our Approach**: Extract and analyze the surprise covariance matrix
+## Why This Matters for Index Futures
 
-$$\Sigma_{\text{surprise}} = \text{Cov}(\Delta X - E[\Delta X])$$
+ES moves are driven by changes in expected earnings and discount rates. Both are functions of macro surprises. By understanding the surprise covariance structure, we can:
+- Detect when macro factors decouple (elevated uncertainty)
+- Measure portfolio factor exposure in real-time
+- Build systematic position sizing rules around regime shifts
+- Avoid guessing about direction while still quantifying risk
 
-Then decompose via PCA to identify dominant macro risk factors.
+## Architecture
 
-### Statistical Framework: Multivariate Covariance Analysis
+```
+Data Ingestion (FRED, Alpha Vantage)
+    ↓
+Frequency Alignment (daily/monthly/quarterly → monthly)
+    ↓
+Covariance Computation (8×8 matrix of indicators)
+    ↓
+Eigendecomposition (identify principal factors)
+    ↓
+Surprise Extraction [next phase]
+    ↓
+Factor Loadings & Risk Attribution [future]
+```
 
-**Data Alignment Challenge**: Economic indicators have different update frequencies:
-- Daily: Treasury yields, VIX
-- Monthly: CPI, unemployment, consumer sentiment
-- Quarterly: GDP
+## Data & Indicators
 
-**Solution**: Align all indicators to monthly frequency via:
-- **Daily → Monthly**: Last-observation-carried-forward (LOCF) downsampling
-- **Quarterly → Monthly**: Cubic Hermite interpolation preserving trend
-- **Monthly → Monthly**: Identity mapping
+Eight economic dimensions, fetched daily via FRED and Alpha Vantage:
 
-**Covariance Computation** (unbiased estimator):
+| Indicator | Frequency | Logic |
+|-----------|-----------|-------|
+| CPI (CPIAUCSL) | Monthly | Inflation expectations anchor equity risk premia |
+| Real GDP (A191RL1Q225SBEA) | Quarterly | Direct earnings driver |
+| Unemployment (UNRATE) | Monthly | Labor market tightness; Phillips curve |
+| Consumer Sentiment (UMCSENT) | Monthly | Forward-looking demand signal |
+| Fed Funds Rate (FEDFUNDS) | Monthly | Discount rate anchor |
+| Treasury 10Y (DGS10) | Daily | Long-end discount rate |
+| Treasury 2Y (DGS2) | Daily | Near-term policy expectations |
+| VIX | Daily | Realized volatility; risk-off shifts |
+
+**Challenge**: These have different update frequencies (daily, monthly, quarterly). Solution: align to monthly via LOCF downsampling (daily) and Hermite interpolation (quarterly).
+
+## Methodology
+
+### 1. Data Alignment
+
+We maintain a rolling 12-month window across all indicators:
+- Daily data (10Y, 2Y, VIX): take last value of each month (~21 trading days)
+- Quarterly data (GDP): interpolate to monthly preserving trend
+- Monthly data: use as-is
+
+Result: 12 monthly observations for all 8 indicators, allowing consistent covariance computation.
+
+### 2. Covariance Matrix Computation
+
+Standard unbiased estimator:
 
 $$\Sigma_{ij} = \frac{1}{n-1} \sum_{t=1}^{n} (X_i^t - \bar{X}_i)(X_j^t - \bar{X}_j)$$
 
-where $n=12$ (rolling 12-month window), $X \in \mathbb{R}^{8}$
+For $X \in \mathbb{R}^{8}$ and $n=12$, we get an 8×8 symmetric positive semi-definite matrix.
 
-**Matrix Properties**:
-- Symmetry: $\Sigma^T = \Sigma$ ✓
-- Positive semi-definite: $\lambda_i \geq 0, \forall i$ ✓
-- Norm metric: Frobenius $\|\Sigma\|_F = \sqrt{\sum_{i,j} \sigma_{ij}^2}$ tracks regime volatility
+We validate:
+- Symmetry: $\Sigma^T = \Sigma$
+- Non-negative eigenvalues: $\lambda_i \geq 0$
+- Condition number for numerical stability: $\kappa = \lambda_{\max} / \lambda_{\min}$
 
----
+### 3. Signal Strength: Frobenius Norm
 
-## 🏗️ System Architecture
+We use the Frobenius norm as a scalar regime indicator:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│              MACRO SURPRISE EXTRACTION PIPELINE              │
-└─────────────────────────────────────────────────────────────┘
+$$\|\Sigma\|_F = \sqrt{\sum_{i,j} \sigma_{ij}^2}$$
 
-Phase 1: Data Ingestion
-├─ FRED API (8 indicators, 12-month rolling window)
-├─ Alpha Vantage (VIX, intraday resolution)
-└─ CloudWatch Logs (audit trail, latency tracking)
-         ↓
-Phase 2: Indicator Processing & Alignment
-├─ DataAligner: Harmonize 3 frequencies → monthly
-├─ Outlier detection: Robust scaling via MAD (median absolute deviation)
-└─ Stationarity check: Augmented Dickey-Fuller test
-         ↓
-Phase 3: Covariance Matrix Computation
-├─ 8×8 symmetric positive semi-definite matrix
-├─ Eigenvalue decomposition for factor extraction
-└─ Condition number analysis (numerical stability)
-         ↓
-Phase 4: Surprise Extraction [UPCOMING]
-├─ Kalman filter for expectation modeling
-├─ Real-time surprise signal: S_t = X_t - E[X_t | Ψ_t]
-└─ Historical surprise covariance
-         ↓
-Phase 5: Factor Model & Risk Attribution [UPCOMING]
-├─ Principal Component Analysis (PCA) on surprise covariance
-├─ Loadings extraction: Factor_i = Σ × w_i
-└─ ES exposure analysis per factor regime
-         ↓
-Output: Real-Time S3 Results (JSON, daily)
-└─ Signal strength, factor loadings, regime classification
-```
+This captures overall macro volatility and factor decoupling:
+- High norm: macro factors moving independently, elevated uncertainty
+- Low norm: tight co-movement, stable regime
 
----
-
-## 📈 Methodology Deep-Dive
-
-### 1. Eight Macroeconomic Dimensions
-
-| Indicator | Series ID | Frequency | Rationale |
-|-----------|-----------|-----------|-----------|
-| **Inflation** | CPIAUCSL | Monthly | Core demand pressure; affects equity risk premia |
-| **Growth** | A191RL1Q225SBEA | Quarterly → Monthly | Real GDP; direct earnings driver |
-| **Labor** | UNRATE | Monthly | Unemployment; Phillips curve dynamics |
-| **Sentiment** | UMCSENT | Monthly | Forward-looking consumer demand |
-| **Short Rates** | FEDFUNDS | Monthly | Policy rate; discount rate anchor |
-| **Curve Slope** | DGS10 − DGS2 | Daily → Monthly | Term premium; recession signal |
-| **Long Yields** | DGS10 | Daily → Monthly | Long-end rates; equity multiple compression |
-| **Volatility** | VIX | Daily → Monthly | Risk-on/risk-off regime indicator |
-
-### 2. Covariance Eigendecomposition
-
-After computing $\Sigma \in \mathbb{R}^{8 \times 8}$, we perform eigendecomposition:
+### 4. Eigendecomposition
 
 $$\Sigma = U \Lambda U^T$$
 
-where:
-- $U \in \mathbb{R}^{8 \times 8}$: orthonormal eigenvector matrix
-- $\Lambda = \text{diag}(\lambda_1, \ldots, \lambda_8)$: eigenvalue matrix ($\lambda_1 \geq \lambda_2 \geq \cdots$)
+where $\Lambda = \text{diag}(\lambda_1, \ldots, \lambda_8)$ with $\lambda_1 \geq \lambda_2 \geq \cdots$
 
-**Variance Explained**: First $k$ principal components explain:
+The first 3-4 eigenvalues typically capture 85-92% of variance. These become our principal macro factors.
 
-$$\text{VE}_k = \frac{\sum_{i=1}^{k} \lambda_i}{\sum_{i=1}^{8} \lambda_i}$$
+## Implementation
 
-Typically, $k=3$ or $k=4$ captures 85%+ of variance.
+Built in C++ for speed (covariance computation: 12ms) with AWS Lambda orchestration.
 
-### 3. Signal Strength Metric
+**Stack**:
+- Eigen 3.4.0 (linear algebra)
+- AWS SDK for C++ (S3 persistence)
+- curl (API clients)
+- CMake 3.28 (build)
 
-We use the **Frobenius norm** as a scalar regime indicator:
+**Infrastructure**:
+- AWS Lambda (512 MB, 600s timeout)
+- EventBridge trigger (daily, 12:00 UTC)
+- S3 (versioned results)
+- CloudWatch (logging, metrics)
 
-$$\text{Regime Volatility} = \|\Sigma\|_F = \sqrt{\sum_{i=1}^{8} \sum_{j=1}^{8} \sigma_{ij}^2}$$
+**IaC**: AWS CDK 2.x with multi-environment support (dev/staging/prod)
 
-- High $\|\Sigma\|_F$: Macro factors decoupling, heightened uncertainty
-- Low $\|\Sigma\|_F$: Tight macro co-movement, stable regime
+## Current State
 
----
+**Complete**:
+- Data ingestion from FRED & Alpha Vantage ✓
+- Frequency alignment to monthly ✓
+- 8×8 covariance computation ✓
+- Eigendecomposition ✓
+- Lambda deployment + daily automation ✓
+- 180+ unit tests ✓
 
-## 🔧 Technical Implementation
+**In Progress**:
+- Fix Lambda binary shared library dependencies (exec format error)
 
-### Infrastructure
+**Next**:
+- Surprise extraction via Kalman filter (Phase 1.4)
+- PCA on surprise covariance (Phase 1.5)
+- Factor-based ES trading model (Phase 2)
+- Risk attribution dashboard (Phase 3)
 
-**Compute**: AWS Lambda (Python 3.11 + C++ native binary)
-- 512 MB memory, 600 sec timeout
-- Compiled with: GCC 11.4, CMake 3.28, AWS SDK v1.11.717
+## Testing & Validation
 
-**Orchestration**: EventBridge (daily trigger at 12:00 UTC)
-- Executes after US economic data releases & market close
-- Automatic retry on transient failures
+180+ unit tests covering:
+- Data alignment (downsampling, interpolation)
+- Covariance symmetry and positive-semidefiniteness
+- Eigenvalue ordering and eigenvector orthogonality
+- Numerical stability checks
+- NaN/inf detection
 
-**Storage**: S3 + versioning
-- Daily results: `s3://inverted-yield-trader-{env}-results/YYYY-MM-DD.json`
-- Schema: covariance matrix, eigenvalues, signal strength, metadata
+Mock data with known covariances validates our computation against analytical results.
 
-**IaC**: AWS CDK 2.x (TypeScript)
-- Multi-environment support (dev, staging, prod)
-- Stack separation: S3, IAM, Lambda, EventBridge
-- CloudFormation outputs for cross-stack references
+Historical backtests (5+ years FRED data) show macro regime classification aligns 73% with NBER recession dates—reasonable for a covariance-only signal.
 
-### Dependencies
+## Running Locally
 
-**C++ Libraries**:
-- Eigen 3.4.0: Linear algebra (matrix ops, eigendecomposition)
-- nlohmann/json: JSON parsing
-- AWS SDK for C++ (S3 client): Result persistence
-- curl: HTTP client for FRED/Alpha Vantage APIs
+```bash
+# Install dependencies
+brew install eigen nlohmann-json curl
 
-**Data Format**: JSON
+# Build
+cd src && mkdir build && cd build
+cmake .. && make
+
+# Run unit tests
+cd ../../test && bash ../run_unit_tests.sh
+
+# Integration tests (requires API keys)
+export FRED_API_KEY=xxx ALPHA_VANTAGE_API_KEY=yyy
+bash ../run_all_tests.sh
+```
+
+## Deploying to AWS
+
+```bash
+# Build Lambda binary with all shared libraries
+docker build -f Dockerfile.lambda -t inverted-yield-trader-lambda .
+CONTAINER_ID=$(docker create inverted-yield-trader-lambda)
+docker cp $CONTAINER_ID:/var/task/bootstrap .
+docker cp $CONTAINER_ID:/var/task/lib .
+docker rm $CONTAINER_ID
+zip -r lambda-function.zip bootstrap lib/
+
+# Deploy infrastructure
+cd cdk
+npm install
+export FRED_API_KEY=xxx ALPHA_VANTAGE_API_KEY=yyy
+npx cdk deploy --context environment=prod
+
+# Verify
+aws lambda invoke --function-name InvertedYieldTraderProd /tmp/out.json
+cat /tmp/out.json
+```
+
+## Output Format
+
+Daily results written to S3:
+
 ```json
 {
   "timestamp": "2025-12-26T12:00:00Z",
   "covariance_matrix": [[...], [...], ...],
   "eigenvalues": [λ₁, λ₂, ..., λ₈],
+  "eigenvectors": [[...], [...], ...],
   "frobenius_norm": 243.7,
   "condition_number": 12.5,
-  "variance_explained_by_3pcs": 0.87,
-  "regime_signal": "elevated_uncertainty"
+  "variance_explained_3pc": 0.87,
+  "regime_signal": "elevated"
 }
 ```
 
----
+## Design Decisions & Trade-offs
 
-## 📊 Backtesting & Validation
+**Why monthly alignment?**
+- GDP only available quarterly; monthly balances temporal resolution with data availability
+- Daily data has high frequency noise; monthly smooths without losing regime signals
 
-### Unit Test Coverage
-- **180+ test cases** across data processing, covariance computation, eigendecomposition
-- Validates: symmetry, positive-semidefiniteness, NaN detection, numerical stability
-- Mock economic data with known covariances for unit testing
+**Why Frobenius norm over individual eigenvalues?**
+- Single scalar regime signal for downstream consumption
+- Captures both variance magnitude and factor decoupling
+- Computationally efficient
 
-### Integration Tests
-- End-to-end pipeline: fetch → align → compute → export
-- Historical backtests on 5+ years of FRED + VIX data
-- Regime classification accuracy: 73% (vs. NBER recession dates)
+**Why not static linking?**
+- Dynamic linking reduces binary size (662K vs. 5MB+)
+- AWS Lambda runtime environment includes standard system libraries
+- (Currently debugging shared library path issues)
 
-### Risk Metrics Computed
-- **Condition number** ($\kappa = \lambda_{\max} / \lambda_{\min}$): Numerical stability check
-- **Variance concentrated in first 3 PCs**: Typically 85–92%
-- **Signal drift**: Month-over-month Frobenius norm changes
+**Why 12-month rolling window?**
+- Standard for macro analysis (captures seasonal patterns)
+- Provides 12 degrees of freedom for covariance estimation
+- Balances recency with stability
 
----
+## Limitations & Honest Disclaimers
 
-## 🚀 Deployment & Operations
+- **No alpha claims**: This is a risk decomposition framework, not a return forecaster
+- **Surprises are random**: Even perfectly estimated covariance cannot predict sign
+- **Macro lags**: Economic releases are 1-3 weeks delayed; real-time requires nowcasting
+- **Small sample**: 12 observations for 8-dimensional covariance is tight; shrinkage estimators may help
+- **Regime persistence**: Covariance structure can change regime without warning
+- **Backtest limitations**: Assumes zero slippage, instant execution, full liquidity
 
-### Multi-Environment CI/CD
+The goal is clarity on *why* ES moves, not certainty on *when* it moves.
 
-```bash
-# Development (sandbox testing)
-npm run deploy -- --context environment=dev --context fredApiKey=xxx
+## References
 
-# Production (live trading infrastructure)
-npm run deploy -- --context environment=prod --context fredApiKey=xxx
-```
+Lettau, M., & Ludvigson, S. (2005). "Consumption, Aggregate Wealth, and Expected Stock Returns." *Journal of Finance*.
 
-**Automatic Rollout Features**:
-- CloudFormation drift detection
-- Lambda version tracking
-- S3 lifecycle policies (archive after 90 days)
-- SNS alerts on execution failures
+Andersen, T. G., & Bollerslev, T. (1998). "Intraday periodicity and volatility persistence in financial markets." *Review of Financial Studies*.
 
-### Monitoring & Observability
+Fama, E. F., & French, K. R. (2015). "A five-factor asset pricing model." *Journal of Financial Economics*.
 
-**CloudWatch Metrics**:
-- Lambda execution time (mean: 4.2s, p95: 8.7s)
-- API call latencies (FRED: 340ms avg, Alpha Vantage: 450ms avg)
-- Covariance computation time (C++ optimized: 12ms)
+Ledoit, O., & Wolf, M. (2004). "Honey, I shrunk the sample covariance matrix." *Journal of Portfolio Management*.
 
-**Alarms**:
-- Failed API calls (retry 3x with exponential backoff)
-- Eigendecomposition failures (matrix singularity)
-- S3 write errors (DLQ for manual inspection)
+## Documentation
+
+- `PRODUCTION_GUIDE.md` — Deployment, monitoring, troubleshooting
+- `TEST_GUIDE.md` — Test structure, mock data, coverage
+- `ROADMAP.md` — Phased development plan
 
 ---
 
-## 📈 Roadmap: Phase 2 & 3
-
-### Phase 2: Surprise Extraction & PCA (Q1 2025)
-- [ ] Implement Kalman filter for expectation modeling
-- [ ] Compute real-time surprise signals $S_t = X_t - \hat{E}_t[X_t]$
-- [ ] Apply PCA to surprise covariance (not levels)
-- [ ] Publish factor loadings for each macro dimension
-
-### Phase 3: Factor-Based ES Trading System (Q2 2025)
-- [ ] Regime classification: low/mid/high macro volatility states
-- [ ] ES position sizing: scale by factor exposure × regime
-- [ ] Backtest: 2000–2024 ES futures vs. macro factor model
-- [ ] Add ES-specific features (roll adjustment, open interest)
-
-### Phase 4: Risk Attribution Dashboard (Q3 2025)
-- [ ] Real-time dashboard: regime state, factor loadings, ES exposure
-- [ ] Performance attribution: which factors drove ES moves
-- [ ] Drawdown analysis: regimes where strategy underperforms
-
----
-
-## 🛠️ How to Run
-
-### Local Development
-```bash
-# 1. Install C++ dependencies
-brew install eigen nlohmann-json curl
-
-# 2. Build
-cd src && mkdir build && cd build
-cmake .. && make
-
-# 3. Run unit tests
-cd ../../test && bash ../run_unit_tests.sh
-
-# 4. Run integration tests (requires API keys)
-export FRED_API_KEY=xxx ALPHA_VANTAGE_API_KEY=yyy
-bash ../run_all_tests.sh
-```
-
-### Deploy to AWS
-```bash
-# 1. Build Lambda binary
-docker build -f Dockerfile.lambda -t inverted-yield-trader-lambda:latest .
-docker run --rm --entrypoint /bin/sh inverted-yield-trader-lambda:latest \
-  -c "cd /var/task && zip -r /tmp/out.zip bootstrap lib/" > lambda-function.zip
-
-# 2. Deploy infrastructure
-cd cdk
-npm install
-source .env
-npx cdk deploy
-
-# 3. Verify
-aws lambda invoke --function-name InvertedYieldTraderProd /tmp/out.json
-cat /tmp/out.json
-```
-
----
-
-## 📚 Academic References
-
-1. **Macro-Finance Link**: Lettau & Ludvigson (2005) – "Consumption, Aggregate Wealth, and Expected Stock Returns"
-2. **Surprise Methodology**: Andersen & Bollerslev (1998) – "Intraday periodicity and volatility persistence in financial markets"
-3. **Factor Decomposition**: Fama & French (2015) – "A five-factor asset pricing model"
-4. **Covariance Estimation**: Ledoit & Wolf (2004) – "Honey, I shrunk the sample covariance matrix"
-
----
-
-## ⚖️ Risk Disclaimers
-
-- **No Alpha Claims**: This is a risk decomposition framework, not a forecasting model
-- **Macro Surprises Are Random**: Even perfectly estimated covariances cannot predict return sign
-- **Implementation Risk**: Backtests assume zero slippage, full liquidity (unrealistic for large positions)
-- **Data Lag**: Economic releases are delayed; real-time inference requires Nowcasting
-
----
-
-## 📧 Contact & Documentation
-
-- **Questions?** See `PRODUCTION_GUIDE.md` for deployment details
-- **Testing?** See `TEST_GUIDE.md` for coverage and mock data
-- **Troubleshooting?** See `TROUBLESHOOTING_FRED.md` for API issues
-
----
-
-**Last Updated**: December 26, 2025
-**Maintainer**: [Ryan Hamby]
-**License**: Proprietary (Trading Use Only)
+**Built by**: Ryan Hamby
+**Last updated**: December 26, 2025
+**License**: Proprietary
