@@ -110,40 +110,17 @@ This captures overall macro volatility and factor decoupling:
 - High norm: macro factors moving independently, elevated uncertainty
 - Low norm: tight co-movement, stable regime
 
-**Regime Classification**: Three macro regimes partition the signal space based on rolling statistics of ‖Σ‖_F:
+**Regime Classification**: A threshold classifier partitions macro uncertainty into three ordinal states based on the Frobenius norm signal:
 
-$$\text{Regime}_t = \begin{cases}
-\text{Stable} & \text{if } \|\Sigma_t\|_F \in [0, \mu - \sigma) \\
-\text{Neutral} & \text{if } \|\Sigma_t\|_F \in [\mu - \sigma, \mu + \sigma] \\
-\text{Elevated} & \text{if } \|\Sigma_t\|_F \in (\mu + \sigma, \infty)
-\end{cases}$$
+| Regime | Condition | Characteristics | Factor Structure |
+|--------|-----------|-----------------|------------------|
+| **Stable** | $\|\Sigma\|_F < \mu - \sigma$ | Low uncertainty, tight co-movement | Eigenvalues concentrated; $\lambda_1/\lambda_8 < 5$ |
+| **Neutral** | $\mu - \sigma \le \|\Sigma\|_F \le \mu + \sigma$ | Moderate uncertainty, mixed signals | Eigenvalues dispersed; $\lambda_1/\lambda_8 \in [5, 20]$ |
+| **Elevated** | $\|\Sigma\|_F > \mu + \sigma$ | High uncertainty, factor decoupling | Eigenvalues fragmented; $\lambda_1/\lambda_8 > 20$ |
 
-where $\mu$ and $\sigma$ denote the mean and standard deviation of ‖Σ‖_F computed over the preceding 12-month window.
+where $\mu = \text{E}[\|\Sigma_t\|_F]$ and $\sigma = \text{SD}[\|\Sigma_t\|_F]$ are computed over 12-month rolling windows.
 
-**State Transition Rules**:
-
-```
-Stable [‖Σ‖_F < μ - σ]
-  ├─ Interpretation: Macro factors tightly co-move; covariance structure stable
-  ├─ Transition to Neutral: if ‖Σ‖_F ≥ μ - σ (decoupling begins)
-  └─ Properties: Low uncertainty, stable eigenvalues, predictable relationships
-
-       ↓
-
-Neutral [μ - σ ≤ ‖Σ‖_F ≤ μ + σ]
-  ├─ Interpretation: Mixed signals; regime ambiguity
-  ├─ Transitions:
-  │  ├─ to Stable: if ‖Σ‖_F < μ - σ (re-coupling)
-  │  └─ to Elevated: if ‖Σ‖_F > μ + σ (uncertainty spike)
-  └─ Properties: Moderate uncertainty, factors decoupling, equilibrium-breaking
-
-       ↓
-
-Elevated [‖Σ‖_F > μ + σ]
-  ├─ Interpretation: Factors decouple; uncertainty high
-  ├─ Transition to Neutral: if ‖Σ‖_F ≤ μ + σ (volatility recedes)
-  └─ Properties: High uncertainty, independent shocks, correlation breakdown
-```
+**Physical Interpretation**: The Frobenius norm aggregates all pairwise covariances, so high values indicate multiple independent macro shocks driving the system. Low values indicate correlated economic dimensions (tight factor structure). Transitions between regimes signal regime breaks in underlying macro dynamics.
 
 ### 4. Eigendecomposition
 
