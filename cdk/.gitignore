@@ -1,0 +1,11 @@
+node_modules/
+dist/
+*.js
+*.d.ts
+.cdk.staging/
+cdk.out/
+*.json
+!cdk.json
+!tsconfig.json
+!package.json
+.DS_Store
