@@ -1,6 +1,6 @@
-# Macro Surprise-Driven Risk Framework for ES Futures
+# Macro Factor Decomposition System
 
-A quantitative framework for understanding how macroeconomic surprises propagate through equity index futures. Rather than claiming to predict returns, this project decomposes the covariance structure of economic indicators to identify latent macro risk factors and regime shifts.
+Latent factor extraction via eigendecomposition of economic indicator covariance matrices for regime-aware uncertainty quantification. Decomposes $\Sigma \in \mathbb{R}^{8 \times 8}$ into principal factors to identify macroeconomic regimes and quantify economic uncertainty via spectral analysis.
 
 ## Core Hypothesis
 
