@@ -28,18 +28,13 @@ ES moves are driven by changes in expected earnings and discount rates. Both are
 ## Architecture
 
 ```mermaid
-graph TD
-    A["FRED API<br/>(8 indicators)"] --> C["Data Alignment<br/>daily/monthly/quarterly → monthly"]
-    B["Alpha Vantage<br/>(VIX)"] --> C
-    C --> D["Covariance Computation<br/>Σ ∈ ℝ^8×8"]
-    D --> E["Eigendecomposition<br/>Σ = UΛU^T"]
-    E --> F["Principal Factors<br/>λ₁, λ₂, λ₃, ..."]
-    F --> G["Frobenius Norm Signal<br/>‖Σ‖_F → regime"]
-    G --> H["S3 Results<br/>Daily JSON output"]
-
-    E -.->|Phase 1.4| I["Surprise Extraction<br/>Kalman filter"]
-    I -.->|Phase 1.5| J["Factor Loadings<br/>PCA decomposition"]
-    J -.->|Phase 2| K["ES Trading Model<br/>Position sizing"]
+graph LR
+    A["FRED API"] --> C["Frequency Align"]
+    B["Alpha Vantage"] --> C
+    C --> D["Covariance<br/>8×8 Matrix"]
+    D --> E["Eigendecompose"]
+    E --> F["Signal Strength"]
+    F --> G["S3 Output"]
 ```
 
 ## Data & Indicators
@@ -168,25 +163,7 @@ graph LR
     S3 -->|Archive| S3
 ```
 
-**IaC**: AWS CDK 2.x with multi-environment support (dev/staging/prod)
-
-```mermaid
-graph TB
-    App["CDK App"]
-    S3Stack["S3Stack<br/>Results bucket"]
-    IamStack["IamStack<br/>Lambda role"]
-    LambdaStack["LambdaStack<br/>Function + env vars"]
-    EventStack["EventBridgeStack<br/>Daily trigger"]
-
-    App --> S3Stack
-    App --> IamStack
-    App --> LambdaStack
-    App --> EventStack
-
-    S3Stack -->|bucket name| IamStack
-    IamStack -->|role ARN| LambdaStack
-    LambdaStack -->|function ARN| EventStack
-```
+**IaC**: AWS CDK 2.x (TypeScript) with multi-environment support (dev/staging/prod)
 
 ## Current State
 
@@ -201,39 +178,10 @@ graph TB
 **In Progress**:
 - Fix Lambda binary shared library dependencies (exec format error)
 
-**Roadmap**:
-
-```mermaid
-timeline
-    title Development Roadmap
-
-    Phase 1: Complete
-        : Data Ingestion ✓
-        : Frequency Alignment ✓
-        : 8x8 Covariance ✓
-        : Eigendecomposition ✓
-        : Lambda Automation ✓
-
-    Phase 1.4 (Q1 2025): Surprise Extraction
-        : Kalman filter for E[X_t]
-        : Real-time surprise signals S_t
-        : Historical surprise covariance
-
-    Phase 1.5 (Q1 2025): Factor Model
-        : PCA on surprise covariance
-        : Factor loadings extraction
-        : Variance explained analysis
-
-    Phase 2 (Q2 2025): Trading Model
-        : Regime classification rules
-        : ES position sizing logic
-        : 2000-2024 backtesting
-
-    Phase 3 (Q3 2025): Dashboard
-        : Real-time factor state
-        : Performance attribution
-        : Risk decomposition UI
-```
+**What's Next**:
+- Surprise extraction via Kalman filter for expectation modeling
+- Factor decomposition via PCA on surprise covariance
+- ES trading model with regime-aware position sizing
 
 ## Testing & Validation
 
