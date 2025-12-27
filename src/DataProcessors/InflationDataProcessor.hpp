@@ -10,10 +10,12 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <vector>
+#include <string>
 
 class InflationDataProcessor {
 public:
-    std::vector<double> process();
+    std::vector<double> process(const std::string& fredApiKey, int numValues = 10);
 };
 
 #endif /* InflationDataProcessor_hpp */

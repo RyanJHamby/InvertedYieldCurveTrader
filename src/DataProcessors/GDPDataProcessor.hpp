@@ -10,10 +10,11 @@
 
 #include <stdio.h>
 #include <vector>
+#include <string>
 
 class GDPDataProcessor {
 public:
-    std::vector<double> process();
+    std::vector<double> process(const std::string& fredApiKey, int numValues = 8);
 };
 
 #endif /* GDPDataProcessor_hpp */

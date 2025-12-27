@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 // Static member initialization
 std::map<std::string, std::string> SecretsManager::secretCache_;

@@ -17,7 +17,7 @@
 #include <cmath>
 using json = nlohmann::json;
 
-void InvertedYieldDataProcessor::process() {
+void InvertedYieldDataProcessor::process(const std::string& fredApiKey) {
     const std::string jsonFilePath = "../Lambda/AlphaVantageConstants.json";
 
     std::ifstream jsonFile(jsonFilePath);

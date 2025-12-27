@@ -27,6 +27,8 @@ file(GLOB DATA_PROCESSORS_SRC
 file(GLOB AWS_CLIENTS_SRC
      "*AwsClients/*.cpp"
 )
+# Remove DynamoDBClient since we don't build DynamoDB support in Lambda
+list(REMOVE_ITEM AWS_CLIENTS_SRC "${CMAKE_CURRENT_SOURCE_DIR}/AwsClients/DynamoDBClient.cpp")
 
 file(GLOB UTILS_SRC
      "*Utils/*.cpp"
@@ -77,6 +79,7 @@ include_directories(${GTEST_INCLUDE_DIRS})
 include_directories("${CMAKE_SOURCE_DIR}/include")
 include_directories("/opt/homebrew/opt/nlohmann-json/include")
 include_directories("/opt/homebrew/opt/eigen/include/eigen3")
+include_directories("/usr/local/include")
 
 target_link_libraries(${PROJECT_NAME}
         ${AWSSDK_LINK_LIBRARIES}

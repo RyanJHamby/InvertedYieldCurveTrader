@@ -16,7 +16,7 @@
 #include <vector>
 #include <cmath>
 
-std::vector<double> GDPDataProcessor::process() {
+std::vector<double> GDPDataProcessor::process(const std::string& fredApiKey, int numValues) {
     const std::string jsonFilePath = "../Lambda/AlphaVantageConstants.json";
 
     std::ifstream jsonFile(jsonFilePath);

@@ -3,55 +3,101 @@
 
 FROM public.ecr.aws/lambda/provided:al2 as builder
 
-# Install build tools
+# Install build tools (including tar for cmake extraction)
 RUN yum install -y \
     gcc-c++ \
-    cmake \
     git \
     curl-devel \
     openssl-devel \
     zlib-devel \
-    make && \
+    make \
+    wget \
+    tar && \
     yum clean all
 
-# Install Eigen
-RUN yum install -y eigen3-devel && yum clean all
+# Install newer CMake by building from source
+# (yum has 2.8.12, we need 3.13+)
+RUN mkdir -p /tmp/cmake-src && \
+    cd /tmp/cmake-src && \
+    wget -q https://github.com/Kitware/CMake/releases/download/v3.28.0/cmake-3.28.0.tar.gz && \
+    tar xzf cmake-3.28.0.tar.gz && \
+    cd cmake-3.28.0 && \
+    ./bootstrap --prefix=/usr/local --no-system-libs && \
+    make -j4 && \
+    make install && \
+    rm -rf /tmp/cmake-src
+
+# Copy Eigen from local installation
+COPY opt/homebrew/opt/eigen/include/eigen3/Eigen /usr/local/include/Eigen
 
 # Install nlohmann-json headers
-RUN mkdir -p /usr/local/include && \
-    curl -L https://github.com/nlohmann/json/releases/download/v3.11.2/json.hpp -o /usr/local/include/json.hpp
+RUN mkdir -p /usr/local/include/nlohmann && \
+    curl -L https://github.com/nlohmann/json/releases/download/v3.11.2/json.hpp -o /usr/local/include/nlohmann/json.hpp
 
-# Copy AWS SDK installation (must be available locally)
-COPY aws-sdk-cpp-install /opt/aws-sdk-cpp-install
+# Install GTest (needed for our build)
+RUN yum install -y gtest-devel && yum clean all
+
+# Build AWS SDK for C++ (S3 only) for Linux target
+RUN mkdir -p /tmp/aws-build && \
+    cd /tmp/aws-build && \
+    git clone --recursive --depth 1 --branch main https://github.com/aws/aws-sdk-cpp.git && \
+    cd aws-sdk-cpp && \
+    mkdir build && cd build && \
+    /usr/local/bin/cmake .. \
+      -DBUILD_ONLY="s3" \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_INSTALL_PREFIX=/opt/aws-sdk-cpp-install && \
+    make -j4 && \
+    make install && \
+    rm -rf /tmp/aws-build
 
 # Set up build environment
 ENV CMAKE_PREFIX_PATH=/opt/aws-sdk-cpp-install
 
 # Copy source
 WORKDIR /build
+# Force re-copy to pick up CMakeLists updates
+RUN echo "Cache bust for CMakeLists.txt updates"
 COPY . .
 
-# Build the project
+# Build the project with explicit include flag
 RUN cd src && \
+    rm -rf build CMakeCache.txt CMakeFiles && \
     mkdir -p build && \
     cd build && \
     cmake .. \
       -DCMAKE_PREFIX_PATH=/opt/aws-sdk-cpp-install \
+      -DCMAKE_CXX_FLAGS="-I/usr/local/include" \
+      -DCMAKE_C_FLAGS="-I/usr/local/include" \
       -DCMAKE_BUILD_TYPE=Release && \
-    make -j4
+    make InvertedYieldCurveTrader -j4
 
 # Runtime stage - minimal image
 FROM public.ecr.aws/lambda/provided:al2
 
-# Copy built binary from builder
-COPY --from=builder /build/src/build/InvertedYieldCurveTrader ${LAMBDA_TASK_ROOT}/
+WORKDIR ${LAMBDA_TASK_ROOT}
 
-# Copy shared libraries
-COPY --from=builder /opt/aws-sdk-cpp-install/lib/*.dylib* ${LAMBDA_TASK_ROOT}/lib/ 2>/dev/null || true
-COPY --from=builder /opt/aws-sdk-cpp-install/lib/*.so* ${LAMBDA_TASK_ROOT}/lib/ 2>/dev/null || true
+# Copy built binary from builder and rename to bootstrap
+COPY --from=builder /build/src/build/InvertedYieldCurveTrader ./bootstrap
+
+# Make bootstrap executable
+RUN chmod +x ./bootstrap
+
+# Copy shared libraries (built in Docker, placed in lib64 on Amazon Linux 2)
+RUN mkdir -p ./lib && \
+    cp /opt/aws-sdk-cpp-install/lib64/*.so* ./lib/ 2>/dev/null || \
+    cp /opt/aws-sdk-cpp-install/lib/*.so* ./lib/ 2>/dev/null || true
+
+# Copy system libraries that might be needed
+RUN cp /lib64/libc.so.6 ./lib/ 2>/dev/null || true && \
+    cp /lib64/libm.so.6 ./lib/ 2>/dev/null || true && \
+    cp /lib64/libdl.so.2 ./lib/ 2>/dev/null || true && \
+    cp /lib64/libpthread.so.0 ./lib/ 2>/dev/null || true && \
+    cp /lib64/libstdc++.so.6 ./lib/ 2>/dev/null || true && \
+    cp /lib64/libgcc_s.so.1 ./lib/ 2>/dev/null || true
 
 # Set Lambda handler
 ENV LD_LIBRARY_PATH=${LAMBDA_TASK_ROOT}/lib:$LD_LIBRARY_PATH
 
 # Default command
-CMD ["./InvertedYieldCurveTrader", "covariance"]
+CMD ["bootstrap"]

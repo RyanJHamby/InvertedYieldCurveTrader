@@ -14,7 +14,7 @@
 
 class InvertedYieldDataProcessor {
 public:
-    void process();
+    void process(const std::string& fredApiKey = "");
     double getMean();
     std::vector<double> getRecentValues();
     

@@ -16,7 +16,7 @@
 #include <cmath>
 using json = nlohmann::json;
 
-std::vector<double> InflationDataProcessor::process() {
+std::vector<double> InflationDataProcessor::process(const std::string& fredApiKey, int numValues) {
     const std::string jsonFilePath = "../Lambda/AlphaVantageConstants.json";
 
     std::ifstream jsonFile(jsonFilePath);
